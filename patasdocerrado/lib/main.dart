@@ -9,10 +9,37 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
+      debugShowCheckedModeBanner: true,
       home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          title: const Text("Patas do Cerrado"),
+          backgroundColor: Colors.orange,
+          elevation: 0,
+        ),
+        bottomNavigationBar:
+            BottomNavigationBar(backgroundColor: Colors.orange, items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Perfil',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings),
+            label: 'Configurações',
+          ),
+        ]),
+        drawer: const Drawer(
+          backgroundColor: Colors.white,
+          child: DrawerHeader(
+              child: Icon(
+            Icons.favorite,
+            size: 48,
+          )),
         ),
       ),
     );
