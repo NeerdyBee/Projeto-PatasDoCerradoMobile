@@ -92,7 +92,6 @@ class MainApp extends StatelessWidget {
                   ),
                 ),
                 ElevatedButton(
-                  backgroundColor: Color.fromRGBO(255, 98, 62, 100),
                   onPressed: () {},
                   child: const Text('Vamos Começar'),
                 ),
