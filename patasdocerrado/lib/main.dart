@@ -10,38 +10,93 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: true,
-      home: Scaffold(
-        backgroundColor: Colors.white,
-        appBar: AppBar(
-          title: const Text("Patas do Cerrado"),
-          backgroundColor: Colors.orange,
-          elevation: 0,
-        ),
-        bottomNavigationBar:
-            BottomNavigationBar(backgroundColor: Colors.orange, items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Perfil',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Configurações',
-          ),
-        ]),
-        drawer: const Drawer(
-          backgroundColor: Colors.white,
-          child: DrawerHeader(
-              child: Icon(
-            Icons.favorite,
-            size: 48,
-          )),
-        ),
-      ),
-    );
+        debugShowCheckedModeBanner: true,
+        home: Scaffold(
+            backgroundColor: Colors.white,
+            appBar: AppBar(
+              title: const Text("Patas do Cerrado"),
+              backgroundColor: const Color.fromRGBO(255, 98, 62, 100),
+              elevation: 0,
+            ),
+            bottomNavigationBar: Container(
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(30),
+                      topLeft: Radius.circular(30)),
+                  boxShadow: [
+                    BoxShadow(
+                        color: Color.fromARGB(95, 68, 68, 68),
+                        spreadRadius: 0.7,
+                        blurRadius: 6),
+                  ],
+                ),
+                child: ClipRRect(
+                    borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(50.0),
+                        topRight: Radius.circular(50.0),
+                        bottomLeft: Radius.circular(50.0),
+                        bottomRight: Radius.circular(50.0)),
+                    child: BottomNavigationBar(
+                        selectedItemColor:
+                            const Color.fromRGBO(255, 98, 62, 100),
+                        items: const <BottomNavigationBarItem>[
+                          BottomNavigationBarItem(
+                            icon: Icon(
+                              Icons.home,
+                              color: Color.fromRGBO(255, 98, 62, 100),
+                            ),
+                            label: 'Home',
+                          ),
+                          BottomNavigationBarItem(
+                            icon: Icon(Icons.person),
+                            label: 'Perfil',
+                          ),
+                          BottomNavigationBarItem(
+                            icon: Icon(Icons.settings),
+                            label: 'Configurações',
+                          ),
+                        ]))),
+            drawer: const Drawer(
+              backgroundColor: Colors.white,
+              child: DrawerHeader(
+                  child: Icon(
+                Icons.favorite,
+                size: 48,
+              )),
+            ),
+            body: Center(
+                child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                const Image(
+                    image: NetworkImage(
+                        'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg'),
+                    height: 200),
+                RichText(
+                  text: const TextSpan(
+                    children: <TextSpan>[
+                      TextSpan(
+                          text: 'Bem Vindo!',
+                          style: TextStyle(fontWeight: FontWeight.bold)),
+                    ],
+                  ),
+                ),
+                RichText(
+                  text: TextSpan(
+                    children: <TextSpan>[
+                      TextSpan(
+                          text: 'Vários pets estão esperando por um novo lar',
+                          style:
+                              TextStyle(color: Colors.black.withOpacity(0.7))),
+                    ],
+                  ),
+                ),
+                ElevatedButton(
+                  backgroundColor: Color.fromRGBO(255, 98, 62, 100),
+                  onPressed: () {},
+                  child: const Text('Vamos Começar'),
+                ),
+              ],
+            ))));
   }
 }
