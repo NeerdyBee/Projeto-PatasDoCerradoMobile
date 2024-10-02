@@ -15,13 +15,13 @@ class MainApp extends StatelessWidget {
             backgroundColor: Colors.white,
             appBar: AppBar(
               title: const Text("Patas do Cerrado"),
-              backgroundColor: const Color.fromRGBO(255, 98, 62, 100),
+              backgroundColor: const Color.fromARGB(255, 255, 255, 255),
               elevation: 0,
             ),
             bottomNavigationBar: Container(
                 decoration: const BoxDecoration(
                   borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(30),
+                      topRight: Radius.circular(100),
                       topLeft: Radius.circular(30)),
                   boxShadow: [
                     BoxShadow(
@@ -37,27 +37,26 @@ class MainApp extends StatelessWidget {
                         bottomLeft: Radius.circular(50.0),
                         bottomRight: Radius.circular(50.0)),
                     child: BottomNavigationBar(
-                        selectedItemColor:
-                            const Color.fromRGBO(255, 98, 62, 100),
+                        selectedItemColor: const Color.fromRGBO(255, 97, 62, 1),
                         items: const <BottomNavigationBarItem>[
                           BottomNavigationBarItem(
                             icon: Icon(
                               Icons.home,
-                              color: Color.fromRGBO(255, 98, 62, 100),
+                              color: Color.fromRGBO(255, 97, 62, 1),
                             ),
-                            label: 'Home',
+                            label: 'Início',
+                          ),
+                          BottomNavigationBarItem(
+                            icon: Icon(Icons.search),
+                            label: 'Adotaveis',
                           ),
                           BottomNavigationBarItem(
                             icon: Icon(Icons.person),
                             label: 'Perfil',
                           ),
-                          BottomNavigationBarItem(
-                            icon: Icon(Icons.settings),
-                            label: 'Configurações',
-                          ),
                         ]))),
             drawer: const Drawer(
-              backgroundColor: Colors.white,
+              backgroundColor: Color.fromARGB(255, 255, 255, 255),
               child: DrawerHeader(
                   child: Icon(
                 Icons.favorite,
