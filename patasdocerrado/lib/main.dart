@@ -6,34 +6,35 @@ void main() {
 
 class MainApp extends StatelessWidget {
   const MainApp({super.key});
-
+//
+//INICIALIZAÇÃO
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: true,
         home: Scaffold(
             backgroundColor: Colors.white,
+            //
+            //APP BAR
             appBar: AppBar(
               title: const Text("Patas do Cerrado"),
               backgroundColor: const Color.fromARGB(255, 255, 255, 255),
               elevation: 0,
             ),
             //
-            //
+            //BARRA INTERATIVA
             bottomNavigationBar: Container(
                 decoration: const BoxDecoration(
                   borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(100),
+                      topRight: Radius.circular(30),
                       topLeft: Radius.circular(30)),
                   boxShadow: [
                     BoxShadow(
-                        color: Color.fromARGB(95, 68, 68, 68),
+                        color: Color.fromARGB(255, 231, 231, 231),
                         spreadRadius: 0.7,
                         blurRadius: 6),
                   ],
                 ),
-                //
-                //
                 child: ClipRRect(
                     borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(50.0),
@@ -41,6 +42,7 @@ class MainApp extends StatelessWidget {
                         bottomLeft: Radius.circular(50.0),
                         bottomRight: Radius.circular(50.0)),
                     //
+                    //ICONES E BOTOES
                     child: BottomNavigationBar(
                         selectedItemColor: const Color.fromRGBO(255, 97, 62, 1),
                         items: const <BottomNavigationBarItem>[
@@ -64,7 +66,7 @@ class MainApp extends StatelessWidget {
                           ),
                         ]))),
             //
-            //
+            //IMAGEM - BEM VINDO E BOTÃO
             body: Center(
                 child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
