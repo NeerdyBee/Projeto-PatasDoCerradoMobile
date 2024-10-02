@@ -51,7 +51,7 @@ class MainApp extends StatelessWidget {
                             label: 'Adotaveis',
                           ),
                           BottomNavigationBarItem(
-                            icon: Icon(Icons.person),
+                            icon: Icon(Icons.person_outline),
                             label: 'Perfil',
                           ),
                         ]))),
