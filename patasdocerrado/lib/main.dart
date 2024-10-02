@@ -18,6 +18,8 @@ class MainApp extends StatelessWidget {
               backgroundColor: const Color.fromARGB(255, 255, 255, 255),
               elevation: 0,
             ),
+            //
+            //
             bottomNavigationBar: Container(
                 decoration: const BoxDecoration(
                   borderRadius: BorderRadius.only(
@@ -30,12 +32,15 @@ class MainApp extends StatelessWidget {
                         blurRadius: 6),
                   ],
                 ),
+                //
+                //
                 child: ClipRRect(
                     borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(50.0),
                         topRight: Radius.circular(50.0),
                         bottomLeft: Radius.circular(50.0),
                         bottomRight: Radius.circular(50.0)),
+                    //
                     child: BottomNavigationBar(
                         selectedItemColor: const Color.fromRGBO(255, 97, 62, 1),
                         items: const <BottomNavigationBarItem>[
@@ -44,25 +49,22 @@ class MainApp extends StatelessWidget {
                               Icons.home,
                               color: Color.fromRGBO(255, 97, 62, 1),
                             ),
+                            //
                             label: 'Início',
                           ),
+                          //
                           BottomNavigationBarItem(
                             icon: Icon(Icons.search),
                             label: 'Adotaveis',
                           ),
+                          //
                           BottomNavigationBarItem(
                             icon: Icon(Icons.person_outline),
                             label: 'Perfil',
                           ),
                         ]))),
-            drawer: const Drawer(
-              backgroundColor: Color.fromARGB(255, 255, 255, 255),
-              child: DrawerHeader(
-                  child: Icon(
-                Icons.favorite,
-                size: 48,
-              )),
-            ),
+            //
+            //
             body: Center(
                 child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
