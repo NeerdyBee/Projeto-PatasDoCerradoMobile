@@ -17,7 +17,10 @@ class MainApp extends StatelessWidget {
             //
             //APP BAR
             appBar: AppBar(
-              title: const Text("Patas do Cerrado"),
+              title: Image.asset(
+                'logo.png',
+                height: 40, // Ajuste a altura conforme necessário
+              ),
               backgroundColor: const Color.fromARGB(255, 255, 255, 255),
               elevation: 0,
             ),
@@ -42,7 +45,7 @@ class MainApp extends StatelessWidget {
                         bottomLeft: Radius.circular(50.0),
                         bottomRight: Radius.circular(50.0)),
                     //
-                    //ICONES E BOTOES
+                    //ICONES - BOTOES
                     child: BottomNavigationBar(
                         selectedItemColor: const Color.fromRGBO(255, 97, 62, 1),
                         items: const <BottomNavigationBarItem>[
