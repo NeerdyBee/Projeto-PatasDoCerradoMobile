@@ -1,18 +1,31 @@
 import 'package:flutter/material.dart';
 
-void mainlogin() {
+void main() {
   runApp(const MainApp());
 }
 
 class MainApp extends StatelessWidget {
   const MainApp({super.key});
-
+//
+//INICIALIZAÇÃO
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        debugShowCheckedModeBanner: true,
+        debugShowCheckedModeBanner: false,
         home: Scaffold(
             backgroundColor: Colors.white,
+            //
+            //APP BAR
+            appBar: AppBar(
+              title: Image.asset(
+                'logo.png',
+                height: 50, // Ajuste a altura conforme necessário
+              ),
+              backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+              elevation: 0,
+            ),
+            //
+            //BARRA INTERATIVA
             bottomNavigationBar: Container(
                 decoration: const BoxDecoration(
                   borderRadius: BorderRadius.only(
@@ -20,7 +33,7 @@ class MainApp extends StatelessWidget {
                       topLeft: Radius.circular(30)),
                   boxShadow: [
                     BoxShadow(
-                        color: Color.fromARGB(95, 68, 68, 68),
+                        color: Color.fromARGB(255, 231, 231, 231),
                         spreadRadius: 0.7,
                         blurRadius: 6),
                   ],
@@ -31,42 +44,36 @@ class MainApp extends StatelessWidget {
                         topRight: Radius.circular(50.0),
                         bottomLeft: Radius.circular(50.0),
                         bottomRight: Radius.circular(50.0)),
+                    //
+                    //ICONES - BOTOES
                     child: BottomNavigationBar(
-                        selectedItemColor:
-                            const Color.fromRGBO(255, 98, 62, 100),
+                        selectedItemColor: const Color.fromRGBO(255, 97, 62, 1),
                         items: const <BottomNavigationBarItem>[
                           BottomNavigationBarItem(
                             icon: Icon(
                               Icons.home,
-                              color: Color.fromRGBO(255, 98, 62, 100),
+                              color: Color.fromRGBO(255, 97, 62, 1),
                             ),
-                            label: 'Home',
+                            //
+                            label: 'Início',
                           ),
+                          //
                           BottomNavigationBarItem(
-                            icon: Icon(Icons.person),
+                            icon: Icon(Icons.search),
+                            label: 'Adotaveis',
+                          ),
+                          //
+                          BottomNavigationBarItem(
+                            icon: Icon(Icons.person_outline),
                             label: 'Perfil',
                           ),
-                          BottomNavigationBarItem(
-                            icon: Icon(Icons.settings),
-                            label: 'Configurações',
-                          ),
                         ]))),
-            drawer: const Drawer(
-              backgroundColor: Colors.white,
-              child: DrawerHeader(
-                  child: Icon(
-                Icons.favorite,
-                size: 48,
-              )),
-            ),
+            //
+            //IMAGEM - BEM VINDO E BOTÃO
             body: Center(
                 child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                const Image(
-                    image: NetworkImage(
-                        'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg'),
-                    height: 200),
+                const Image(image: AssetImage('logo.png'), height: 200),
                 RichText(
                   text: const TextSpan(
                     children: <TextSpan>[
