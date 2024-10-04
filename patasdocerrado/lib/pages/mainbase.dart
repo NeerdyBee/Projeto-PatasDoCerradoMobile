@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:patasdocerrado/components/my_appbar.dart';
 
 void main() {
   runApp(const MainApp());
@@ -16,14 +17,7 @@ class MainApp extends StatelessWidget {
             backgroundColor: Colors.white,
             //
             //APP BAR
-            appBar: AppBar(
-              title: Image.asset(
-                'logo.png',
-                height: 50, // Ajuste a altura conforme necessário
-              ),
-              backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-              elevation: 0,
-            ),
+            appBar: MyAppBar(),
             //
             //BARRA INTERATIVA
             bottomNavigationBar: Container(
