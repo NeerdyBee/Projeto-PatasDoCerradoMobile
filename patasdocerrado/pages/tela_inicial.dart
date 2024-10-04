@@ -15,88 +15,74 @@ class MainApp extends StatelessWidget {
         home: Scaffold(
             backgroundColor: Colors.white,
             //
-            //APP BAR
-            appBar: AppBar(
-              title: Image.asset(
-                'logo.png',
-                height: 50, // Ajuste a altura conforme necessário
-              ),
-              backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-              elevation: 0,
-            ),
-            //
-            //BARRA INTERATIVA
-            bottomNavigationBar: Container(
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(30),
-                      topLeft: Radius.circular(30)),
-                  boxShadow: [
-                    BoxShadow(
-                        color: Color.fromARGB(255, 231, 231, 231),
-                        spreadRadius: 0.7,
-                        blurRadius: 6),
-                  ],
-                ),
-                child: ClipRRect(
-                    borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(50.0),
-                        topRight: Radius.circular(50.0),
-                        bottomLeft: Radius.circular(50.0),
-                        bottomRight: Radius.circular(50.0)),
-                    //
-                    //ICONES - BOTOES
-                    child: BottomNavigationBar(
-                        selectedItemColor: const Color.fromRGBO(255, 97, 62, 1),
-                        items: const <BottomNavigationBarItem>[
-                          BottomNavigationBarItem(
-                            icon: Icon(
-                              Icons.home,
-                              color: Color.fromRGBO(255, 97, 62, 1),
-                            ),
-                            //
-                            label: 'Início',
-                          ),
-                          //
-                          BottomNavigationBarItem(
-                            icon: Icon(Icons.search),
-                            label: 'Adotaveis',
-                          ),
-                          //
-                          BottomNavigationBarItem(
-                            icon: Icon(Icons.person_outline),
-                            label: 'Perfil',
-                          ),
-                        ]))),
-            //
-            //IMAGEM - BEM VINDO E BOTÃO
+            //IMAGEM
             body: Center(
                 child: Column(
               children: [
-                const Image(image: AssetImage('logo.png'), height: 200),
+                Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 8, vertical: 100),
+                    child: Image(image: AssetImage('logo.png'), height: 125)),
+                //
+                //TEXTOS
                 RichText(
                   text: const TextSpan(
                     children: <TextSpan>[
                       TextSpan(
-                          text: 'Bem Vindo!',
-                          style: TextStyle(fontWeight: FontWeight.bold)),
+                        text: 'Bem Vindo!',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold, // Negrito
+                          fontSize: 18,
+                          color: Color.fromRGBO(22, 24, 35, 1),
+                        ),
+                      ),
                     ],
                   ),
                 ),
+                //
+                //ESPAÇO
+                const SizedBox(height: 6),
+                //
+                //
                 RichText(
                   text: TextSpan(
                     children: <TextSpan>[
                       TextSpan(
-                          text: 'Vários pets estão esperando por um novo lar',
-                          style:
-                              TextStyle(color: Colors.black.withOpacity(0.7))),
+                        text:
+                            'Vários pets estão esperando\n            por um novo lar.',
+                        style: TextStyle(
+                          color: const Color.fromARGB(255, 17, 17, 17)
+                              .withOpacity(1),
+                        ),
+                      ),
                     ],
                   ),
                 ),
+                //
+                //ESPAÇO
+                const SizedBox(height: 50),
+                //
+                //BOTÃO
                 ElevatedButton(
                   onPressed: () {},
-                  child: const Text('Vamos Começar'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor:
+                        const Color.fromARGB(255, 238, 77, 33), // Cor do botão
+                    minimumSize: const Size(
+                        367, 49), // Define a largura (200) e altura (50)
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(
+                          10), // Arredondamento de 10 nas bordas
+                    ),
+                  ),
+                  child: const Text(
+                    'Vamos Começar',
+                    style: TextStyle(
+                      color: Colors.white, // Cor do texto
+                    ),
+                  ),
                 ),
+                //
+                //
               ],
             ))));
   }
