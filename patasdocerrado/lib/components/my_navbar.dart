@@ -5,28 +5,40 @@ class MyNavBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BottomNavigationBar(
-        selectedItemColor: const Color.fromRGBO(255, 97, 62, 1),
-        items: const <BottomNavigationBarItem>[
+    return Container(
+      margin: EdgeInsets.all(16.0),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(30),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black12,
+            blurRadius: 8,
+            offset: Offset(0, -1),
+          ),
+        ],
+      ),
+      child: BottomNavigationBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        items: [
           BottomNavigationBarItem(
-            icon: Icon(
-              Icons.home,
-              color: Color.fromRGBO(255, 97, 62, 1),
-            ),
-            //
+            icon: Icon(Icons.home),
             label: 'Início',
           ),
-          //
           BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: 'Adotaveis',
+            icon: Icon(Icons.pets),
+            label: 'Adotáveis',
           ),
-          //
           BottomNavigationBarItem(
-            icon: Icon(Icons.person_outline),
+            icon: Icon(Icons.person),
             label: 'Perfil',
           ),
-        ]);
+        ],
+        selectedItemColor: Color(0xFFFF623E),
+        unselectedItemColor: Color(0xFF6e6f76),
+      ),
+    );
   }
 
   @override
