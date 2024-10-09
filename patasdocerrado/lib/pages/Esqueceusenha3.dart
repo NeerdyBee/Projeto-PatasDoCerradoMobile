@@ -97,7 +97,7 @@ class MainApp extends StatelessWidget {
                               height: 4,
                               color: Color.fromRGBO(0, 0, 0, 0.5))),
                       TextSpan(
-                          text: 'Crie agora!',
+                          text: ' Crie agora!',
                           style: TextStyle(
                               fontSize: 14,
                               height: 4,
