@@ -2,12 +2,8 @@
 
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(const MainApp());
-}
-
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+class LoginPage extends StatelessWidget {
+  const LoginPage({super.key});
 //
 //INICIALIZAÇÃO
   @override
@@ -75,7 +71,7 @@ class MainApp extends StatelessWidget {
                   ),
                 ),
                 ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () => Navigator.pushNamed(context, '/homepage'),
                     style: ElevatedButton.styleFrom(
                         backgroundColor: Color.fromRGBO(255, 97, 62, 1),
                         foregroundColor: Color.fromRGBO(255, 255, 255, 1),

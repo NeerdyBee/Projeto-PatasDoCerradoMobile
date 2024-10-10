@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(const MainApp());
-}
-
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+class InitialPage extends StatelessWidget {
+  const InitialPage({super.key});
 //
 //INICIALIZAÇÃO
   @override
@@ -63,7 +59,7 @@ class MainApp extends StatelessWidget {
                 //
                 //BOTÃO
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () => Navigator.pushNamed(context, '/login'),
                   style: ElevatedButton.styleFrom(
                     backgroundColor:
                         const Color.fromARGB(255, 238, 77, 33), // Cor do botão

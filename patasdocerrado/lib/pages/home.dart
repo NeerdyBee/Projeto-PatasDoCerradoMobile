@@ -4,69 +4,144 @@ import 'package:patasdocerrado/components/my_navbar.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
-//
-//INICIALIZAÇÃO
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Colors.white,
-        //
-        //APP BAR
-        appBar: MyAppBar(),
-        //
-        //BARRA INTERATIVA
-        bottomNavigationBar: Container(
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(30), topLeft: Radius.circular(30)),
-              boxShadow: [
-                BoxShadow(
-                    color: Color.fromARGB(255, 231, 231, 231),
-                    spreadRadius: 0.7,
-                    blurRadius: 6),
-              ],
-            ),
-            child: ClipRRect(
-              borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(50.0),
-                  topRight: Radius.circular(50.0),
-                  bottomLeft: Radius.circular(50.0),
-                  bottomRight: Radius.circular(50.0)),
-              //
-              //ICONES - BOTOES
-              child: MyNavBar(),
-            )),
-        //
-        //IMAGEM - BEM VINDO E BOTÃO
-        body: Center(
-            child: Column(
-          children: [
-            const Image(image: AssetImage('logo.png'), height: 200),
-            RichText(
-              text: const TextSpan(
-                children: <TextSpan>[
-                  TextSpan(
-                      text: 'Bem Vindo!',
-                      style: TextStyle(fontWeight: FontWeight.bold)),
-                ],
+    return MaterialApp(
+        home: Scaffold(
+            body: SafeArea(
+              child: SingleChildScrollView(
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Image.asset(
+                          './assets/logopngttt-3.svg',
+                          width: 93,
+                          height: 54,
+                        ),
+                      ),
+                      Text(
+                        'Bem vindo!',
+                        style: TextStyle(
+                          fontFamily: 'Poppins',
+                          fontWeight: FontWeight.w500,
+                          fontSize: 16,
+                          color: Color(0xFF8d8d8d),
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      Text(
+                        'Conheça seu novo melhor amigo!',
+                        style: TextStyle(
+                          fontFamily: 'Poppins',
+                          fontWeight: FontWeight.w700,
+                          fontSize: 14,
+                          color: Color(0xFF161823),
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(height: 16),
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.8,
+                        height: 368,
+                        decoration: BoxDecoration(
+                          color: Colors.grey[300],
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.all(16.0),
+                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                        width: MediaQuery.of(context).size.width * 0.8,
+                        height: 96,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(16),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black12,
+                              blurRadius: 8,
+                            ),
+                          ],
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Bartho',
+                              style: TextStyle(
+                                fontFamily: 'Poppins',
+                                fontWeight: FontWeight.w700,
+                                fontSize: 14,
+                                color: Color(0xFFFF623E),
+                              ),
+                            ),
+                            Text(
+                              'Rialma, Goias',
+                              style: TextStyle(
+                                fontFamily: 'Poppins',
+                                fontWeight: FontWeight.w500,
+                                fontSize: 11,
+                                color: Color(0xFF8d8d8d),
+                              ),
+                            ),
+                            SizedBox(height: 8),
+                            Row(
+                              children: [
+                                Icon(Icons.male, size: 11),
+                                SizedBox(width: 8),
+                                Text(
+                                  'Macho',
+                                  style: TextStyle(
+                                    fontFamily: 'Poppins',
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 11,
+                                    color: Color(0xFF8d8d8d),
+                                  ),
+                                ),
+                                Spacer(),
+                                Icon(Icons.access_time, size: 11),
+                                SizedBox(width: 8),
+                                Text(
+                                  '2 Anos',
+                                  style: TextStyle(
+                                    fontFamily: 'Poppins',
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 11,
+                                    color: Color(0xFF8d8d8d),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                      ElevatedButton(
+                        onPressed: () {},
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Color(0xFFFF623E),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                        ),
+                        child: Text(
+                          'Me adote!',
+                          style: TextStyle(
+                            fontFamily: 'Poppins',
+                            fontWeight: FontWeight.w500,
+                            fontSize: 11,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ),
-            RichText(
-              text: TextSpan(
-                children: <TextSpan>[
-                  TextSpan(
-                      text: 'Vários pets estão esperando por um novo lar',
-                      style: TextStyle(color: Colors.black.withOpacity(0.7))),
-                ],
-              ),
-            ),
-            ElevatedButton(
-              child: const Text('Vamos Começar'),
-              onPressed: () {
-                Navigator.pushNamed(context, '/config');
-              },
-            ),
-          ],
-        )));
+            bottomNavigationBar: MyNavBar()));
   }
 }
