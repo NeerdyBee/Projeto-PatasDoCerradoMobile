@@ -4,7 +4,10 @@ import 'package:patasdocerrado/pages/home.dart';
 import 'package:patasdocerrado/pages/profile.dart';
 import 'package:patasdocerrado/pages/tela_inicial.dart';
 import 'package:patasdocerrado/pages/login.dart';
-import 'package:patasdocerrado/pages/cadastro.dart';
+import 'package:patasdocerrado/pages/register.dart';
+import 'package:patasdocerrado/pages/recoverPswd.dart';
+import 'package:patasdocerrado/pages/recoverPswdCode.dart';
+import 'package:patasdocerrado/pages/recoverPswdNew.dart';
 
 void main() {
   runApp(const MainApp());
@@ -21,8 +24,11 @@ class MainApp extends StatelessWidget {
       routes: {
         '/initialpage': (context) => const InitialPage(),
         '/login': (context) => const LoginPage(),
-        '/register': (context) => const RegisterPage(),
+        '/registerpage': (context) => const RegisterPage(),
         '/homepage': (context) => const HomePage(),
+        '/recoverpswdpage': (context) => const RecoverPswdPage(),
+        '/recoverpswdcodepage': (context) => const RecoverPswdCodePage(),
+        '/recoverpswdnewpage': (context) => const RecoverPswdNewPage(),
       },
     );
   }

@@ -37,10 +37,13 @@ class LoginPage extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
                   child: TextField(
                     decoration: InputDecoration(
-                      border: OutlineInputBorder(
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                            color: Color.fromARGB(255, 221, 221, 221),
+                            width: 2.0),
                         borderRadius: BorderRadius.circular(10),
                       ),
                       hintText: 'E-mail',
@@ -48,28 +51,37 @@ class LoginPage extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
                   child: TextField(
                     decoration: InputDecoration(
-                      border: OutlineInputBorder(
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                            color: Color.fromARGB(255, 221, 221, 221),
+                            width: 2.0),
                         borderRadius: BorderRadius.circular(10),
                       ),
                       hintText: 'Senha',
                     ),
                   ),
                 ),
-                RichText(
-                  text: TextSpan(
-                    children: <TextSpan>[
-                      TextSpan(
-                          text: 'Esqueceu sua senha?\n',
-                          style: TextStyle(
+                GestureDetector(
+                    onTap: () =>
+                        Navigator.pushNamed(context, '/recoverpswdpage'),
+                    child: Align(
+                        alignment: Alignment.centerRight,
+                        child: Padding(
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                          child: Text(
+                            "Esqueceu sua senha?",
+                            style: TextStyle(
+                              color: Color.fromRGBO(255, 97, 62, 1),
                               fontSize: 14,
-                              height: 2,
-                              color: Color.fromRGBO(255, 97, 62, 1)))
-                    ],
-                  ),
-                ),
+                              height: 4,
+                            ),
+                            textAlign: TextAlign.right,
+                          ),
+                        ))),
                 ElevatedButton(
                     onPressed: () => Navigator.pushNamed(context, '/homepage'),
                     style: ElevatedButton.styleFrom(
@@ -83,24 +95,28 @@ class LoginPage extends StatelessWidget {
                       'Entrar',
                       style: TextStyle(fontSize: 16),
                     )),
-                RichText(
-                  text: TextSpan(
-                    children: <TextSpan>[
-                      TextSpan(
-                          text: 'Ainda não possui uma conta?',
-                          style: TextStyle(
-                              fontSize: 14,
-                              height: 4,
-                              color: Color.fromRGBO(0, 0, 0, 0.5))),
-                      TextSpan(
-                          text: 'Crie agora!',
-                          style: TextStyle(
-                              fontSize: 14,
-                              height: 4,
-                              color: Color.fromRGBO(255, 97, 62, 1)))
-                    ],
-                  ),
-                ),
+                GestureDetector(
+                    onTap: () => Navigator.pushNamed(context, '/registerpage'),
+                    child: Align(
+                        alignment: Alignment.center,
+                        child: Padding(
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                          child: RichText(
+                            text: TextSpan(
+                              children: <TextSpan>[
+                                TextSpan(
+                                    text:
+                                        "Ainda não possui uma conta? Crie agora!",
+                                    style: TextStyle(
+                                      color: Color.fromRGBO(255, 97, 62, 1),
+                                      fontSize: 14,
+                                      height: 4,
+                                    ))
+                              ],
+                            ),
+                          ),
+                        ))),
               ],
             )));
   }

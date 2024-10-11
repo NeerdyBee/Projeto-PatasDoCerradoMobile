@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(const MainApp());
-}
-
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+class RecoverPswdNewPage extends StatelessWidget {
+  const RecoverPswdNewPage({super.key});
 //
 //INICIALIZAÇÃO
   @override
@@ -18,20 +14,19 @@ class MainApp extends StatelessWidget {
               children: [
                 Padding(
                     padding: EdgeInsets.symmetric(horizontal: 8, vertical: 40),
-                    child: Image(image: AssetImage('logo.png'), height: 125)),
+                    child: Image(image: AssetImage('logo.png'), height: 130)),
                 RichText(
                   textAlign: TextAlign.center,
                   text: TextSpan(
                     children: <TextSpan>[
                       TextSpan(
-                          text: 'Esqueceu sua senha?\n',
+                          text: 'Crie sua nova senha!\n',
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 18,
                               height: 4)),
                       TextSpan(
-                          text:
-                              'Vamos ajuda-lo nisso! Primeiro, digite seu\n  e-mail cadastrado ao criar a sua conta.',
+                          text: 'Digite sua nova senha, e confirme.',
                           style: TextStyle(
                               color: Colors.black.withOpacity(0.5),
                               fontSize: 14,
@@ -40,27 +35,49 @@ class MainApp extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 67, vertical: 30),
+                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
                   child: TextField(
                     decoration: InputDecoration(
-                      border: OutlineInputBorder(
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                            color: Color.fromARGB(255, 221, 221, 221),
+                            width: 2.0),
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      hintText: 'E-mail',
+                      hintText: 'Nova senha',
                     ),
                   ),
                 ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                  child: TextField(
+                    decoration: InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                            color: Color.fromARGB(255, 221, 221, 221),
+                            width: 2.0),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      hintText: 'Confirmar nova senha',
+                    ),
+                  ),
+                ),
+                //
+                //ESPAÇAMENTO
+                SizedBox(height: 30),
+                //
+                //
                 ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () => Navigator.pushNamed(context, '/login'),
                     style: ElevatedButton.styleFrom(
                         backgroundColor: Color.fromRGBO(255, 97, 62, 1),
                         foregroundColor: Color.fromRGBO(255, 255, 255, 1),
-                        minimumSize: Size(367, 49),
+                        minimumSize: Size(445, 55),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
                         )),
                     child: Text(
-                      'Próximo passo',
+                      'Concluir e redefinir senha',
                       style: TextStyle(fontSize: 16),
                     )),
               ],
