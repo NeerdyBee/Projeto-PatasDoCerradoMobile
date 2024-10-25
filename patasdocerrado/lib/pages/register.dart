@@ -42,8 +42,11 @@ class _RegisterPageState extends State<RegisterPage> {
         ),
         // APP BAR
         appBar: AppBar(
-          leading: Icon(Icons.arrow_back_ios_rounded),
+          leading: IconButton(
+              icon: Icon(Icons.arrow_back_ios_rounded, color: Colors.black),
+              onPressed: () => Navigator.of(context).pop()),
           title: Text('Cadastro'),
+          centerTitle: true,
           backgroundColor: const Color.fromARGB(255, 255, 255, 255),
           elevation: 0,
         ),
@@ -115,16 +118,23 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                       ))),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-                child: TextField(
-                  decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                          color: Color.fromARGB(255, 221, 221, 221),
-                          width: 2.0),
-                      borderRadius: BorderRadius.circular(10),
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 8),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(color: Colors.grey.shade300, width: 2.0),
+                  ),
+                  child: Expanded(
+                    child: TextField(
+                      decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'Digite seu nome de usuário',
+                          hintStyle: TextStyle(
+                              fontFamily: 'Poppins',
+                              fontSize: 16,
+                              color: Color(0xff8d8d8d))),
                     ),
-                    hintText: 'Digite seu nome de usuário',
                   ),
                 ),
               ),
@@ -142,43 +152,23 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                       ))),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-                child: TextField(
-                  decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                          color: Color.fromARGB(255, 221, 221, 221),
-                          width: 2.0),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    hintText: 'Sua Cidade',
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 8),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(color: Colors.grey.shade300, width: 2.0),
                   ),
-                ),
-              ),
-              Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-                  child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: RichText(
-                        text: TextSpan(
-                          text: 'Nome',
-                          style: TextStyle(
-                            fontSize: 16,
-                            height: 2,
-                          ),
-                        ),
-                      ))),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-                child: TextField(
-                  decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                          color: Color.fromARGB(255, 221, 221, 221),
-                          width: 2.0),
-                      borderRadius: BorderRadius.circular(10),
+                  child: Expanded(
+                    child: TextField(
+                      decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'Selecione sua cidade',
+                          hintStyle: TextStyle(
+                              fontFamily: 'Poppins',
+                              fontSize: 16,
+                              color: Color(0xff8d8d8d))),
                     ),
-                    hintText: 'Digite seu nome',
                   ),
                 ),
               ),
@@ -196,16 +186,23 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                       ))),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-                child: TextField(
-                  decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                          color: Color.fromARGB(255, 221, 221, 221),
-                          width: 2.0),
-                      borderRadius: BorderRadius.circular(10),
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 8),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(color: Colors.grey.shade300, width: 2.0),
+                  ),
+                  child: Expanded(
+                    child: TextField(
+                      decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'Digite seu CPF',
+                          hintStyle: TextStyle(
+                              fontFamily: 'Poppins',
+                              fontSize: 16,
+                              color: Color(0xff8d8d8d))),
                     ),
-                    hintText: 'Digite seu CPF',
                   ),
                 ),
               ),
@@ -223,16 +220,23 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                       ))),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-                child: TextField(
-                  decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                          color: Color.fromARGB(255, 221, 221, 221),
-                          width: 2.0),
-                      borderRadius: BorderRadius.circular(10),
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 8),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(color: Colors.grey.shade300, width: 2.0),
+                  ),
+                  child: Expanded(
+                    child: TextField(
+                      decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'Digite seu e-mail',
+                          hintStyle: TextStyle(
+                              fontFamily: 'Poppins',
+                              fontSize: 16,
+                              color: Color(0xff8d8d8d))),
                     ),
-                    hintText: 'Digite seu e-mail',
                   ),
                 ),
               ),
@@ -250,16 +254,23 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                       ))),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-                child: TextField(
-                  decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                          color: Color.fromARGB(255, 221, 221, 221),
-                          width: 2.0),
-                      borderRadius: BorderRadius.circular(10),
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 8),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(color: Colors.grey.shade300, width: 2.0),
+                  ),
+                  child: Expanded(
+                    child: TextField(
+                      decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'Digite seu telefone',
+                          hintStyle: TextStyle(
+                              fontFamily: 'Poppins',
+                              fontSize: 16,
+                              color: Color(0xff8d8d8d))),
                     ),
-                    hintText: 'Digite seu telefone',
                   ),
                 ),
               ),
@@ -277,29 +288,37 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                       ))),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-                child: TextField(
-                  obscureText: !_passwordVisible,
-                  decoration: InputDecoration(
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        _passwordVisible
-                            ? Icons.visibility
-                            : Icons.visibility_off,
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          _passwordVisible = !_passwordVisible;
-                        });
-                      },
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 8),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(color: Colors.grey.shade300, width: 2.0),
+                  ),
+                  child: Expanded(
+                    child: TextField(
+                      obscureText: !_passwordVisible,
+                      decoration: InputDecoration(
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              color: Color(0xffFF623E),
+                              _passwordVisible
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                _passwordVisible = !_passwordVisible;
+                              });
+                            },
+                          ),
+                          border: InputBorder.none,
+                          hintText: 'Senha',
+                          hintStyle: TextStyle(
+                              fontFamily: 'Poppins',
+                              fontSize: 16,
+                              color: Color(0xff8d8d8d))),
                     ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                          color: Color.fromARGB(255, 221, 221, 221),
-                          width: 2.0),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    hintText: 'Senha',
                   ),
                 ),
               ),
@@ -317,29 +336,38 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                       ))),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-                child: TextField(
-                  obscureText: !_confirmPasswordVisible,
-                  decoration: InputDecoration(
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        _confirmPasswordVisible
-                            ? Icons.visibility
-                            : Icons.visibility_off,
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          _confirmPasswordVisible = !_confirmPasswordVisible;
-                        });
-                      },
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 8),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(color: Colors.grey.shade300, width: 2.0),
+                  ),
+                  child: Expanded(
+                    child: TextField(
+                      obscureText: !_confirmPasswordVisible,
+                      decoration: InputDecoration(
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              color: Color(0xffFF623E),
+                              _confirmPasswordVisible
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                _confirmPasswordVisible =
+                                    !_confirmPasswordVisible;
+                              });
+                            },
+                          ),
+                          border: InputBorder.none,
+                          hintText: 'Confirmar senha',
+                          hintStyle: TextStyle(
+                              fontFamily: 'Poppins',
+                              fontSize: 16,
+                              color: Color(0xff8d8d8d))),
                     ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                          color: Color.fromARGB(255, 221, 221, 221),
-                          width: 2.0),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    hintText: 'Confirmar senha',
                   ),
                 ),
               ),

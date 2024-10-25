@@ -1,21 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:patasdocerrado/pages/Adotaveisteste.dart';
+import 'package:patasdocerrado/components/my_petcard.dart';
 
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: PetCardScreen(),
-    );
-  }
-}
-
-class PetCardScreen extends StatelessWidget {
+class FeedPage extends StatelessWidget {
+  const FeedPage({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,12 +54,6 @@ class PetCardScreen extends StatelessWidget {
                 ),
               ],
             ),
-          ),
-          Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: CustomBottomNavigationBar(),
           ),
         ],
       ),

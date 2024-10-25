@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
+  bool _passwordVisible = false;
 //
 //INICIALIZAÇÃO
   @override
@@ -14,9 +15,11 @@ class LoginPage extends StatelessWidget {
             backgroundColor: Colors.white,
             body: Column(
               children: [
-                Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 8, vertical: 40),
-                    child: Image(image: AssetImage('logo.png'), height: 130)),
+                SizedBox(height: 60),
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[Image.asset('logo.png', height: 130)]),
+                SizedBox(height: 60),
                 RichText(
                   textAlign: TextAlign.center,
                   text: TextSpan(
@@ -24,43 +27,62 @@ class LoginPage extends StatelessWidget {
                       TextSpan(
                           text: 'Que bom te ver por aqui!\n',
                           style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                              height: 4)),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                          )),
                       TextSpan(
                           text: 'Econtre seu novo amigo',
                           style: TextStyle(
                               color: Colors.black.withOpacity(0.5),
                               fontSize: 18,
-                              fontWeight: FontWeight.bold)),
+                              fontWeight: FontWeight.bold,
+                              height: 2)),
                     ],
                   ),
                 ),
+                SizedBox(height: 60),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-                  child: TextField(
-                    decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(
-                            color: Color.fromARGB(255, 221, 221, 221),
-                            width: 2.0),
-                        borderRadius: BorderRadius.circular(10),
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 8),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      border:
+                          Border.all(color: Colors.grey.shade300, width: 2.0),
+                    ),
+                    child: Expanded(
+                      child: TextField(
+                        decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: 'E-mail',
+                            hintStyle: TextStyle(
+                                fontFamily: 'Poppins',
+                                fontSize: 16,
+                                color: Color(0xff8d8d8d))),
                       ),
-                      hintText: 'E-mail',
                     ),
                   ),
                 ),
+                SizedBox(height: 20),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-                  child: TextField(
-                    decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(
-                            color: Color.fromARGB(255, 221, 221, 221),
-                            width: 2.0),
-                        borderRadius: BorderRadius.circular(10),
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 8),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      border:
+                          Border.all(color: Colors.grey.shade300, width: 2.0),
+                    ),
+                    child: Expanded(
+                      child: TextField(
+                        decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: 'Senha',
+                            hintStyle: TextStyle(
+                                fontFamily: 'Poppins',
+                                fontSize: 16,
+                                color: Color(0xff8d8d8d))),
                       ),
-                      hintText: 'Senha',
                     ),
                   ),
                 ),
@@ -70,18 +92,18 @@ class LoginPage extends StatelessWidget {
                     child: Align(
                         alignment: Alignment.centerRight,
                         child: Padding(
-                          padding:
-                              EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                          padding: EdgeInsets.symmetric(horizontal: 20),
                           child: Text(
                             "Esqueceu sua senha?",
                             style: TextStyle(
                               color: Color.fromRGBO(255, 97, 62, 1),
-                              fontSize: 14,
+                              fontSize: 16,
                               height: 4,
                             ),
                             textAlign: TextAlign.right,
                           ),
                         ))),
+                SizedBox(height: 20),
                 ElevatedButton(
                     onPressed: () => Navigator.pushNamed(context, '/homepage'),
                     style: ElevatedButton.styleFrom(
@@ -95,24 +117,26 @@ class LoginPage extends StatelessWidget {
                       'Entrar',
                       style: TextStyle(fontSize: 16),
                     )),
+                SizedBox(height: 30),
                 GestureDetector(
                     onTap: () => Navigator.pushNamed(context, '/registerpage'),
                     child: Align(
                         alignment: Alignment.center,
                         child: Padding(
-                          padding:
-                              EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                          padding: EdgeInsets.symmetric(horizontal: 10),
                           child: RichText(
                             text: TextSpan(
                               children: <TextSpan>[
                                 TextSpan(
-                                    text:
-                                        "Ainda não possui uma conta? Crie agora!",
+                                    text: "Ainda não possui uma conta? ",
                                     style: TextStyle(
-                                      color: Color.fromRGBO(255, 97, 62, 1),
-                                      fontSize: 14,
-                                      height: 4,
-                                    ))
+                                        color: Colors.black.withOpacity(0.5),
+                                        fontSize: 16)),
+                                TextSpan(
+                                    text: "Crie agora!",
+                                    style: TextStyle(
+                                        color: Color.fromRGBO(255, 97, 62, 1),
+                                        fontSize: 16))
                               ],
                             ),
                           ),

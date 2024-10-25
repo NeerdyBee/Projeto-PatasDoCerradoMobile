@@ -33,7 +33,6 @@ class ConfigPage extends StatelessWidget {
                   bottomRight: Radius.circular(50.0)),
               //
               //ICONES - BOTOES
-              child: MyNavBar(),
             )),
         //
         //IMAGEM - BEM VINDO E BOTÃO

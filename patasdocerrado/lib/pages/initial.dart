@@ -3,11 +3,10 @@ import 'dart:ui';
 
 class InitialPage extends StatelessWidget {
   const InitialPage({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+      backgroundColor: Colors.white,
       body: Stack(
         children: [
           SafeArea(
@@ -26,15 +25,15 @@ class InitialPage extends StatelessWidget {
                           height: 54,
                         ),
                       ),
-                      const Spacer(),
+                      Spacer(),
                       IconButton(
-                        icon: const Icon(Icons.notifications_outlined),
+                        icon: Icon(Icons.notifications_outlined),
                         onPressed: () {},
                       ),
                     ],
                   ),
                 ),
-                const Center(
+                Center(
                   child: Column(
                     children: [
                       Text(
@@ -61,7 +60,7 @@ class InitialPage extends StatelessWidget {
                     ],
                   ),
                 ),
-                const SizedBox(height: 16),
+                SizedBox(height: 16),
                 Expanded(
                   child: Stack(
                     children: [
@@ -117,7 +116,7 @@ class InitialPage extends StatelessWidget {
 class PetCard extends StatelessWidget {
   final String imageName;
 
-  const PetCard({super.key, required this.imageName});
+  const PetCard({required this.imageName});
 
   @override
   Widget build(BuildContext context) {
@@ -163,8 +162,6 @@ class PetCard extends StatelessWidget {
 }
 
 class CardDetails extends StatelessWidget {
-  const CardDetails({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -172,7 +169,7 @@ class CardDetails extends StatelessWidget {
       height: 96,
       decoration: BoxDecoration(
         color: Colors.white.withOpacity(0.75),
-        borderRadius: const BorderRadius.only(
+        borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(20),
           bottomRight: Radius.circular(20),
         ),
@@ -186,7 +183,7 @@ class CardDetails extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
+                Text(
                   'Bartho',
                   style: TextStyle(
                     fontFamily: 'Poppins',
@@ -203,7 +200,7 @@ class CardDetails extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10),
                     ),
                   ),
-                  child: const Text(
+                  child: Text(
                     'Me adote!',
                     style: TextStyle(
                       fontFamily: 'Poppins',
@@ -215,7 +212,7 @@ class CardDetails extends StatelessWidget {
                 ),
               ],
             ),
-            const Text(
+            Text(
               'Rialma, Goias',
               style: TextStyle(
                 fontFamily: 'Poppins',
@@ -225,7 +222,7 @@ class CardDetails extends StatelessWidget {
               ),
             ),
             SizedBox(height: 8),
-            const Row(
+            Row(
               children: [
                 InfoRow(icon: Icons.male, label: 'Macho'),
                 SizedBox(width: 16),
@@ -253,7 +250,7 @@ class InfoRow extends StatelessWidget {
         SizedBox(width: 4),
         Text(
           label,
-          style: const TextStyle(
+          style: TextStyle(
             fontFamily: 'Poppins',
             fontWeight: FontWeight.w500,
             fontSize: 11,
