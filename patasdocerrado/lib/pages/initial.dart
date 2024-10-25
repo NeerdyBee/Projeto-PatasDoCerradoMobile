@@ -40,19 +40,19 @@ class InitialPage extends StatelessWidget {
                         'Bem vindo!',
                         style: TextStyle(
                           fontFamily: 'Poppins',
-                          fontWeight: FontWeight.w500,
+                          fontWeight: FontWeight.w800,
                           fontSize: 16,
-                          color: Colors.black,
+                          color: Colors.black.withOpacity(0.5),
                         ),
                         textAlign: TextAlign.center,
                       ),
-                      SizedBox(height: 8),
+                      SizedBox(height: 6),
                       Text(
                         'Conheça seu novo melhor amigo!',
                         style: TextStyle(
                           fontFamily: 'Poppins',
-                          fontWeight: FontWeight.w700,
-                          fontSize: 14,
+                          fontWeight: FontWeight.w900,
+                          fontSize: 16,
                           color: Colors.black,
                         ),
                         textAlign: TextAlign.center,
@@ -213,7 +213,7 @@ class CardDetails extends StatelessWidget {
               ],
             ),
             Text(
-              'Rialma, Goias',
+              'Rialma, Goiás',
               style: TextStyle(
                 fontFamily: 'Poppins',
                 fontWeight: FontWeight.w500,
