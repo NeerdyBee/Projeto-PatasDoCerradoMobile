@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
-  bool _passwordVisible = false;
 //
 //INICIALIZAÇÃO
   @override
