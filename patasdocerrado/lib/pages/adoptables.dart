@@ -146,7 +146,7 @@ class AdoptablesPage extends StatelessWidget {
       isScrollControlled: true,
       backgroundColor: Colors.white,
       barrierColor: Color.fromARGB(255, 56, 56, 56)
-          .withOpacity(0.95), // COR DO FUNDO DO FILTRO P TELA DE TRAS
+          .withOpacity(1), // COR DO FUNDO DO FILTRO P TELA DE TRAS
       transitionAnimationController: AnimationController(
         // ANIMAÇÃO DE ENTRADA
         vsync: Navigator.of(context),
@@ -154,7 +154,7 @@ class AdoptablesPage extends StatelessWidget {
       ),
       builder: (context) {
         return FractionallySizedBox(
-          heightFactor: 0.92, //ALTURA DO FILTRO
+          heightFactor: 0.95, //ALTURA DO FILTRO
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
@@ -168,7 +168,7 @@ class AdoptablesPage extends StatelessWidget {
                 SizedBox(height: 16),
                 _buildFilterOptions('Espécie', ['Cão', 'Gato']),
                 SizedBox(height: 16),
-                _buildFilterOptions('Sexo', ['Macho', 'Femea']),
+                _buildFilterOptions('Sexo', ['Macho', 'Fêmea']),
                 SizedBox(height: 16),
                 _buildFilterOptions('Porte', ['Pequeno', 'Médio', 'Grande']),
                 SizedBox(height: 40),
@@ -187,10 +187,10 @@ class AdoptablesPage extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
-          'Preferencias de busca',
+          'Preferências de busca',
           style: TextStyle(
             fontFamily: 'Poppins',
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.w900,
             fontSize: 15,
             color: Color(0xffFF623E),
           ),
@@ -261,7 +261,8 @@ class AdoptablesPage extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 8),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
-            border: Border.all(color: Colors.grey.shade300),
+            border: Border.all(
+                color: Colors.grey.shade300, width: 1.5), // BOTAO DE CIMA
           ),
           child: Row(
             children: [
@@ -319,6 +320,9 @@ class AdoptablesPage extends StatelessWidget {
             return Padding(
               padding: const EdgeInsets.only(right: 8.0),
               child: ChoiceChip(
+                // É OS BOTÃO
+                side: BorderSide(
+                    color: Color.fromARGB(221, 221, 221, 221), width: 1.5),
                 label: Text(
                   option,
                   style: TextStyle(
