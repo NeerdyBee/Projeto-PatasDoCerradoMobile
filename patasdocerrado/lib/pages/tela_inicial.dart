@@ -46,8 +46,9 @@ class InitialPage extends StatelessWidget {
                         text:
                             'Vários pets estão esperando\n            por um novo lar.',
                         style: TextStyle(
-                          color: const Color.fromARGB(255, 17, 17, 17)
-                              .withOpacity(1),
+                          fontSize: 16,
+                          fontWeight: FontWeight.w900,
+                          color: Colors.black.withOpacity(0.5),
                         ),
                       ),
                     ],

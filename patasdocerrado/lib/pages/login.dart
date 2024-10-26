@@ -27,14 +27,14 @@ class LoginPage extends StatelessWidget {
                           text: 'Que bom te ver por aqui!\n',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            fontSize: 20,
+                            fontSize: 18,
                           )),
                       TextSpan(
-                          text: 'Econtre seu novo amigo',
+                          text: 'Encontre seu novo amigo',
                           style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w900,
                               color: Colors.black.withOpacity(0.5),
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
                               height: 2)),
                     ],
                   ),
@@ -85,6 +85,7 @@ class LoginPage extends StatelessWidget {
                     ),
                   ),
                 ),
+                SizedBox(height: 8),
                 GestureDetector(
                     onTap: () =>
                         Navigator.pushNamed(context, '/recoverpswdpage'),
@@ -97,7 +98,6 @@ class LoginPage extends StatelessWidget {
                             style: TextStyle(
                               color: Color.fromRGBO(255, 97, 62, 1),
                               fontSize: 16,
-                              height: 4,
                             ),
                             textAlign: TextAlign.right,
                           ),

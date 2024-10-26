@@ -207,10 +207,9 @@ class AdoptablesPage extends StatelessWidget {
                 color: Color(0xff7e8a8c),
               ),
             ),
-            Icon(
-              Icons.arrow_drop_down,
-              color: Color(0xff7e8a8c),
-            ),
+            SizedBox(width: 15),
+            Icon(Icons.arrow_back_ios_rounded, color: Color(0xffFF623E)),
+            SizedBox(width: 15),
           ],
         ),
       ],

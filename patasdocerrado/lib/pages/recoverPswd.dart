@@ -10,11 +10,20 @@ class RecoverPswdPage extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         home: Scaffold(
             backgroundColor: Colors.white,
+            appBar: AppBar(
+              leading: IconButton(
+                  icon: Icon(Icons.arrow_back_ios_rounded, color: Colors.black),
+                  onPressed: () => Navigator.of(context).pop()),
+              backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+              elevation: 0,
+            ),
             body: Column(
               children: [
-                Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 8, vertical: 40),
-                    child: Image(image: AssetImage('logo.png'), height: 125)),
+                SizedBox(height: 20),
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[Image.asset('logo.png', height: 130)]),
+                SizedBox(height: 40),
                 RichText(
                   textAlign: TextAlign.center,
                   text: TextSpan(
@@ -29,26 +38,36 @@ class RecoverPswdPage extends StatelessWidget {
                           text:
                               'Vamos ajuda-lo nisso! Primeiro, digite seu\n  e-mail cadastrado ao criar a sua conta.',
                           style: TextStyle(
-                              color: Colors.black.withOpacity(0.5),
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold)),
+                              fontSize: 16,
+                              fontWeight: FontWeight.w900,
+                              color: Colors.black.withOpacity(0.5))),
                     ],
                   ),
                 ),
+                SizedBox(height: 40),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 67, vertical: 30),
-                  child: TextField(
-                    decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(
-                            color: Color.fromARGB(255, 221, 221, 221),
-                            width: 2.0),
-                        borderRadius: BorderRadius.circular(10),
+                  padding: EdgeInsets.symmetric(horizontal: 67),
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 8),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      border:
+                          Border.all(color: Colors.grey.shade300, width: 2.0),
+                    ),
+                    child: Expanded(
+                      child: TextField(
+                        decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: 'E-mail',
+                            hintStyle: TextStyle(
+                                fontFamily: 'Poppins',
+                                fontSize: 16,
+                                color: Color(0xff8d8d8d))),
                       ),
-                      hintText: 'E-mail',
                     ),
                   ),
                 ),
+                SizedBox(height: 40),
                 ElevatedButton(
                     onPressed: () =>
                         Navigator.pushNamed(context, '/recoverpswdcodepage'),
