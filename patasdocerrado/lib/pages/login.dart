@@ -108,7 +108,7 @@ class LoginPage extends StatelessWidget {
                     style: ElevatedButton.styleFrom(
                         backgroundColor: Color.fromRGBO(255, 97, 62, 1),
                         foregroundColor: Color.fromRGBO(255, 255, 255, 1),
-                        minimumSize: Size(445, 55),
+                        minimumSize: Size(380, 55),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
                         )),
@@ -118,7 +118,7 @@ class LoginPage extends StatelessWidget {
                     )),
                 SizedBox(height: 30),
                 GestureDetector(
-                    onTap: () => Navigator.pushNamed(context, '/registerpage'),
+                    onTap: () => Navigator.pushNamed(context, '/homepage'),
                     child: Align(
                         alignment: Alignment.center,
                         child: Padding(
