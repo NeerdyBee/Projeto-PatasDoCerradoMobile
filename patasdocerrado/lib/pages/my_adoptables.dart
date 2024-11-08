@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:patasdocerrado/components/my_petcard.dart';
 
-class MyFavoritesPage extends StatelessWidget {
-  const MyFavoritesPage({super.key});
+class MyAdoptablesPage extends StatelessWidget {
+  const MyAdoptablesPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -81,11 +81,11 @@ class MyFavoritesPage extends StatelessWidget {
   Widget _buildPetList() {
     return ListView.builder(
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-      itemCount: 6,
+      itemCount: 1,
       itemBuilder: (context, index) {
         return Padding(
           padding: const EdgeInsets.only(bottom: 20),
-          child: PetCard(imageName: 'dog0${index + 1}.jpg'),
+          child: PetCard(imageName: 'dog04.jpg'),
         );
       },
     );

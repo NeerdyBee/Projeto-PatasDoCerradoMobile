@@ -17,7 +17,9 @@ class LoginPage extends StatelessWidget {
                 SizedBox(height: 60),
                 Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[Image.asset('logo.png', height: 130)]),
+                    children: <Widget>[
+                      Image.asset('assets/logo.png', height: 130)
+                    ]),
                 SizedBox(height: 60),
                 RichText(
                   textAlign: TextAlign.center,

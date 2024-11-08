@@ -18,7 +18,7 @@ class InitialPage extends StatelessWidget {
                 Padding(
                     padding: EdgeInsets.symmetric(horizontal: 8, vertical: 100),
                     child: Image(
-                        image: AssetImage('../assets/logo.png'), height: 125)),
+                        image: AssetImage('assets/logo.png'), height: 125)),
                 //
                 //TEXTOS
                 RichText(

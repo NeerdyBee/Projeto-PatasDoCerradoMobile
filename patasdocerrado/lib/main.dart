@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:patasdocerrado/pages/home.dart';
+import 'package:patasdocerrado/pages/my_adoptables.dart';
 import 'package:patasdocerrado/pages/petprofile.dart';
 import 'package:patasdocerrado/pages/tela_inicial.dart';
 import 'package:patasdocerrado/pages/login.dart';
@@ -8,6 +9,7 @@ import 'package:patasdocerrado/pages/recoverPswd.dart';
 import 'package:patasdocerrado/pages/recoverPswdCode.dart';
 import 'package:patasdocerrado/pages/recoverPswdNew.dart';
 import 'package:patasdocerrado/pages/editprofile.dart';
+import 'package:patasdocerrado/pages/my_favorites.dart';
 
 void main() async {
   runApp(const MainApp());
@@ -20,7 +22,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const PetProfilePage(),
+      home: const MyFavoritesPage(),
       routes: {
         '/initialpage': (context) => const InitialPage(),
         '/login': (context) => const LoginPage(),
@@ -31,6 +33,8 @@ class MainApp extends StatelessWidget {
         '/recoverpswdnewpage': (context) => const RecoverPswdNewPage(),
         '/editprofile': (context) => const EditProfilePage(),
         '/petprofile': (context) => const PetProfilePage(),
+        '/my_favorites': (context) => const MyFavoritesPage(),
+        '/my_adoptables': (context) => const MyAdoptablesPage(),
       },
     );
   }
