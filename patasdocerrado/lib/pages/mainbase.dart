@@ -67,7 +67,7 @@ class MainApp extends StatelessWidget {
             body: Center(
                 child: Column(
               children: [
-                const Image(image: AssetImage('logo.png'), height: 200),
+                const Image(image: AssetImage('assets/logo.png'), height: 200),
                 RichText(
                   text: const TextSpan(
                     children: <TextSpan>[

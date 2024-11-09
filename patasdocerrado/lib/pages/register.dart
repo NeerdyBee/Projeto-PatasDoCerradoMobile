@@ -100,6 +100,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   style: TextStyle(
                     fontSize: 16,
                     height: 2,
+                    color: Color(0xffFF623E),
                   ),
                 ),
               ),
@@ -114,6 +115,8 @@ class _RegisterPageState extends State<RegisterPage> {
                           style: TextStyle(
                             fontSize: 16,
                             height: 2,
+                            fontWeight: FontWeight.w500,
+                            color: Color(0xff193238),
                           ),
                         ),
                       ))),
@@ -148,6 +151,8 @@ class _RegisterPageState extends State<RegisterPage> {
                           style: TextStyle(
                             fontSize: 16,
                             height: 2,
+                            fontWeight: FontWeight.w500,
+                            color: Color(0xff193238),
                           ),
                         ),
                       ))),
@@ -182,6 +187,8 @@ class _RegisterPageState extends State<RegisterPage> {
                           style: TextStyle(
                             fontSize: 16,
                             height: 2,
+                            fontWeight: FontWeight.w500,
+                            color: Color(0xff193238),
                           ),
                         ),
                       ))),
@@ -216,6 +223,8 @@ class _RegisterPageState extends State<RegisterPage> {
                           style: TextStyle(
                             fontSize: 16,
                             height: 2,
+                            fontWeight: FontWeight.w500,
+                            color: Color(0xff193238),
                           ),
                         ),
                       ))),
@@ -250,6 +259,8 @@ class _RegisterPageState extends State<RegisterPage> {
                           style: TextStyle(
                             fontSize: 16,
                             height: 2,
+                            fontWeight: FontWeight.w500,
+                            color: Color(0xff193238),
                           ),
                         ),
                       ))),
@@ -284,6 +295,8 @@ class _RegisterPageState extends State<RegisterPage> {
                           style: TextStyle(
                             fontSize: 16,
                             height: 2,
+                            fontWeight: FontWeight.w500,
+                            color: Color(0xff193238),
                           ),
                         ),
                       ))),
@@ -332,6 +345,8 @@ class _RegisterPageState extends State<RegisterPage> {
                           style: TextStyle(
                             fontSize: 16,
                             height: 2,
+                            fontWeight: FontWeight.w500,
+                            color: Color(0xff193238),
                           ),
                         ),
                       ))),

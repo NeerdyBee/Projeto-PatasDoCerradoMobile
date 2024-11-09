@@ -22,7 +22,9 @@ class RecoverPswdPage extends StatelessWidget {
                 SizedBox(height: 20),
                 Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[Image.asset('logo.png', height: 130)]),
+                    children: <Widget>[
+                      Image.asset('assets/logo.png', height: 130)
+                    ]),
                 SizedBox(height: 40),
                 RichText(
                   textAlign: TextAlign.center,

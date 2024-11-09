@@ -7,7 +7,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       title: Image.asset(
-        'logo.png',
+        'assets/logo.png',
         height: 50, // Ajuste a altura conforme necessário
       ),
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),

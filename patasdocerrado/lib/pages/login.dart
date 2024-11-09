@@ -120,7 +120,7 @@ class LoginPage extends StatelessWidget {
                     )),
                 SizedBox(height: 30),
                 GestureDetector(
-                    onTap: () => Navigator.pushNamed(context, '/homepage'),
+                    onTap: () => Navigator.pushNamed(context, '/registerpage'),
                     child: Align(
                         alignment: Alignment.center,
                         child: Padding(

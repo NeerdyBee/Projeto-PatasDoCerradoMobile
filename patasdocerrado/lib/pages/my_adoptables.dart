@@ -21,7 +21,7 @@ class MyAdoptablesPage extends StatelessWidget {
                       Align(
                         alignment: Alignment.centerLeft,
                         child: Image.asset(
-                          'logo.png',
+                          'assets/logo.png',
                           width: 93,
                           height: 54,
                         ),
@@ -85,7 +85,7 @@ class MyAdoptablesPage extends StatelessWidget {
       itemBuilder: (context, index) {
         return Padding(
           padding: const EdgeInsets.only(bottom: 20),
-          child: PetCard(imageName: 'dog04.jpg'),
+          child: PetCard(imageName: 'assets/dog04.jpg'),
         );
       },
     );
