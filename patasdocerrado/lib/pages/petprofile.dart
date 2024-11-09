@@ -100,9 +100,9 @@ class _DogImageComponentState extends State<DogImageComponent>
           ),
         ),
 
-        // CAIXA ANIMADA DE INFORMAÇÕES SOBRE O CÃO E O BOTÃO DE ADOÇÃO
+        // CAIXA ANIMADA
         AnimatedPositioned(
-          duration: Duration(milliseconds: 300),
+          duration: Duration(milliseconds: 600),
           curve: Curves.easeInOut, // CURVA SUAVE PARA A ANIMAÇÃO
           bottom:
               _isBoxVisible ? 0 : -570, // A CAIXA FICA VISÍVEL OU DESAPARECE
@@ -110,7 +110,7 @@ class _DogImageComponentState extends State<DogImageComponent>
           right: 0,
           child: AnimatedContainer(
             duration: Duration(milliseconds: 300),
-            height: 570, // ALTURA DA CAIXA
+            height: 568, // ALTURA DA CAIXA
             decoration: BoxDecoration(
               color: Color.fromARGB(255, 255, 255, 255),
               borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
@@ -130,7 +130,7 @@ class _DogImageComponentState extends State<DogImageComponent>
                           text: 'Gostou do Bartho?', // PERGUNTA SOBRE O CÃO
                           style: TextStyle(
                             fontFamily: 'Poppins',
-                            fontWeight: FontWeight.w700,
+                            fontWeight: FontWeight.w800,
                             fontSize: 20,
                             color: Color(0xFFFF5239),
                           ),
@@ -150,15 +150,15 @@ class _DogImageComponentState extends State<DogImageComponent>
                       ),
                     ],
                   ),
-                  SizedBox(height: 10),
+                  SizedBox(height: 4),
                   // TEXTO INFORMATIVO SOBRE ADOÇÃO
                   Text(
                     'Para adotar esse pet ou saber mais sobre ele, entre em contato com o protetor;',
                     style: TextStyle(
-                      fontFamily: 'Rialma',
+                      fontFamily: 'Poppins',
                       fontWeight: FontWeight.w500,
                       fontSize: 15,
-                      color: Color(0x8A808080),
+                      color: Color(0xFF7E8A8C),
                     ),
                   ),
                   SizedBox(height: 40),
@@ -185,14 +185,14 @@ class _DogImageComponentState extends State<DogImageComponent>
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              SizedBox(height: 6),
+                              SizedBox(height: 7),
                               Text(
                                 'Jessica Martins', // NOME DO DONO
                                 style: TextStyle(
                                   fontFamily: 'Poppins',
                                   fontWeight: FontWeight.w600,
                                   fontSize: 15,
-                                  color: Color(0xFFFF5239),
+                                  color: Color(0xFFFF623E),
                                 ),
                               ),
                               SizedBox(height: 2),
@@ -205,14 +205,14 @@ class _DogImageComponentState extends State<DogImageComponent>
                                   color: Color(0x8A808080),
                                 ),
                               ),
-                              SizedBox(height: 35),
+                              SizedBox(height: 32),
                               // TELEFONE DO DONO
                               Row(
                                 children: [
                                   Icon(
                                     Icons.chat,
                                     color: Color(0xFFFF5239),
-                                    size: 20,
+                                    size: 30,
                                   ),
                                   SizedBox(width: 5),
                                   Text(
@@ -221,7 +221,7 @@ class _DogImageComponentState extends State<DogImageComponent>
                                       fontFamily: 'Poppins',
                                       fontWeight: FontWeight.w500,
                                       fontSize: 16,
-                                      color: Colors.black,
+                                      color: Color.fromARGB(199, 16, 16, 32),
                                     ),
                                   ),
                                 ],
@@ -233,7 +233,7 @@ class _DogImageComponentState extends State<DogImageComponent>
                                   Icon(
                                     Icons.email,
                                     color: Color(0xFFFF5239),
-                                    size: 20,
+                                    size: 30,
                                   ),
                                   SizedBox(width: 5),
                                   Text(
@@ -241,8 +241,9 @@ class _DogImageComponentState extends State<DogImageComponent>
                                     style: TextStyle(
                                       fontFamily: 'Poppins',
                                       fontWeight: FontWeight.w500,
-                                      fontSize: 15,
-                                      color: Colors.black,
+                                      fontSize: 16,
+                                      color:
+                                          const Color.fromARGB(199, 16, 16, 32),
                                     ),
                                   ),
                                 ],
@@ -251,6 +252,32 @@ class _DogImageComponentState extends State<DogImageComponent>
                           ),
                         ],
                       ),
+                    ),
+                  ),
+                  SizedBox(height: 50),
+                  // TEXTINHO
+                  Center(
+                    child: Text(
+                      'Adote com responsabilidade',
+                      style: TextStyle(
+                        fontFamily: 'Poppins',
+                        fontWeight: FontWeight.w500,
+                        fontSize: 15,
+                        color: Color(0xFFFF5239),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 5),
+                  // TEXTINHO LONGO
+                  Text(
+                    '"Adote com responsabilidade, pois um gesto de amor pode mudar duas vidas para sempre."',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontFamily: 'Poppins',
+                      fontWeight: FontWeight.w500,
+                      fontSize: 13,
+                      height: 1.8,
+                      color: Color(0xFF7e8a8c),
                     ),
                   ),
                 ],
@@ -275,31 +302,31 @@ class DogAdoptionComponent extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(height: 20),
+          SizedBox(height: 6),
           // NOME DO CÃO
           RichText(
             text: TextSpan(
               text: 'Bartho', // NOME DO CÃO
               style: TextStyle(
                 fontFamily: 'Poppins',
-                fontWeight: FontWeight.w700,
+                fontWeight: FontWeight.w800,
                 fontSize: 20,
-                color: Color(0xFFFF5239),
+                color: Color(0xFFFF623E),
               ),
             ),
           ),
-          SizedBox(height: 5),
+          SizedBox(height: 1.5),
           // LOCALIZAÇÃO DO CÃO
           Text(
             'Rialma, Goias', // LOCALIZAÇÃO
             style: TextStyle(
               fontFamily: 'Poppins',
-              fontWeight: FontWeight.w400,
-              fontSize: 14,
-              color: Color(0x8A808080),
+              fontWeight: FontWeight.w500,
+              fontSize: 13,
+              color: Color.fromARGB(255, 166, 166, 166),
             ),
           ),
-          SizedBox(height: 20),
+          SizedBox(height: 28),
           // INFORMAÇÕES PRINCIPAIS DO CÃO
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -311,20 +338,20 @@ class DogAdoptionComponent extends StatelessWidget {
               InfoCard(title: 'Porte', info: 'Médio'),
             ],
           ),
-          SizedBox(height: 20),
+          SizedBox(height: 28),
           // BOTÃO PARA CONHECER A HISTÓRIA DO CÃO
           Text(
             'Conheça minha história',
             style: TextStyle(
               fontFamily: 'Poppins',
               fontWeight: FontWeight.w500,
-              fontSize: 14,
-              color: Color(0xFFFF5239),
+              fontSize: 15,
+              color: Color(0xFFFF623E),
             ),
           ),
-          SizedBox(height: 10),
+          SizedBox(height: 2),
           DogDetailsComponent(),
-          SizedBox(height: 20),
+          SizedBox(height: 15),
           OwnerCard(name: 'Jessica Martins', location: 'Rialma, Goias'),
           SizedBox(height: 20),
           Center(
@@ -353,7 +380,7 @@ class DogAdoptionComponent extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: 10),
+          SizedBox(height: 6),
           Center(
             child: Text(
               'Ver informações para adoção',
@@ -376,11 +403,11 @@ class InfoCard extends StatelessWidget {
   final String info;
 
   InfoCard({required this.title, required this.info});
-
+  //CARDIZINHOS
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 13, horizontal: 20),
+      padding: EdgeInsets.symmetric(vertical: 15, horizontal: 22),
       decoration: BoxDecoration(
         color: Color(0x0FFFFF5ED),
         borderRadius: BorderRadius.circular(15),
@@ -393,9 +420,9 @@ class InfoCard extends StatelessWidget {
               text: title,
               style: TextStyle(
                 fontFamily: 'Poppins',
-                fontWeight: FontWeight.w700,
-                fontSize: 12,
-                color: Color(0xFFFF5239),
+                fontWeight: FontWeight.w300,
+                fontSize: 15,
+                color: Color(0xFFFF623E),
               ),
             ),
           ),
@@ -427,7 +454,7 @@ class OwnerCard extends StatelessWidget {
       padding: EdgeInsets.all(10),
       decoration: BoxDecoration(
         color: Color(0x0FFFFF5ED),
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(15),
       ),
       child: Row(
         children: [
@@ -476,10 +503,10 @@ class DogDetailsComponent extends StatelessWidget {
         'Bartho é um adorável vira-lata que passou seus primeiros anos vivendo nas ruas. Ele é um verdadeiro sobrevivente, sempre com um brilho nos olhos e uma esperança no coração. Um dia, enquanto vagava em busca de comida, Bartho foi resgatado por uma equipe de voluntários que se apaixonaram instantaneamente por sua energia contagiante e seu espírito amigável.',
         style: TextStyle(
           fontFamily: 'Poppins',
-          fontWeight: FontWeight.w400,
-          fontSize: 11,
-          height: 24 / 11,
-          color: Color(0xFF7e8a8c),
+          fontWeight: FontWeight.w100,
+          fontSize: 14,
+          height: 1.8,
+          color: Color(0xFF7E8A8C),
         ),
       ),
     );
