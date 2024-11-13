@@ -8,10 +8,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false, // DESABILITA O BANNER DE DEBUG
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
-        body:
-            DogImageComponent(), // COMPONENTE PRINCIPAL COM IMAGEM E INFORMAÇÕES DO CÃO
+        body: DogImageComponent(),
       ),
     );
   }
@@ -24,35 +23,39 @@ class DogImageComponent extends StatefulWidget {
 
 class _DogImageComponentState extends State<DogImageComponent>
     with TickerProviderStateMixin {
-  late AnimationController _controller; // CONTROLADOR DA ANIMAÇÃO
-  bool _isBoxVisible =
-      false; // FLAG PARA CONTROLAR A VISIBILIDADE DA CAIXA ANIMADA
+  late AnimationController _controller;
+  bool _isBoxVisible = false;
+  bool _isFavorite = false; // State to control heart icon state
 
   @override
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: Duration(milliseconds: 300), // DURAÇÃO DA ANIMAÇÃO
+      duration: Duration(milliseconds: 300),
       vsync: this,
     );
   }
 
   @override
   void dispose() {
-    _controller
-        .dispose(); // DESCARTAR O CONTROLADOR QUANDO NÃO FOR MAIS NECESSÁRIO
+    _controller.dispose();
     super.dispose();
   }
 
-  // FUNÇÃO PARA TOGLAR A VISIBILIDADE DA CAIXA ANIMADA
   void _toggleBox() {
     setState(() {
       if (_isBoxVisible) {
-        _controller.reverse(); // FAZ A CAIXA DESCER
+        _controller.reverse();
       } else {
-        _controller.forward(); // FAZ A CAIXA SUBIR
+        _controller.forward();
       }
-      _isBoxVisible = !_isBoxVisible; // TOGGLE DO ESTADO DA CAIXA
+      _isBoxVisible = !_isBoxVisible;
+    });
+  }
+
+  void _toggleFavorite() {
+    setState(() {
+      _isFavorite = !_isFavorite;
     });
   }
 
@@ -60,7 +63,6 @@ class _DogImageComponentState extends State<DogImageComponent>
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        // IMAGEM DE FUNDO DO CÃO
         Positioned(
           top: 0,
           left: 0,
@@ -72,21 +74,18 @@ class _DogImageComponentState extends State<DogImageComponent>
             fit: BoxFit.cover, // GARANTE QUE A IMAGEM FIQUE BEM AJUSTADA
           ),
         ),
-
-        // ÍCONE DE SAÍDA (VOLTAR PARA A TELA ANTERIOR)
         Positioned(
           top: 20,
           right: 20,
           child: IconButton(
             icon: Icon(Icons.arrow_back_ios, color: Colors.white),
             onPressed: () {
-              Navigator.of(context).pop(); // VAI VOLTAR PARA A TELA ANTERIOR
+              Navigator.of(context).pop();
             },
           ),
         ),
-
-        // CONTAINER PRINCIPAL COM O COMPONENTE DE ADOÇÃO DO CÃO
         Align(
+          // BOX PRINCIPAL BRANCO
           alignment: Alignment.bottomCenter,
           child: Container(
             width: double.infinity,
@@ -95,8 +94,27 @@ class _DogImageComponentState extends State<DogImageComponent>
               color: Colors.white,
               borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
             ),
-            child: DogAdoptionComponent(
-                onAdoptClicked: _toggleBox), // CHAMA O COMPONENTE DE ADOÇÃO
+
+            // BOTÃO FAVORITO
+            child: Stack(
+              children: [
+                Positioned(
+                  top: 25,
+                  right: 25,
+                  child: GestureDetector(
+                    onTap: _toggleFavorite,
+                    child: Container(
+                      child: Icon(
+                        _isFavorite ? Icons.favorite : Icons.favorite_border,
+                        color: _isFavorite ? Colors.red : Colors.grey,
+                        size: 32.0, // Tamanho do ícone
+                      ),
+                    ),
+                  ),
+                ),
+                DogAdoptionComponent(onAdoptClicked: _toggleBox),
+              ],
+            ),
           ),
         ),
 
@@ -115,6 +133,7 @@ class _DogImageComponentState extends State<DogImageComponent>
               color: Color.fromARGB(255, 255, 255, 255),
               borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
             ),
+
             child: Padding(
               padding: const EdgeInsets.all(20.0),
               child: Column(
@@ -196,6 +215,7 @@ class _DogImageComponentState extends State<DogImageComponent>
                                 ),
                               ),
                               SizedBox(height: 2),
+
                               Text(
                                 'Rialma, Goias', // LOCALIZAÇÃO DO DONO
                                 style: TextStyle(
@@ -298,10 +318,8 @@ class DogAdoptionComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(20.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+        padding: const EdgeInsets.all(20.0),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           SizedBox(height: 6),
           // NOME DO CÃO
           RichText(
@@ -317,15 +335,23 @@ class DogAdoptionComponent extends StatelessWidget {
           ),
           SizedBox(height: 1.5),
           // LOCALIZAÇÃO DO CÃO
-          Text(
-            'Rialma, Goias', // LOCALIZAÇÃO
-            style: TextStyle(
-              fontFamily: 'Poppins',
-              fontWeight: FontWeight.w500,
-              fontSize: 13,
-              color: Color.fromARGB(255, 166, 166, 166),
+          Row(children: [
+            Icon(
+              Icons.location_on_outlined, // Ícone de localização vazado
+              color: Color.fromARGB(255, 204, 204, 204), // Cor do ícone
+              size: 14, // Tamanho do ícone, o mesmo do texto
             ),
-          ),
+            SizedBox(width: 0),
+            Text(
+              'Rialma, Goias', // LOCALIZAÇÃO
+              style: TextStyle(
+                fontFamily: 'Poppins',
+                fontWeight: FontWeight.w500,
+                fontSize: 13,
+                color: Color.fromARGB(255, 166, 166, 166),
+              ),
+            ),
+          ]),
           SizedBox(height: 28),
           // INFORMAÇÕES PRINCIPAIS DO CÃO
           Row(
@@ -391,10 +417,8 @@ class DogAdoptionComponent extends StatelessWidget {
                 color: Color(0x8A808080),
               ),
             ),
-          ),
-        ],
-      ),
-    );
+          )
+        ]));
   }
 }
 
@@ -407,7 +431,7 @@ class InfoCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 15, horizontal: 22),
+      padding: EdgeInsets.symmetric(vertical: 13, horizontal: 22),
       decoration: BoxDecoration(
         color: Color(0x0FFFFF5ED),
         borderRadius: BorderRadius.circular(15),
@@ -420,7 +444,7 @@ class InfoCard extends StatelessWidget {
               text: title,
               style: TextStyle(
                 fontFamily: 'Poppins',
-                fontWeight: FontWeight.w300,
+                fontWeight: FontWeight.w500,
                 fontSize: 15,
                 color: Color(0xFFFF623E),
               ),
