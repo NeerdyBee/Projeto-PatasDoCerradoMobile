@@ -107,7 +107,7 @@ class _DogImageComponentState extends State<DogImageComponent>
                       child: Icon(
                         _isFavorite ? Icons.favorite : Icons.favorite_border,
                         color: _isFavorite ? Colors.red : Colors.grey,
-                        size: 32.0, // Tamanho do ícone
+                        size: 30.0, // Tamanho do ícone
                       ),
                     ),
                   ),
