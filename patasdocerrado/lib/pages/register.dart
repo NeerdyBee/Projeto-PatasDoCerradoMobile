@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -12,6 +13,11 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
   bool _passwordVisible = false;
   bool _confirmPasswordVisible = false;
+  final controllerUsername = TextEditingController();
+  final controllerPassword = TextEditingController();
+  final controllerTelefone = TextEditingController();
+  final controllerEmail = TextEditingController();
+  final controllerCpf = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +29,7 @@ class _RegisterPageState extends State<RegisterPage> {
           color: Colors.transparent,
           elevation: 0,
           child: ElevatedButton(
-            onPressed: () => Navigator.pushNamed(context, '/login'),
+            onPressed: () => doUserRegistration(),
             style: ElevatedButton.styleFrom(
               backgroundColor: Color.fromRGBO(255, 97, 62, 1),
               foregroundColor: Color.fromRGBO(255, 255, 255, 1),
@@ -130,6 +136,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                   child: Expanded(
                     child: TextField(
+                      controller: controllerUsername,
                       decoration: InputDecoration(
                           border: InputBorder.none,
                           hintText: 'Digite seu nome de usuário',
@@ -183,42 +190,6 @@ class _RegisterPageState extends State<RegisterPage> {
                       alignment: Alignment.centerLeft,
                       child: RichText(
                         text: TextSpan(
-                          text: 'CPF',
-                          style: TextStyle(
-                            fontSize: 16,
-                            height: 2,
-                            fontWeight: FontWeight.w500,
-                            color: Color(0xff193238),
-                          ),
-                        ),
-                      ))),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-                child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 8),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(color: Colors.grey.shade300, width: 2.0),
-                  ),
-                  child: Expanded(
-                    child: TextField(
-                      decoration: InputDecoration(
-                          border: InputBorder.none,
-                          hintText: 'Digite seu CPF',
-                          hintStyle: TextStyle(
-                              fontFamily: 'Poppins',
-                              fontSize: 16,
-                              color: Color(0xff8d8d8d))),
-                    ),
-                  ),
-                ),
-              ),
-              Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-                  child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: RichText(
-                        text: TextSpan(
                           text: 'E-mail',
                           style: TextStyle(
                             fontSize: 16,
@@ -238,9 +209,47 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                   child: Expanded(
                     child: TextField(
+                      controller: controllerEmail,
                       decoration: InputDecoration(
                           border: InputBorder.none,
                           hintText: 'Digite seu e-mail',
+                          hintStyle: TextStyle(
+                              fontFamily: 'Poppins',
+                              fontSize: 16,
+                              color: Color(0xff8d8d8d))),
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                  child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: RichText(
+                        text: TextSpan(
+                          text: 'CPF',
+                          style: TextStyle(
+                            fontSize: 16,
+                            height: 2,
+                            fontWeight: FontWeight.w500,
+                            color: Color(0xff193238),
+                          ),
+                        ),
+                      ))),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 8),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(color: Colors.grey.shade300, width: 2.0),
+                  ),
+                  child: Expanded(
+                    child: TextField(
+                      controller: controllerCpf,
+                      decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'Digite seu CPF',
                           hintStyle: TextStyle(
                               fontFamily: 'Poppins',
                               fontSize: 16,
@@ -274,6 +283,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                   child: Expanded(
                     child: TextField(
+                      controller: controllerTelefone,
                       decoration: InputDecoration(
                           border: InputBorder.none,
                           hintText: 'Digite seu telefone',
@@ -310,6 +320,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                   child: Expanded(
                     child: TextField(
+                      controller: controllerPassword,
                       obscureText: !_passwordVisible,
                       decoration: InputDecoration(
                           suffixIcon: IconButton(
@@ -391,5 +402,67 @@ class _RegisterPageState extends State<RegisterPage> {
         ),
       ),
     );
+  }
+
+  void showSuccess() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Arrasou!"),
+          content: const Text("Seu usuário foi criado com sucesso!"),
+          actions: <Widget>[
+            ElevatedButton(
+              child: const Text("OK"),
+              onPressed: () {
+                Navigator.pushNamed(context, '/login');
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void showError(String errorMessage) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text("Erro!"),
+            content: Text(errorMessage),
+            actions: <Widget>[
+              ElevatedButton(
+                child: const Text("OK"),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        });
+  }
+
+  void doUserRegistration() async {
+    final username = controllerUsername.text.trim();
+    final email = controllerEmail.text.trim();
+    final password = controllerPassword.text.trim();
+    final cpf = controllerCpf.text.trim();
+    final telefone = controllerTelefone.text.trim();
+
+    final user = ParseObject("_User")
+      ..set("username", username)
+      ..set("email", email)
+      ..set("password", password)
+      ..set("cpf", cpf)
+      ..set("telefone", telefone);
+
+    final ParseResponse response = await user.save();
+
+    if (response.success) {
+      showSuccess();
+    } else {
+      showError(response.error!.message);
+    }
   }
 }

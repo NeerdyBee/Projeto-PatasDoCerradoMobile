@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:patasdocerrado/pages/my_adoptables.dart';
-import 'package:patasdocerrado/pages/my_favorites.dart';
 
 class PetCard extends StatefulWidget {
   final String imageName;
@@ -99,28 +97,24 @@ class _PetCardState extends State<PetCard> {
                     ),
                     Align(
                       alignment: Alignment.center,
-                      child: Column(
-                        children: [
-                          ElevatedButton(
-                            onPressed: () {},
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Color(0xFFFF623E),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              minimumSize: Size(140, 42),
-                            ),
-                            child: Text(
-                              'Me adote!',
-                              style: TextStyle(
-                                fontFamily: 'Poppins',
-                                fontWeight: FontWeight.w500,
-                                fontSize: 11,
-                                color: Colors.white,
-                              ),
-                            ),
+                      child: ElevatedButton(
+                        onPressed: () {},
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Color(0xFFFF623E),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
                           ),
-                        ],
+                          minimumSize: Size(140, 42),
+                        ),
+                        child: Text(
+                          'Me adote!',
+                          style: TextStyle(
+                            fontFamily: 'Poppins',
+                            fontWeight: FontWeight.w500,
+                            fontSize: 11,
+                            color: Colors.white,
+                          ),
+                        ),
                       ),
                     ),
                   ],
@@ -135,16 +129,9 @@ class _PetCardState extends State<PetCard> {
         right: 32,
         child: IconButton(
           icon: Icon(
-              context == MyAdoptablesPage
-                  ? isFavorite && context != MyFavoritesPage
-                      ? Icons.favorite
-                      : Icons.favorite_border
-                  : Icons.delete_outline_rounded,
-              color: context == MyAdoptablesPage
-                  ? isFavorite && context == MyFavoritesPage
-                      ? Colors.red
-                      : Colors.grey
-                  : Colors.grey),
+            isFavorite ? Icons.favorite : Icons.favorite_border,
+            color: isFavorite ? Colors.red : Colors.grey,
+          ),
           onPressed: _toggleFavorite,
         ),
       ),
