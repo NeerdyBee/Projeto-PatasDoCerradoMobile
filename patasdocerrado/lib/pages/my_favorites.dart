@@ -68,6 +68,8 @@ class MyFavoritesPage extends StatelessWidget {
                 Expanded(
                   child: Stack(children: [
                     _buildPetList(),
+                    // Fade overlays
+                    _buildFadeOverlay(top: true),
                   ]),
                 ),
               ],
@@ -88,6 +90,30 @@ class MyFavoritesPage extends StatelessWidget {
           child: PetCard(imageName: 'assets/dog0${index + 1}.jpg'),
         );
       },
+    );
+  }
+
+  Widget _buildFadeOverlay({required bool top}) {
+    return Positioned(
+      top: top ? 0 : null,
+      bottom: top ? null : 0,
+      left: 0,
+      right: 0,
+      child: IgnorePointer(
+        child: Container(
+          height: 15.0,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: top ? Alignment.topCenter : Alignment.bottomCenter,
+              end: top ? Alignment.bottomCenter : Alignment.topCenter,
+              colors: [
+                Colors.white,
+                Colors.white.withOpacity(0.0),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
