@@ -5,8 +5,6 @@ import 'package:patasdocerrado/pages/tela_inicial.dart';
 import 'package:patasdocerrado/pages/login.dart';
 import 'package:patasdocerrado/pages/register.dart';
 import 'package:patasdocerrado/pages/recoverPswd.dart';
-import 'package:patasdocerrado/pages/recoverPswdCode.dart';
-import 'package:patasdocerrado/pages/recoverPswdNew.dart';
 import 'package:patasdocerrado/pages/editprofile.dart';
 import 'package:patasdocerrado/pages/my_favorites.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
@@ -35,8 +33,6 @@ class MainApp extends StatelessWidget {
         '/registerpage': (context) => const RegisterPage(),
         '/homepage': (context) => const HomePage(),
         '/recoverpswdpage': (context) => const RecoverPswdPage(),
-        '/recoverpswdcodepage': (context) => const RecoverPswdCodePage(),
-        '/recoverpswdnewpage': (context) => const RecoverPswdNewPage(),
         '/editprofile': (context) => const EditProfilePage(),
         '/my_favorites': (context) => const MyFavoritesPage(),
         '/my_adoptables': (context) => const MyAdoptablesPage(),

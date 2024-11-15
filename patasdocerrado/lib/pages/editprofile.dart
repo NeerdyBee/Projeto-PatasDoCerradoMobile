@@ -102,6 +102,8 @@ class _EditProfilePage extends State<EditProfilePage> {
                           style: TextStyle(
                             fontSize: 16,
                             height: 2,
+                            fontWeight: FontWeight.w500,
+                            color: Color(0xff193238),
                           ),
                         ),
                       ))),
@@ -129,6 +131,8 @@ class _EditProfilePage extends State<EditProfilePage> {
                           style: TextStyle(
                             fontSize: 16,
                             height: 2,
+                            fontWeight: FontWeight.w500,
+                            color: Color(0xff193238),
                           ),
                         ),
                       ))),
@@ -152,37 +156,12 @@ class _EditProfilePage extends State<EditProfilePage> {
                       alignment: Alignment.centerLeft,
                       child: RichText(
                         text: TextSpan(
-                          text: 'CPF',
-                          style: TextStyle(
-                            fontSize: 16,
-                            height: 2,
-                          ),
-                        ),
-                      ))),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-                child: TextField(
-                  decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                          color: Color.fromARGB(255, 221, 221, 221),
-                          width: 2.0),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    hintText: '123.456.789-22',
-                  ),
-                ),
-              ),
-              Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-                  child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: RichText(
-                        text: TextSpan(
                           text: 'E-mail',
                           style: TextStyle(
                             fontSize: 16,
                             height: 2,
+                            fontWeight: FontWeight.w500,
+                            color: Color(0xff193238),
                           ),
                         ),
                       ))),
@@ -206,10 +185,41 @@ class _EditProfilePage extends State<EditProfilePage> {
                       alignment: Alignment.centerLeft,
                       child: RichText(
                         text: TextSpan(
+                          text: 'CPF',
+                          style: TextStyle(
+                            fontSize: 16,
+                            height: 2,
+                            fontWeight: FontWeight.w500,
+                            color: Color(0xff193238),
+                          ),
+                        ),
+                      ))),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                child: TextField(
+                  decoration: InputDecoration(
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                          color: Color.fromARGB(255, 221, 221, 221),
+                          width: 2.0),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    hintText: '123.456.789-22',
+                  ),
+                ),
+              ),
+              Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                  child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: RichText(
+                        text: TextSpan(
                           text: 'Telefone',
                           style: TextStyle(
                             fontSize: 16,
                             height: 2,
+                            fontWeight: FontWeight.w500,
+                            color: Color(0xff193238),
                           ),
                         ),
                       ))),

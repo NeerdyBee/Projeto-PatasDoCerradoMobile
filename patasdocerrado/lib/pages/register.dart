@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:flutter/material.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 
@@ -15,6 +13,7 @@ class _RegisterPageState extends State<RegisterPage> {
   bool _confirmPasswordVisible = false;
   final controllerUsername = TextEditingController();
   final controllerPassword = TextEditingController();
+  final controllerPasswordConfirm = TextEditingController();
   final controllerTelefone = TextEditingController();
   final controllerEmail = TextEditingController();
   final controllerCpf = TextEditingController();
@@ -371,6 +370,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                   child: Expanded(
                     child: TextField(
+                      controller: controllerPasswordConfirm,
                       obscureText: !_confirmPasswordVisible,
                       decoration: InputDecoration(
                           suffixIcon: IconButton(
@@ -406,6 +406,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   void showSuccess() {
     showDialog(
+      barrierDismissible: false,
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
@@ -426,6 +427,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   void showError(String errorMessage) {
     showDialog(
+        barrierDismissible: false,
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
@@ -447,8 +449,24 @@ class _RegisterPageState extends State<RegisterPage> {
     final username = controllerUsername.text.trim();
     final email = controllerEmail.text.trim();
     final password = controllerPassword.text.trim();
+    final passwordConfirm = controllerPasswordConfirm.text.trim();
     final cpf = controllerCpf.text.trim();
     final telefone = controllerTelefone.text.trim();
+
+    if (username.isEmpty ||
+        password.isEmpty ||
+        email.isEmpty ||
+        passwordConfirm.isEmpty ||
+        cpf.isEmpty ||
+        telefone.isEmpty) {
+      showError("Tenha certeza de preencher todos os campos!");
+      return;
+    }
+
+    if (password != passwordConfirm) {
+      showError("Tenha certeza de confirmar sua senha corretamente!");
+      return;
+    }
 
     final user = ParseObject("_User")
       ..set("username", username)

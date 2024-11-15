@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:patasdocerrado/components/my_navbar.dart';
 import 'package:patasdocerrado/pages/initial.dart';
 import 'package:patasdocerrado/pages/adoptables.dart';
-import 'package:patasdocerrado/pages/profile.dart';
+import 'package:patasdocerrado/pages/userprofile.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -16,7 +16,7 @@ class _HomePageState extends State<HomePage> {
   final List _pages = [
     const InitialPage(),
     const AdoptablesPage(),
-    const ProfilePage()
+    UserProfilePage()
   ];
 
   void _selectPage(int index) {

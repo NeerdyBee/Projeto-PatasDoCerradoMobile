@@ -158,6 +158,7 @@ class _LoginPageState extends State<LoginPage> {
 
   void showError(String errorMessage) {
     showDialog(
+        barrierDismissible: false,
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
@@ -178,6 +179,11 @@ class _LoginPageState extends State<LoginPage> {
   void doUserLogin() async {
     final username = controllerUsername.text.trim();
     final password = controllerPassword.text.trim();
+
+    if (username.isEmpty || password.isEmpty) {
+      showError("Tenha certeza de preencher todos os campos!");
+      return;
+    }
     final user = ParseUser(username, password, null);
     var response = await user.login();
     if (response.success) {

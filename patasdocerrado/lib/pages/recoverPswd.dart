@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 
-class RecoverPswdPage extends StatelessWidget {
+class RecoverPswdPage extends StatefulWidget {
   const RecoverPswdPage({super.key});
-//
-//INICIALIZAÇÃO
+
+  @override
+  _RecoverPswdState createState() => _RecoverPswdState();
+}
+
+class _RecoverPswdState extends State<RecoverPswdPage> {
+  final controllerEmail = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -38,7 +45,7 @@ class RecoverPswdPage extends StatelessWidget {
                               height: 4)),
                       TextSpan(
                           text:
-                              'Vamos ajuda-lo nisso! Primeiro, digite seu\n  e-mail cadastrado ao criar a sua conta.',
+                              'Vamos ajuda-lo nisso! Digite o e-mail de\nsua conta para enviarmos as instruções.',
                           style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w900,
@@ -58,6 +65,7 @@ class RecoverPswdPage extends StatelessWidget {
                     ),
                     child: Expanded(
                       child: TextField(
+                        controller: controllerEmail,
                         decoration: InputDecoration(
                             border: InputBorder.none,
                             hintText: 'E-mail',
@@ -71,8 +79,7 @@ class RecoverPswdPage extends StatelessWidget {
                 ),
                 SizedBox(height: 40),
                 ElevatedButton(
-                    onPressed: () =>
-                        Navigator.pushNamed(context, '/recoverpswdcodepage'),
+                    onPressed: () => doUserResetPassword(),
                     style: ElevatedButton.styleFrom(
                         backgroundColor: Color.fromRGBO(255, 97, 62, 1),
                         foregroundColor: Color.fromRGBO(255, 255, 255, 1),
@@ -81,10 +88,67 @@ class RecoverPswdPage extends StatelessWidget {
                           borderRadius: BorderRadius.circular(10),
                         )),
                     child: Text(
-                      'Próximo passo',
+                      'Confirmar',
                       style: TextStyle(fontSize: 16),
                     )),
               ],
             )));
+  }
+
+  void showSuccess(String message) {
+    final content = message;
+    showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Arrasou!"),
+          content: Text(content),
+          actions: <Widget>[
+            ElevatedButton(
+              child: const Text("OK"),
+              onPressed: () {
+                Navigator.pushNamed(context, '/login');
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void showError(String errorMessage) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text("Erro!"),
+            content: Text(errorMessage),
+            actions: <Widget>[
+              ElevatedButton(
+                child: const Text("OK"),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        });
+  }
+
+  void doUserResetPassword() async {
+    final email = controllerEmail.text.trim();
+    if (email.isEmpty) {
+      showError("É necessário inserir um e-mail!");
+      return;
+    }
+    final ParseUser user = ParseUser(null, null, email);
+    final ParseResponse parseResponse = await user.requestPasswordReset();
+    if (parseResponse.success) {
+      showSuccess(
+          "As intruções para resetar sua senha foram enviadas em seu e-mail!");
+    } else {
+      showError(parseResponse.error!.message);
+    }
   }
 }
