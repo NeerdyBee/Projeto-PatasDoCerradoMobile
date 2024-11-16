@@ -93,7 +93,7 @@ class MyAdoptablesPage extends StatelessWidget {
   Widget _buildPetList() {
     return ListView.builder(
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-      itemCount: 20, // Ajuste o itemCount conforme necessário
+      itemCount: 1, // Ajuste o itemCount conforme necessário
       itemBuilder: (context, index) {
         return Padding(
           padding: const EdgeInsets.only(bottom: 20),
