@@ -32,7 +32,7 @@ class MyFavoritesPage extends StatelessWidget {
                           Icons.arrow_back_ios,
                           color: Color(0xFFFF623E),
                         ),
-                        onPressed: () {},
+                        onPressed: () => Navigator.of(context).pop(),
                       ),
                     ],
                   ),

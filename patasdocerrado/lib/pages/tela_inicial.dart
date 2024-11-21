@@ -15,12 +15,13 @@ class InitialPage extends StatelessWidget {
             body: Center(
                 child: Column(
               children: [
-                Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 8, vertical: 100),
-                    child: Image(
-                        image: AssetImage('assets/logo.png'), height: 125)),
-                //
-                //TEXTOS
+                SizedBox(height: 100),
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Image.asset('assets/logo.png', height: 130)
+                    ]),
+                SizedBox(height: 60),
                 RichText(
                   text: const TextSpan(
                     children: <TextSpan>[

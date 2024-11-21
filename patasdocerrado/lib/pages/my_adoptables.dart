@@ -30,12 +30,11 @@ class MyAdoptablesPage extends StatelessWidget {
                           ),
                           Spacer(),
                           IconButton(
-                            icon: Icon(
-                              Icons.arrow_back_ios,
-                              color: Color(0xFFFF623E),
-                            ),
-                            onPressed: () {},
-                          ),
+                              icon: Icon(
+                                Icons.arrow_back_ios,
+                                color: Color(0xFFFF623E),
+                              ),
+                              onPressed: () => Navigator.of(context).pop()),
                         ],
                       ),
                     ),
