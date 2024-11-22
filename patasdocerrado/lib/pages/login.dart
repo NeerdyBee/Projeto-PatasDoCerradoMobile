@@ -43,11 +43,11 @@ class _LoginPageState extends State<LoginPage> {
                             fontSize: 18,
                           )),
                       TextSpan(
-                          text: 'Encontre seu novo amigo',
+                          text: 'Encontre seu novo amigo!',
                           style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w900,
-                              color: Colors.black.withOpacity(0.5),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                              color: Color.fromRGBO(22, 24, 35, 1),
                               height: 2)),
                     ],
                   ),
@@ -68,7 +68,7 @@ class _LoginPageState extends State<LoginPage> {
                         controller: controllerUsername,
                         decoration: InputDecoration(
                             border: InputBorder.none,
-                            hintText: 'E-mail',
+                            hintText: 'Usuário',
                             hintStyle: TextStyle(
                                 fontFamily: 'Poppins',
                                 fontSize: 16,

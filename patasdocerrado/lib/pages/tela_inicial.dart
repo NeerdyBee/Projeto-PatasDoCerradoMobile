@@ -21,7 +21,7 @@ class InitialPage extends StatelessWidget {
                     children: <Widget>[
                       Image.asset('assets/logo.png', height: 130)
                     ]),
-                SizedBox(height: 60),
+                SizedBox(height: 120),
                 RichText(
                   text: const TextSpan(
                     children: <TextSpan>[
@@ -46,7 +46,7 @@ class InitialPage extends StatelessWidget {
                     children: <TextSpan>[
                       TextSpan(
                         text:
-                            'Vários pets estão esperando\n            por um novo lar.',
+                            'Vários amigos estão esperando\n            por um novo lar.',
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w900,
@@ -58,28 +58,22 @@ class InitialPage extends StatelessWidget {
                 ),
                 //
                 //ESPAÇO
-                const SizedBox(height: 50),
+                const SizedBox(height: 70),
                 //
                 //BOTÃO
                 ElevatedButton(
-                  onPressed: () => Navigator.pushNamed(context, '/login'),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor:
-                        const Color.fromARGB(255, 238, 77, 33), // Cor do botão
-                    minimumSize: const Size(
-                        367, 49), // Define a largura (200) e altura (50)
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(
-                          10), // Arredondamento de 10 nas bordas
-                    ),
-                  ),
-                  child: const Text(
-                    'Vamos Começar',
-                    style: TextStyle(
-                      color: Colors.white, // Cor do texto
-                    ),
-                  ),
-                ),
+                    onPressed: () => Navigator.pushNamed(context, '/login'),
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: Color.fromRGBO(255, 97, 62, 1),
+                        foregroundColor: Color.fromRGBO(255, 255, 255, 1),
+                        minimumSize: Size(380, 55),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        )),
+                    child: Text(
+                      'Vamos começar!',
+                      style: TextStyle(fontSize: 16),
+                    )),
                 //
                 //
               ],
