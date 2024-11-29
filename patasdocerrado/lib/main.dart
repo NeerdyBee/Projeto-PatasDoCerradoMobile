@@ -8,9 +8,14 @@ import 'package:patasdocerrado/pages/recoverPswd.dart';
 import 'package:patasdocerrado/pages/editprofile.dart';
 import 'package:patasdocerrado/pages/my_favorites.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
+import 'package:flutter/services.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
   const keyApplicationId = 'BS70Hl8xgdpi1EQGC3BqWKOZBoAwSqH2erMgpg6z';
   const keyClientKey = '9MJ87n7THIRB5ueD60MR4nsG2JYJ6og5USoMFnM8';
   const keyParseServerUrl = 'https://parseapi.back4app.com';
@@ -38,5 +43,20 @@ class MainApp extends StatelessWidget {
         '/my_adoptables': (context) => const MyAdoptablesPage(),
       },
     );
+  }
+
+  Future<bool> hasUserLogged() async {
+    ParseUser? currentUser = await ParseUser.currentUser() as ParseUser?;
+    if (currentUser == null) {
+      return false;
+    }
+    final ParseResponse? parseResponse =
+        await ParseUser.getCurrentUserFromServer(currentUser.sessionToken!);
+    if (parseResponse?.success == null || !parseResponse!.success) {
+      await currentUser.logout();
+      return false;
+    } else {
+      return true;
+    }
   }
 }

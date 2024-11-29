@@ -468,6 +468,12 @@ class _RegisterPageState extends State<RegisterPage> {
       return;
     }
 
+    if (password.length <= 3) {
+      showError(
+          "Senha muito curta. Insira uma senha com mais de 3 caractéres.");
+      return;
+    }
+
     final user = ParseObject("_User")
       ..set("username", username)
       ..set("email", email)
