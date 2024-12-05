@@ -6,21 +6,30 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false, // Remover o banner de DEBUG
       home: Scaffold(
-        backgroundColor: Colors.white, // Tela de fundo branca
+        backgroundColor: Colors.white,
         appBar: AppBar(
+          toolbarHeight: 70,
           title: Text(
             'Cadastre um novo pet',
-            style: TextStyle(color: Colors.orange),
+            style: TextStyle(
+              color: const Color.fromARGB(255, 255, 98, 62),
+              fontSize: 18, // Diminui o tamanho da fonte
+              fontWeight: FontWeight.bold, // Deixa a fonte mais grossa
+            ),
           ),
           backgroundColor: Colors.white,
           elevation: 0,
           actions: [
-            IconButton(
-              icon: Icon(Icons.exit_to_app, color: Colors.orange),
-              onPressed: () {
-                // Adicionar ação de saída se necessário
-              },
+            Padding(
+              padding: const EdgeInsets.only(
+                  left: 10.0), // Ajusta a posição do ícone
+              child: IconButton(
+                icon: Icon(Icons.arrow_back_ios_new,
+                    color: const Color.fromARGB(255, 255, 98, 62)),
+                onPressed: () {},
+              ),
             ),
           ],
         ),
@@ -31,24 +40,44 @@ class MyApp extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 _buildTitle('Nome do Pet'),
-                PetNameInput(),
-                SizedBox(height: 16),
+                SizedBox(height: 10),
+                // LARGURA: Ajustado para 250 pixels
+                Container(
+                  width: 350, // Largura ajustada
+                  child: PetNameInput(),
+                ),
+                SizedBox(height: 20),
                 _buildTitle('Cidades do Goiás'),
-                CitySelection(),
-                SizedBox(height: 16),
+                SizedBox(height: 10),
+                // LARGURA: Ajustado para 250 pixels
+                Container(
+                  width: 350, // Largura ajustada
+                  child: CitySelection(),
+                ),
+                SizedBox(height: 20),
                 _buildTitle('Idade'),
-                AgeInput(),
-                SizedBox(height: 16),
+                SizedBox(height: 10),
+                // LARGURA: Ajustado para 250 pixels
+                Container(
+                  width: 350, // Largura ajustada
+                  child: AgeInput(),
+                ),
+                SizedBox(height: 20),
                 _buildTitle('Espécie'),
+                SizedBox(height: 10),
                 SpeciesSelection(),
-                SizedBox(height: 16),
+                SizedBox(height: 20),
                 _buildTitle('Sexo'),
+                SizedBox(height: 10),
                 GenderSelection(),
-                SizedBox(height: 16),
+                SizedBox(height: 20),
                 _buildTitle('Porte'),
+                SizedBox(height: 10),
                 SizeSelection(),
-                SizedBox(height: 32),
-                SubmitButton(onPressed: () {}),
+                SizedBox(height: 50),
+                SubmitButton(onPressed: () {
+                  print('Cadastro concluído!');
+                }),
               ],
             ),
           ),
@@ -61,7 +90,7 @@ class MyApp extends StatelessWidget {
     return Text(
       title,
       style: TextStyle(
-        fontSize: 16, // Diminui o tamanho da fonte
+        fontSize: 16,
         fontWeight: FontWeight.bold,
         color: Colors.grey[800],
       ),
@@ -69,16 +98,19 @@ class MyApp extends StatelessWidget {
   }
 }
 
-// Campo de nome do pet
 class PetNameInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextField(
       decoration: InputDecoration(
-        labelText: 'Nome do Pet',
-        labelStyle: TextStyle(color: const Color.fromARGB(255, 255, 255, 255)),
+        hintText: 'Digite o nome',
+        hintStyle: TextStyle(color: Colors.grey), // Cor cinza
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(
+            color: Colors.grey, // Cor cinza
+            width: 2, // Largura da borda
+          ),
         ),
         contentPadding: EdgeInsets.symmetric(horizontal: 16.0),
       ),
@@ -86,7 +118,6 @@ class PetNameInput extends StatelessWidget {
   }
 }
 
-// Campo de seleção de cidade
 class CitySelection extends StatefulWidget {
   @override
   _CitySelectionState createState() => _CitySelectionState();
@@ -107,9 +138,15 @@ class _CitySelectionState extends State<CitySelection> {
     return DropdownButtonFormField<String>(
       value: _selectedCity,
       decoration: InputDecoration(
-        labelText: 'Escolha a cidade',
+        hintText: 'Escolha a cidade',
+        hintStyle: TextStyle(
+            color: const Color.fromARGB(255, 255, 98, 62)), // Cor laranja
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(
+            color: Colors.grey, // Cor cinza
+            width: 2, // Largura da borda
+          ),
         ),
       ),
       items: _cities.map((String city) {
@@ -127,158 +164,158 @@ class _CitySelectionState extends State<CitySelection> {
   }
 }
 
-// Campo de idade
-class AgeInput extends StatelessWidget {
+class AgeInput extends StatefulWidget {
+  @override
+  _AgeInputState createState() => _AgeInputState();
+}
+
+class _AgeInputState extends State<AgeInput> {
+  String _selectedAgeType = 'Anos';
+
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         Expanded(
-          child: TextField(
-            decoration: InputDecoration(
-              hintText: 'Digite a idade',
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
+          child: Container(
+            width: 250, // Largura ajustada para o campo de Idade
+            child: TextField(
+              decoration: InputDecoration(
+                hintText: 'Digite a idade',
+                hintStyle: TextStyle(color: Colors.grey), // Cor cinza
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: BorderSide(
+                    color:
+                        const Color.fromARGB(255, 196, 196, 196), // Cor cinza
+                    width: 2, // Largura da borda
+                  ),
+                ),
               ),
             ),
           ),
         ),
         SizedBox(width: 8),
-        ElevatedButton(
-          onPressed: () {},
-          style: ElevatedButton.styleFrom(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
-            backgroundColor: Color(0xFFFF623E),
-            padding: EdgeInsets.symmetric(
-                horizontal: 16, vertical: 8), // Cor laranja
-          ),
-          child: Text('Anos'),
-        ),
+        _buildAgeButton('Anos'),
         SizedBox(width: 8),
-        ElevatedButton(
-          onPressed: () {},
-          style: ElevatedButton.styleFrom(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
-            backgroundColor: Color(0xFFFF623E),
-            padding: EdgeInsets.symmetric(
-                horizontal: 16, vertical: 8), // Cor laranja
-          ),
-          child: Text('Meses'),
-        ),
+        _buildAgeButton('Meses'),
       ],
+    );
+  }
+
+  Widget _buildAgeButton(String label) {
+    return ElevatedButton(
+      onPressed: () {
+        setState(() {
+          _selectedAgeType = label;
+        });
+      },
+      style: ElevatedButton.styleFrom(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        backgroundColor:
+            _selectedAgeType == label ? Color(0xFFFF623E) : Colors.white,
+        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+      ),
+      child: Text(
+        label,
+        style: TextStyle(
+          color: _selectedAgeType == label ? Colors.white : Colors.black,
+        ),
+      ),
     );
   }
 }
 
-// Seleção de espécie
 class SpeciesSelection extends StatefulWidget {
   @override
   _SpeciesSelectionState createState() => _SpeciesSelectionState();
 }
 
 class _SpeciesSelectionState extends State<SpeciesSelection> {
-  bool isDogSelected = true;
+  String _selectedSpecies = 'Cão';
 
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.start, // Alinhamento à esquerda
       children: <Widget>[
-        _buildSpeciesButton('Cão', isDogSelected),
+        _buildSpeciesButton('Cão'),
         SizedBox(width: 10),
-        _buildSpeciesButton('Gato', !isDogSelected),
+        _buildSpeciesButton('Gato'),
       ],
     );
   }
 
-  Widget _buildSpeciesButton(String text, bool isSelected) {
-    return GestureDetector(
-      onTap: () {
+  Widget _buildSpeciesButton(String species) {
+    return ElevatedButton(
+      onPressed: () {
         setState(() {
-          isDogSelected = text == 'Cão';
+          _selectedSpecies = species;
         });
       },
-      child: Container(
-        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-        decoration: BoxDecoration(
-          color: isSelected
-              ? Color(0xFFFF623E)
-              : Colors.white, // Alterado para branco quando não selecionado
+      style: ElevatedButton.styleFrom(
+        shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
-          border: Border.all(
-            color: Colors.black, // Adiciona uma borda preta
-            width: 1,
-          ),
         ),
-        child: Text(
-          text,
-          style: TextStyle(
-            color: isSelected ? Colors.white : Colors.black, // Cor do texto
-            fontWeight: FontWeight.bold,
-          ),
+        backgroundColor:
+            _selectedSpecies == species ? Color(0xFFFF623E) : Colors.white,
+        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+      ),
+      child: Text(
+        species,
+        style: TextStyle(
+          color: _selectedSpecies == species ? Colors.white : Colors.black,
         ),
       ),
     );
   }
 }
 
-// Seleção de sexo
 class GenderSelection extends StatefulWidget {
   @override
   _GenderSelectionState createState() => _GenderSelectionState();
 }
 
 class _GenderSelectionState extends State<GenderSelection> {
-  bool isMaleSelected = true;
+  String _selectedGender = 'Macho';
 
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.start, // Alinhamento à esquerda
       children: <Widget>[
-        _buildGenderButton('Macho', isMaleSelected),
+        _buildGenderButton('Macho'),
         SizedBox(width: 10),
-        _buildGenderButton('Fêmea', !isMaleSelected),
+        _buildGenderButton('Fêmea'),
       ],
     );
   }
 
-  Widget _buildGenderButton(String text, bool isSelected) {
-    return GestureDetector(
-      onTap: () {
+  Widget _buildGenderButton(String gender) {
+    return ElevatedButton(
+      onPressed: () {
         setState(() {
-          isMaleSelected = text == 'Macho';
+          _selectedGender = gender;
         });
       },
-      child: Container(
-        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-        decoration: BoxDecoration(
-          color: isSelected
-              ? Color(0xFFFF623E)
-              : Colors.white, // Alterado para branco quando não selecionado
+      style: ElevatedButton.styleFrom(
+        shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
-          border: Border.all(
-            color: Colors.black, // Adiciona uma borda preta
-            width: 1,
-          ),
         ),
-        child: Text(
-          text,
-          style: TextStyle(
-            color: isSelected ? Colors.white : Colors.black, // Cor do texto
-            fontWeight: FontWeight.bold,
-          ),
+        backgroundColor:
+            _selectedGender == gender ? Color(0xFFFF623E) : Colors.white,
+        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+      ),
+      child: Text(
+        gender,
+        style: TextStyle(
+          color: _selectedGender == gender ? Colors.white : Colors.black,
         ),
       ),
     );
   }
 }
 
-// Seleção de porte
 class SizeSelection extends StatefulWidget {
   @override
   _SizeSelectionState createState() => _SizeSelectionState();
@@ -290,7 +327,6 @@ class _SizeSelectionState extends State<SizeSelection> {
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.start, // Alinhamento à esquerda
       children: <Widget>[
         _buildSizeButton('Pequeno'),
         SizedBox(width: 10),
@@ -302,24 +338,30 @@ class _SizeSelectionState extends State<SizeSelection> {
   }
 
   Widget _buildSizeButton(String size) {
-    return ChoiceChip(
-      label: Text(size),
-      selected: _selectedSize == size,
-      onSelected: (selected) {
+    return ElevatedButton(
+      onPressed: () {
         setState(() {
           _selectedSize = size;
         });
       },
-      selectedColor: Color(0xFFFF623E), // Cor laranja
-      backgroundColor: Colors.white,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
+      style: ElevatedButton.styleFrom(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        backgroundColor:
+            _selectedSize == size ? Color(0xFFFF623E) : Colors.white,
+        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+      ),
+      child: Text(
+        size,
+        style: TextStyle(
+          color: _selectedSize == size ? Colors.white : Colors.black,
+        ),
       ),
     );
   }
 }
 
-// Botão de cadastro
 class SubmitButton extends StatelessWidget {
   final VoidCallback onPressed;
 
@@ -331,17 +373,15 @@ class SubmitButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          backgroundColor: Color(0xFFFF623E), // Cor laranja
+          backgroundColor: Color(0xFFFF623E),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
           ),
-          padding: EdgeInsets.symmetric(
-              horizontal: 156, vertical: 20), // Aumentar o tamanho do botão
+          padding: EdgeInsets.symmetric(horizontal: 169, vertical: 20),
         ),
         child: Text(
-          'Concluir Cadastro',
-          style: TextStyle(
-              color: Colors.white, fontSize: 18), // Ajustar tamanho da fonte
+          'Próximo passo',
+          style: TextStyle(color: Colors.white, fontSize: 18),
         ),
       ),
     );
