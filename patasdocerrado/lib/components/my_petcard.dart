@@ -1,10 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 
 class PetCard extends StatefulWidget {
-  final String imageName;
+  final ParseObject? pet;
+  late ParseObject? p;
+  late ParseObject? cidade;
+  late ParseObject? genero;
+  void queryCidade(ParseObject? pet) async {
+    QueryBuilder<ParseObject> cidadeQuery =
+        QueryBuilder<ParseObject>(ParseObject('Cidade'))
+          ..whereRelatedTo('animal_cidade', 'Animal', pet!.objectId!);
+    ParseResponse cidadeResponse = await cidadeQuery.query();
+    cidade = cidadeResponse.results?.first as ParseObject;
+  }
 
-  const PetCard({required this.imageName});
+  void queryGenero(ParseObject? pet) async {
+    QueryBuilder<ParseObject> generoQuery =
+        QueryBuilder<ParseObject>(ParseObject('Genero'))
+          ..whereRelatedTo('animal_genero', 'Animal', pet!.objectId!);
+    ParseResponse generoResponse = await generoQuery.query();
+    genero = generoResponse.results?.first as ParseObject;
+  }
 
+  PetCard({super.key, required this.pet}) {
+    p = pet;
+    cidade;
+    genero;
+    queryCidade(pet);
+    queryGenero(pet);
+  }
   @override
   _PetCardState createState() => _PetCardState();
 }
@@ -46,7 +70,7 @@ class _PetCardState extends State<PetCard> {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(20)),
                     image: DecorationImage(
-                      image: AssetImage(widget.imageName),
+                      image: AssetImage("assets/dog01.jpg"),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -65,7 +89,7 @@ class _PetCardState extends State<PetCard> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Bartho',
+                          widget.pet?.get('nome'),
                           style: TextStyle(
                             fontFamily: 'Poppins',
                             fontWeight: FontWeight.w700,
@@ -75,7 +99,7 @@ class _PetCardState extends State<PetCard> {
                           textAlign: TextAlign.right,
                         ),
                         Text(
-                          'Rialma, Goias',
+                          '${widget.cidade?.get('nome')}, Goias',
                           style: TextStyle(
                             fontFamily: 'Poppins',
                             fontWeight: FontWeight.w500,
@@ -88,7 +112,9 @@ class _PetCardState extends State<PetCard> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            InfoRow(icon: Icons.male, label: 'Macho'),
+                            InfoRow(
+                                icon: Icons.male,
+                                label: '${widget.cidade?.get('nome')}'),
                             SizedBox(width: 16),
                             InfoRow(icon: Icons.access_time, label: '2 Anos'),
                           ],

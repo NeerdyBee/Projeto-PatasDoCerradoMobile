@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:patasdocerrado/pages/home.dart';
 import 'package:patasdocerrado/pages/my_adoptables.dart';
-import 'package:patasdocerrado/pages/tela_inicial.dart';
+import 'package:patasdocerrado/pages/intro.dart';
 import 'package:patasdocerrado/pages/login.dart';
 import 'package:patasdocerrado/pages/register.dart';
 import 'package:patasdocerrado/pages/recoverPswd.dart';
@@ -31,9 +31,9 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const InitialPage(),
+      home: const IntroPage(),
       routes: {
-        '/initialpage': (context) => const InitialPage(),
+        '/intropage': (context) => const IntroPage(),
         '/login': (context) => const LoginPage(),
         '/registerpage': (context) => const RegisterPage(),
         '/homepage': (context) => const HomePage(),

@@ -1,10 +1,47 @@
 import 'package:flutter/material.dart';
+import 'package:patasdocerrado/components/my_petsupercard.dart';
 import 'dart:ui';
+import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 
-class InitialPage extends StatelessWidget {
+class InitialPage extends StatefulWidget {
   const InitialPage({super.key});
   @override
+  _InitialPageState createState() => _InitialPageState();
+}
+
+class _InitialPageState extends State<InitialPage> {
+  List<ParseObject> results = <ParseObject>[];
+
+  void doQueryMatches() async {
+    // Create inner Book query
+    final QueryBuilder<ParseObject> statusQuery =
+        QueryBuilder<ParseObject>(ParseObject('StatusAdocao'))
+          ..whereEqualTo('nome', 'Para adoção');
+
+    final ParseResponse statusResponse = await statusQuery.query();
+    if (!statusResponse.success) {
+      return;
+    }
+    final status = statusResponse.results?.first as ParseObject;
+
+    final QueryBuilder<ParseObject> petQuery =
+        QueryBuilder<ParseObject>(ParseObject('Animal'))
+          ..orderByDescending('createdAt');
+    final ParseResponse queryResponse = await petQuery.query();
+    if (!queryResponse.success) {
+      setState(() {
+        results.clear();
+      });
+    } else if (mounted) {
+      setState(() {
+        results = queryResponse.results as List<ParseObject>;
+      });
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
+    doQueryMatches();
     return Scaffold(
       backgroundColor: Colors.white,
       body: Stack(
@@ -67,12 +104,12 @@ class InitialPage extends StatelessWidget {
                       ListView.builder(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 16.0, vertical: 8.0),
-                        itemCount: 6,
+                        itemCount: results.length,
                         itemBuilder: (context, index) {
+                          final o = results[index];
                           return Padding(
                             padding: const EdgeInsets.only(bottom: 20),
-                            child: PetCard(
-                                imageName: 'assets/dog0${index + 1}.jpg'),
+                            child: PetSuperCard(pet: o),
                           );
                         },
                       ),
@@ -109,54 +146,6 @@ class InitialPage extends StatelessWidget {
             ),
           ),
         ),
-      ),
-    );
-  }
-}
-
-class PetCard extends StatelessWidget {
-  final String imageName;
-
-  const PetCard({required this.imageName});
-
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      alignment: Alignment.bottomCenter,
-      children: [
-        Container(
-          width: 322,
-          height: 368,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            image: DecorationImage(
-              image: AssetImage(imageName),
-              fit: BoxFit.cover,
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.1),
-                blurRadius: 5,
-                spreadRadius: 2,
-                offset: Offset(0, 5),
-              ),
-            ],
-          ),
-        ),
-        Positioned(
-          bottom: 0,
-          child: _buildBlurEffect(),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildBlurEffect() {
-    return ClipRRect(
-      borderRadius: BorderRadius.vertical(bottom: Radius.circular(20)),
-      child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
-        child: CardDetails(),
       ),
     );
   }

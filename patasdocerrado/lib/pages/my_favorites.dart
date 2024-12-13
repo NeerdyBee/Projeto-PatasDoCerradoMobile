@@ -1,8 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 import 'package:patasdocerrado/components/my_petcard.dart';
 
-class MyFavoritesPage extends StatelessWidget {
+class MyFavoritesPage extends StatefulWidget {
   const MyFavoritesPage({super.key});
+  @override
+  _MyFavoritesPageState createState() => _MyFavoritesPageState();
+}
+
+class _MyFavoritesPageState extends State<MyFavoritesPage> {
+  List<ParseObject> results = <ParseObject>[];
+
+  void doQueryMatches() async {
+    // Create inner Book query
+    final QueryBuilder<ParseObject> petQuery =
+        QueryBuilder<ParseObject>(ParseObject('Animal'))
+          ..orderByDescending('createdAt');
+
+    final ParseResponse petResponse = await petQuery.query();
+    if (!petResponse.success) {
+      setState(() {
+        results.clear();
+      });
+    } else if (mounted) {
+      setState(() {
+        results = petResponse.results as List<ParseObject>;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -85,9 +110,10 @@ class MyFavoritesPage extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
       itemCount: 6,
       itemBuilder: (context, index) {
+        final o = results[index];
         return Padding(
           padding: const EdgeInsets.only(bottom: 20),
-          child: PetCard(imageName: 'assets/dog0${index + 1}.jpg'),
+          child: PetCard(pet: o),
         );
       },
     );

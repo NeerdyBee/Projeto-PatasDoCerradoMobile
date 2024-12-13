@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class InitialPage extends StatelessWidget {
-  const InitialPage({super.key});
+class IntroPage extends StatelessWidget {
+  const IntroPage({super.key});
 //
 //INICIALIZAÇÃO
   @override
