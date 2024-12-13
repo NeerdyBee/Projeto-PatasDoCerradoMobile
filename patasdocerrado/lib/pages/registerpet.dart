@@ -90,7 +90,7 @@ class MyApp extends StatelessWidget {
     return Text(
       title,
       style: TextStyle(
-        fontSize: 16,
+        fontSize: 15,
         fontWeight: FontWeight.bold,
         color: Colors.grey[800],
       ),
@@ -101,20 +101,19 @@ class MyApp extends StatelessWidget {
 class PetNameInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return TextField(
-      decoration: InputDecoration(
-        hintText: 'Digite o nome',
-        hintStyle: TextStyle(color: Colors.grey), // Cor cinza
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(
-            color: Colors.grey, // Cor cinza
-            width: 2, // Largura da borda
-          ),
+    return Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: Colors.grey.shade300, width: 1.5),
         ),
-        contentPadding: EdgeInsets.symmetric(horizontal: 16.0),
-      ),
-    );
+        child: TextField(
+          decoration: InputDecoration(
+            hintText: 'Digite o nome',
+            hintStyle: TextStyle(color: Colors.grey), // Cor cinza
+            border: InputBorder.none,
+            contentPadding: EdgeInsets.symmetric(horizontal: 16.0),
+          ),
+        ));
   }
 }
 
@@ -135,32 +134,32 @@ class _CitySelectionState extends State<CitySelection> {
 
   @override
   Widget build(BuildContext context) {
-    return DropdownButtonFormField<String>(
-      value: _selectedCity,
-      decoration: InputDecoration(
-        hintText: 'Escolha a cidade',
-        hintStyle: TextStyle(
-            color: const Color.fromARGB(255, 255, 98, 62)), // Cor laranja
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(
-            color: Colors.grey, // Cor cinza
-            width: 2, // Largura da borda
-          ),
+    return Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: Colors.grey.shade300, width: 1.5),
         ),
-      ),
-      items: _cities.map((String city) {
-        return DropdownMenuItem<String>(
-          value: city,
-          child: Text(city),
-        );
-      }).toList(),
-      onChanged: (newValue) {
-        setState(() {
-          _selectedCity = newValue;
-        });
-      },
-    );
+        child: DropdownButtonFormField<String>(
+          value: _selectedCity,
+          decoration: InputDecoration(
+            hintText: 'Escolha a cidade',
+            hintStyle: TextStyle(
+                color: const Color.fromARGB(255, 255, 98, 62)), // Cor laranja
+            border: InputBorder.none,
+            contentPadding: EdgeInsets.all(16), // Largura da borda
+          ),
+          items: _cities.map((String city) {
+            return DropdownMenuItem<String>(
+              value: city,
+              child: Text(city),
+            );
+          }).toList(),
+          onChanged: (newValue) {
+            setState(() {
+              _selectedCity = newValue;
+            });
+          },
+        ));
   }
 }
 
@@ -178,19 +177,18 @@ class _AgeInputState extends State<AgeInput> {
       children: [
         Expanded(
           child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: Colors.grey.shade300, width: 1.5),
+            ),
             width: 250, // Largura ajustada para o campo de Idade
             child: TextField(
               decoration: InputDecoration(
                 hintText: 'Digite a idade',
                 hintStyle: TextStyle(color: Colors.grey), // Cor cinza
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: BorderSide(
-                    color:
-                        const Color.fromARGB(255, 196, 196, 196), // Cor cinza
-                    width: 2, // Largura da borda
-                  ),
-                ),
+                border: InputBorder.none,
+
+                contentPadding: EdgeInsets.all(16),
               ),
             ),
           ),
