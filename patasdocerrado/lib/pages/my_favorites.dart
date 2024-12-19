@@ -30,6 +30,12 @@ class _MyFavoritesPageState extends State<MyFavoritesPage> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    doQueryMatches();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
@@ -108,7 +114,7 @@ class _MyFavoritesPageState extends State<MyFavoritesPage> {
   Widget _buildPetList() {
     return ListView.builder(
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-      itemCount: 6,
+      itemCount: results.length,
       itemBuilder: (context, index) {
         final o = results[index];
         return Padding(

@@ -4,39 +4,55 @@ import 'dart:ui';
 
 class PetSuperCard extends StatefulWidget {
   final ParseObject? pet;
-  late ParseObject? cidade;
-  late ParseObject? genero;
 
-  ParseObject queryCidade(ParseObject? p) {
-    QueryBuilder<ParseObject> cidadeQuery =
-        QueryBuilder<ParseObject>(ParseObject('Cidade'))
-          ..whereRelatedTo('animal_cidade', 'Animal', p!.objectId!);
-    return (cidadeQuery.query() as ParseResponse).results?.first as ParseObject;
-  }
+  PetSuperCard({super.key, required this.pet});
 
-  ParseObject queryGenero(ParseObject? p) {
-    QueryBuilder<ParseObject> generoQuery =
-        QueryBuilder<ParseObject>(ParseObject('Genero'))
-          ..whereRelatedTo('animal_genero', 'Animal', p!.objectId!);
-    ParseResponse generoResponse = generoQuery.query() as ParseResponse;
-    return generoResponse.results?.first as ParseObject;
-  }
-
-  PetSuperCard({super.key, required this.pet}) {
-    this.cidade = queryCidade(pet);
-    this.genero = queryGenero(pet);
-  }
   @override
   _PetSuperCardState createState() => _PetSuperCardState();
 }
 
 class _PetSuperCardState extends State<PetSuperCard> {
   bool isFavorite = false;
+  String _cidade = "";
+  String _genero = "";
+  String _imgURL = "";
+  int _idade = 0;
+  String _tipoIdade = "";
+  Future<void> getCidade(ParseObject? p) async {
+    QueryBuilder<ParseObject> cidadeQuery =
+        QueryBuilder<ParseObject>(ParseObject('Cidade'))
+          ..whereEqualTo('objectId', p?.get('animal_cidade').get('objectId'));
+    ParseResponse response = await cidadeQuery.query();
+    final String c = response.results?.first.get('nome');
+    setState(() => _cidade = c);
+  }
 
-  void _toggleFavorite() {
-    setState(() {
-      isFavorite = !isFavorite;
-    });
+  Future<void> getGenero(ParseObject? p) async {
+    QueryBuilder<ParseObject> generoQuery =
+        QueryBuilder<ParseObject>(ParseObject('Genero'))
+          ..whereEqualTo('objectId', p?.get('animal_genero').get('objectId'));
+    ParseResponse response = await generoQuery.query();
+    final String g = response.results?.first.get('nome');
+    setState(() => _genero = g);
+  }
+
+  Future<void> getTipoIdade(ParseObject? p) async {
+    QueryBuilder<ParseObject> tipoIdadeQuery = QueryBuilder<ParseObject>(
+        ParseObject('TipoIdade'))
+      ..whereEqualTo('objectId', p?.get('animal_tipoIdade').get('objectId'));
+    ParseResponse response = await tipoIdadeQuery.query();
+    final String t = response.results?.first.get('nome');
+    setState(() => _tipoIdade = t);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getGenero(widget.pet);
+    getCidade(widget.pet);
+    _imgURL = widget.pet?.get("foto").get("url");
+    _idade = widget.pet?.get("idade");
+    getTipoIdade(widget.pet);
   }
 
   @override
@@ -50,7 +66,7 @@ class _PetSuperCardState extends State<PetSuperCard> {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
             image: DecorationImage(
-              image: AssetImage("assets/dog01.jpg"),
+              image: NetworkImage(_imgURL),
               fit: BoxFit.cover,
             ),
             boxShadow: [
@@ -65,18 +81,18 @@ class _PetSuperCardState extends State<PetSuperCard> {
         ),
         Positioned(
           bottom: 0,
-          child: _buildBlurEffect(),
+          child: _buildBlurEffect(widget),
         ),
       ],
     );
   }
 
-  Widget _buildBlurEffect() {
+  Widget _buildBlurEffect(PetSuperCard pet) {
     return ClipRRect(
       borderRadius: BorderRadius.vertical(bottom: Radius.circular(20)),
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
-        child: CardDetails(widget),
+        child: CardDetails(pet, _cidade, _genero, _idade, _tipoIdade),
       ),
     );
   }
@@ -84,8 +100,17 @@ class _PetSuperCardState extends State<PetSuperCard> {
 
 class CardDetails extends StatelessWidget {
   late final PetSuperCard pet;
-  CardDetails(PetSuperCard widget) {
+  late final String cidade;
+  late final String genero;
+  late final int idade;
+  late final String tipoIdade;
+  CardDetails(PetSuperCard widget, String c, String g, int i, String t,
+      {super.key}) {
     pet = widget;
+    cidade = c;
+    genero = g;
+    idade = i;
+    tipoIdade = t;
   }
 
   @override
@@ -119,7 +144,7 @@ class CardDetails extends StatelessWidget {
                   ),
                 ),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () => Navigator.pushNamed(context, '/petprofile'),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Color(0xFFFF623E),
                     shape: RoundedRectangleBorder(
@@ -139,7 +164,7 @@ class CardDetails extends StatelessWidget {
               ],
             ),
             Text(
-              '${pet.cidade?.get('nome')}, Goiás',
+              '$cidade, Goiás',
               style: TextStyle(
                 fontFamily: 'Poppins',
                 fontWeight: FontWeight.w500,
@@ -150,9 +175,19 @@ class CardDetails extends StatelessWidget {
             SizedBox(height: 8),
             Row(
               children: [
-                InfoRow(icon: Icons.male, label: '${pet.genero?.get('nome')}'),
+                InfoRow(
+                    icon: genero == "Macho" ? Icons.male : Icons.female,
+                    label: genero),
                 SizedBox(width: 16),
-                InfoRow(icon: Icons.access_time, label: '2 Anos'),
+                InfoRow(
+                    icon: Icons.access_time,
+                    label: tipoIdade == "Anos"
+                        ? idade != 1
+                            ? "$idade $tipoIdade"
+                            : "$idade Mês"
+                        : idade != 1
+                            ? "$idade $tipoIdade"
+                            : "$idade Ano"),
               ],
             ),
           ],

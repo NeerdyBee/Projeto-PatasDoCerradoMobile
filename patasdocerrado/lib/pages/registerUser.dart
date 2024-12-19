@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 
-class RegisterPage extends StatefulWidget {
-  const RegisterPage({super.key});
+class RegisterUserPage extends StatefulWidget {
+  const RegisterUserPage({super.key});
 
   @override
-  _RegisterPageState createState() => _RegisterPageState();
+  _RegisterUserPageState createState() => _RegisterUserPageState();
 }
 
-class _RegisterPageState extends State<RegisterPage> {
+class _RegisterUserPageState extends State<RegisterUserPage> {
   bool _passwordVisible = false;
   bool _confirmPasswordVisible = false;
   final controllerUsername = TextEditingController();
+  final controllerCidade = TextEditingController();
   final controllerPassword = TextEditingController();
   final controllerPasswordConfirm = TextEditingController();
   final controllerTelefone = TextEditingController();
@@ -172,6 +173,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                   child: Expanded(
                     child: TextField(
+                      controller: controllerCidade,
                       decoration: InputDecoration(
                           border: InputBorder.none,
                           hintText: 'Selecione sua cidade',
@@ -447,13 +449,31 @@ class _RegisterPageState extends State<RegisterPage> {
 
   void doUserRegistration() async {
     final username = controllerUsername.text.trim();
+    final cidade = controllerCidade.text.trim();
     final email = controllerEmail.text.trim();
     final password = controllerPassword.text.trim();
     final passwordConfirm = controllerPasswordConfirm.text.trim();
     final cpf = controllerCpf.text.trim();
     final telefone = controllerTelefone.text.trim();
+    ParseObject cidadeObjt = new ParseObject("Cidade");
+    Future<bool> doQueryCheck() async {
+      final QueryBuilder<ParseObject> cidadeQuery =
+          QueryBuilder<ParseObject>(ParseObject('Cidade'))
+            ..whereEqualTo("nome", cidade);
+      final ParseResponse queryResponse = await cidadeQuery.query();
+      return (queryResponse.results == null);
+    }
+
+    void doQuerySet() async {
+      final QueryBuilder<ParseObject> cidadeQuery =
+          QueryBuilder<ParseObject>(ParseObject('Cidade'))
+            ..whereEqualTo("nome", cidade);
+      final ParseResponse queryResponse = await cidadeQuery.query();
+      cidadeObjt = queryResponse.results?.first as ParseObject;
+    }
 
     if (username.isEmpty ||
+        cidade.isEmpty ||
         password.isEmpty ||
         email.isEmpty ||
         passwordConfirm.isEmpty ||
@@ -462,7 +482,12 @@ class _RegisterPageState extends State<RegisterPage> {
       showError("Tenha certeza de preencher todos os campos!");
       return;
     }
-
+    if (await doQueryCheck()) {
+      showError("Cidade inserida não é uma cidade de Goiás!");
+      return;
+    } else {
+      doQuerySet();
+    }
     if (password != passwordConfirm) {
       showError("Tenha certeza de confirmar sua senha corretamente!");
       return;
@@ -479,7 +504,8 @@ class _RegisterPageState extends State<RegisterPage> {
       ..set("email", email)
       ..set("password", password)
       ..set("cpf", cpf)
-      ..set("telefone", telefone);
+      ..set("telefone", telefone)
+      ..set("animal_usuario", cidadeObjt.objectId);
 
     final ParseResponse response = await user.save();
 

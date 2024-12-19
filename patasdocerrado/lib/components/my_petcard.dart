@@ -3,38 +3,56 @@ import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 
 class PetCard extends StatefulWidget {
   final ParseObject? pet;
-  late ParseObject? p;
-  late ParseObject? cidade;
-  late ParseObject? genero;
-  void queryCidade(ParseObject? pet) async {
-    QueryBuilder<ParseObject> cidadeQuery =
-        QueryBuilder<ParseObject>(ParseObject('Cidade'))
-          ..whereRelatedTo('animal_cidade', 'Animal', pet!.objectId!);
-    ParseResponse cidadeResponse = await cidadeQuery.query();
-    cidade = cidadeResponse.results?.first as ParseObject;
-  }
 
-  void queryGenero(ParseObject? pet) async {
-    QueryBuilder<ParseObject> generoQuery =
-        QueryBuilder<ParseObject>(ParseObject('Genero'))
-          ..whereRelatedTo('animal_genero', 'Animal', pet!.objectId!);
-    ParseResponse generoResponse = await generoQuery.query();
-    genero = generoResponse.results?.first as ParseObject;
-  }
+  PetCard({super.key, required this.pet});
 
-  PetCard({super.key, required this.pet}) {
-    p = pet;
-    cidade;
-    genero;
-    queryCidade(pet);
-    queryGenero(pet);
-  }
   @override
   _PetCardState createState() => _PetCardState();
 }
 
 class _PetCardState extends State<PetCard> {
   bool isFavorite = false;
+  String _cidade = "";
+  String _genero = "";
+  String _imgURL = "";
+  int _idade = 0;
+  String _tipoIdade = "";
+  Future<void> getCidade(ParseObject? p) async {
+    QueryBuilder<ParseObject> cidadeQuery =
+        QueryBuilder<ParseObject>(ParseObject('Cidade'))
+          ..whereEqualTo('objectId', p?.get('animal_cidade').get('objectId'));
+    ParseResponse response = await cidadeQuery.query();
+    final String c = response.results?.first.get('nome');
+    setState(() => _cidade = c);
+  }
+
+  Future<void> getGenero(ParseObject? p) async {
+    QueryBuilder<ParseObject> generoQuery =
+        QueryBuilder<ParseObject>(ParseObject('Genero'))
+          ..whereEqualTo('objectId', p?.get('animal_genero').get('objectId'));
+    ParseResponse response = await generoQuery.query();
+    final String g = response.results?.first.get('nome');
+    setState(() => _genero = g);
+  }
+
+  Future<void> getTipoIdade(ParseObject? p) async {
+    QueryBuilder<ParseObject> tipoIdadeQuery = QueryBuilder<ParseObject>(
+        ParseObject('TipoIdade'))
+      ..whereEqualTo('objectId', p?.get('animal_tipoIdade').get('objectId'));
+    ParseResponse response = await tipoIdadeQuery.query();
+    final String t = response.results?.first.get('nome');
+    setState(() => _tipoIdade = t);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getGenero(widget.pet);
+    getCidade(widget.pet);
+    _imgURL = widget.pet?.get("foto").get("url");
+    _idade = widget.pet?.get("idade");
+    getTipoIdade(widget.pet);
+  }
 
   void _toggleFavorite() {
     setState(() {
@@ -70,7 +88,7 @@ class _PetCardState extends State<PetCard> {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(20)),
                     image: DecorationImage(
-                      image: AssetImage("assets/dog01.jpg"),
+                      image: NetworkImage(_imgURL),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -99,7 +117,7 @@ class _PetCardState extends State<PetCard> {
                           textAlign: TextAlign.right,
                         ),
                         Text(
-                          '${widget.cidade?.get('nome')}, Goias',
+                          '$_cidade, Goiás',
                           style: TextStyle(
                             fontFamily: 'Poppins',
                             fontWeight: FontWeight.w500,
@@ -112,11 +130,17 @@ class _PetCardState extends State<PetCard> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            InfoRow(
-                                icon: Icons.male,
-                                label: '${widget.cidade?.get('nome')}'),
+                            InfoRow(icon: Icons.male, label: _genero),
                             SizedBox(width: 16),
-                            InfoRow(icon: Icons.access_time, label: '2 Anos'),
+                            InfoRow(
+                                icon: Icons.access_time,
+                                label: _tipoIdade == "Anos"
+                                    ? _idade != 1
+                                        ? "$_idade $_tipoIdade"
+                                        : "$_idade Mês"
+                                    : _idade != 1
+                                        ? "$_idade $_tipoIdade"
+                                        : "$_idade Ano"),
                           ],
                         ),
                       ],
@@ -124,7 +148,8 @@ class _PetCardState extends State<PetCard> {
                     Align(
                       alignment: Alignment.center,
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () =>
+                            Navigator.pushNamed(context, '/petprofile'),
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Color(0xFFFF623E),
                           shape: RoundedRectangleBorder(

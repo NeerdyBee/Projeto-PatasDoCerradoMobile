@@ -1,11 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 
 class IntroPage extends StatelessWidget {
   const IntroPage({super.key});
-//
+
+  void getAnimal() async {
+    QueryBuilder<ParseObject> animalQuery =
+        QueryBuilder<ParseObject>(ParseObject('Animal'));
+    ParseResponse response = await animalQuery.query();
+    print(response.results?.first.get('foto').get("url"));
+  }
+
+  void initState() {}
+
 //INICIALIZAÇÃO
   @override
   Widget build(BuildContext context) {
+    getAnimal();
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         home: Scaffold(

@@ -3,7 +3,10 @@ import 'package:patasdocerrado/pages/home.dart';
 import 'package:patasdocerrado/pages/my_adoptables.dart';
 import 'package:patasdocerrado/pages/intro.dart';
 import 'package:patasdocerrado/pages/login.dart';
-import 'package:patasdocerrado/pages/register.dart';
+import 'package:patasdocerrado/pages/petprofile.dart';
+import 'package:patasdocerrado/pages/registerPet.dart';
+import 'package:patasdocerrado/pages/registerPet2.dart';
+import 'package:patasdocerrado/pages/registerUser.dart';
 import 'package:patasdocerrado/pages/recoverPswd.dart';
 import 'package:patasdocerrado/pages/editprofile.dart';
 import 'package:patasdocerrado/pages/my_favorites.dart';
@@ -35,12 +38,15 @@ class MainApp extends StatelessWidget {
       routes: {
         '/intropage': (context) => const IntroPage(),
         '/login': (context) => const LoginPage(),
-        '/registerpage': (context) => const RegisterPage(),
+        '/registerpage': (context) => const RegisterUserPage(),
         '/homepage': (context) => const HomePage(),
         '/recoverpswdpage': (context) => const RecoverPswdPage(),
         '/editprofile': (context) => const EditProfilePage(),
         '/my_favorites': (context) => const MyFavoritesPage(),
         '/my_adoptables': (context) => const MyAdoptablesPage(),
+        '/registerpet01': (context) => const RegisterPetPage(),
+        '/registerpet02': (context) => const RegisterPetPage2(),
+        '/petprofile': (context) => const PetProfilePage()
       },
     );
   }

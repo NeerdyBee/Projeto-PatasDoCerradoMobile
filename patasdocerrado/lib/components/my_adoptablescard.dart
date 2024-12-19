@@ -1,16 +1,64 @@
 import 'package:flutter/material.dart';
+import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 
-class AdoptablesCard extends StatefulWidget {
-  final String imageName;
+class MyAdoptablesCard extends StatefulWidget {
+  final ParseObject? pet;
 
-  const AdoptablesCard({required this.imageName});
+  MyAdoptablesCard({super.key, required this.pet});
 
   @override
-  _AdoptablesCardState createState() => _AdoptablesCardState();
+  _MyAdoptablesCardState createState() => _MyAdoptablesCardState();
 }
 
-class _AdoptablesCardState extends State<AdoptablesCard> {
+class _MyAdoptablesCardState extends State<MyAdoptablesCard> {
   bool isFavorite = false;
+  String _cidade = "";
+  String _genero = "";
+  String _imgURL = "";
+  int _idade = 0;
+  String _tipoIdade = "";
+  Future<void> getCidade(ParseObject? p) async {
+    QueryBuilder<ParseObject> cidadeQuery =
+        QueryBuilder<ParseObject>(ParseObject('Cidade'))
+          ..whereEqualTo('objectId', p?.get('animal_cidade').get('objectId'));
+    ParseResponse response = await cidadeQuery.query();
+    final String c = response.results?.first.get('nome');
+    setState(() => _cidade = c);
+  }
+
+  Future<void> getGenero(ParseObject? p) async {
+    QueryBuilder<ParseObject> generoQuery =
+        QueryBuilder<ParseObject>(ParseObject('Genero'))
+          ..whereEqualTo('objectId', p?.get('animal_genero').get('objectId'));
+    ParseResponse response = await generoQuery.query();
+    final String g = response.results?.first.get('nome');
+    setState(() => _genero = g);
+  }
+
+  Future<void> getTipoIdade(ParseObject? p) async {
+    QueryBuilder<ParseObject> tipoIdadeQuery = QueryBuilder<ParseObject>(
+        ParseObject('TipoIdade'))
+      ..whereEqualTo('objectId', p?.get('animal_tipoIdade').get('objectId'));
+    ParseResponse response = await tipoIdadeQuery.query();
+    final String t = response.results?.first.get('nome');
+    setState(() => _tipoIdade = t);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getGenero(widget.pet);
+    getCidade(widget.pet);
+    _imgURL = widget.pet?.get("foto").get("url");
+    _idade = widget.pet?.get("idade");
+    getTipoIdade(widget.pet);
+  }
+
+  void _toggleFavorite() {
+    setState(() {
+      isFavorite = !isFavorite;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +88,7 @@ class _AdoptablesCardState extends State<AdoptablesCard> {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(20)),
                     image: DecorationImage(
-                      image: AssetImage(widget.imageName),
+                      image: NetworkImage(_imgURL),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -59,7 +107,7 @@ class _AdoptablesCardState extends State<AdoptablesCard> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Pascal',
+                          widget.pet?.get('nome'),
                           style: TextStyle(
                             fontFamily: 'Poppins',
                             fontWeight: FontWeight.w700,
@@ -69,7 +117,7 @@ class _AdoptablesCardState extends State<AdoptablesCard> {
                           textAlign: TextAlign.right,
                         ),
                         Text(
-                          'Rialma, Goias',
+                          '$_cidade, Goiás',
                           style: TextStyle(
                             fontFamily: 'Poppins',
                             fontWeight: FontWeight.w500,
@@ -82,14 +130,21 @@ class _AdoptablesCardState extends State<AdoptablesCard> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            InfoRow(icon: Icons.male, label: 'Macho'),
+                            InfoRow(icon: Icons.male, label: _genero),
                             SizedBox(width: 16),
-                            InfoRow(icon: Icons.access_time, label: '3 Anos'),
+                            InfoRow(
+                                icon: Icons.access_time,
+                                label: _tipoIdade == "Anos"
+                                    ? _idade != 1
+                                        ? "$_idade $_tipoIdade"
+                                        : "$_idade Mês"
+                                    : _idade != 1
+                                        ? "$_idade $_tipoIdade"
+                                        : "$_idade Ano"),
                           ],
                         ),
                       ],
                     ),
-                    // Usando Row para alinhar os botões
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
@@ -178,7 +233,7 @@ class InfoRow extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        Icon(icon, size: 13, color: Color(0xFF8d8d8d)),
+        Icon(icon, size: 11, color: Color(0xFF8d8d8d)),
         SizedBox(width: 4),
         Text(
           label,

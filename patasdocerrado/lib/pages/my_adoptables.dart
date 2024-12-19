@@ -1,8 +1,42 @@
 import 'package:flutter/material.dart';
+import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 import 'package:patasdocerrado/components/my_adoptablescard.dart';
 
-class MyAdoptablesPage extends StatelessWidget {
+class MyAdoptablesPage extends StatefulWidget {
   const MyAdoptablesPage({super.key});
+  @override
+  _MyAdoptablesPageState createState() => _MyAdoptablesPageState();
+}
+
+class _MyAdoptablesPageState extends State<MyAdoptablesPage> {
+  List<ParseObject> results = <ParseObject>[];
+
+  void doQueryMatches() async {
+    ParseUser? currentUser = await ParseUser.currentUser() as ParseUser?;
+    final QueryBuilder<ParseObject> userQuery =
+        QueryBuilder<ParseObject>(ParseObject('_User'))
+          ..whereEqualTo("objectId", currentUser?.objectId);
+    final QueryBuilder<ParseObject> petQuery =
+        QueryBuilder<ParseObject>(ParseObject('Animal'))
+          ..orderByDescending('createdAt')
+          ..whereMatchesQuery("animal_usuario", userQuery);
+    final ParseResponse queryResponse = await petQuery.query();
+    if (!queryResponse.success) {
+      setState(() {
+        results.clear();
+      });
+    } else if (mounted) {
+      setState(() {
+        results = queryResponse.results as List<ParseObject>;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    doQueryMatches();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -92,11 +126,12 @@ class MyAdoptablesPage extends StatelessWidget {
   Widget _buildPetList() {
     return ListView.builder(
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-      itemCount: 1, // Ajuste o itemCount conforme necessário
+      itemCount: results.length,
       itemBuilder: (context, index) {
+        final o = results[index];
         return Padding(
           padding: const EdgeInsets.only(bottom: 20),
-          child: AdoptablesCard(imageName: 'assets/dog04.jpg'),
+          child: MyAdoptablesCard(pet: o),
         );
       },
     );
@@ -133,7 +168,6 @@ class FloatingButtonWithText extends StatefulWidget {
 }
 
 class _FloatingButtonWithTextState extends State<FloatingButtonWithText> {
-  bool _isHovered = false;
   bool _isPressed = false;
 
   @override

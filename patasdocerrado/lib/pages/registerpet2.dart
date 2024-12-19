@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-void main() => runApp(PetRegistrationScreen());
+class RegisterPetPage2 extends StatefulWidget {
+  const RegisterPetPage2({super.key});
 
-class PetRegistrationScreen extends StatefulWidget {
   @override
-  _PetRegistrationScreenState createState() => _PetRegistrationScreenState();
+  _RegisterPetPage2State createState() => _RegisterPetPage2State();
 }
 
-class _PetRegistrationScreenState extends State<PetRegistrationScreen> {
+class _RegisterPetPage2State extends State<RegisterPetPage2> {
   final TextEditingController _descriptionController = TextEditingController();
   List<String> images = [];
 

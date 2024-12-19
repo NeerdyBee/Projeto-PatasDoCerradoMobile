@@ -10,23 +10,47 @@ class AdoptablesPage extends StatefulWidget {
 
 class _AdoptablesPageState extends State<AdoptablesPage> {
   List<ParseObject> results = <ParseObject>[];
+  final controllerNome = TextEditingController();
+  final controllerCidade = TextEditingController();
+  String controllerEspecie = "";
+  String controllerGenero = "";
+  String controllerPorte = "";
 
   void doQueryMatches() async {
-    // Create inner Book query
+    final QueryBuilder<ParseObject> statusQuery =
+        QueryBuilder<ParseObject>(ParseObject('StatusAdocao'))
+          ..whereEqualTo("nome", "Para adoção");
     final QueryBuilder<ParseObject> petQuery =
         QueryBuilder<ParseObject>(ParseObject('Animal'))
-          ..orderByDescending('createdAt');
-
-    final ParseResponse petResponse = await petQuery.query();
-    if (!petResponse.success) {
+          ..orderByDescending('createdAt')
+          ..whereMatchesQuery("animal_statusAdocao", statusQuery);
+    final ParseResponse queryResponse = await petQuery.query();
+    if (!queryResponse.success) {
       setState(() {
         results.clear();
       });
     } else if (mounted) {
       setState(() {
-        results = petResponse.results as List<ParseObject>;
+        results = queryResponse.results as List<ParseObject>;
       });
     }
+  }
+
+  void doQuerySearch(QueryBuilder query) async {}
+
+  void buildSearch() async {
+    final nome = controllerNome.text.trim();
+    final cidade = controllerCidade.text.trim();
+    final especie = controllerEspecie.trim();
+    final genero = controllerGenero.trim();
+    final porte = controllerPorte.trim();
+    List filtros = [nome, cidade, especie, genero, porte];
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    doQueryMatches();
   }
 
   @override
@@ -62,7 +86,7 @@ class _AdoptablesPageState extends State<AdoptablesPage> {
                         children: [
                           _buildSearchBar(),
                           SizedBox(width: 8),
-                          _buildFilterButton(context),
+                          _buildFilter(context),
                         ],
                       ),
                     ],
@@ -72,7 +96,18 @@ class _AdoptablesPageState extends State<AdoptablesPage> {
                 Expanded(
                   child: Stack(
                     children: [
-                      _buildPetList(),
+                      ListView.builder(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16.0, vertical: 8.0),
+                        itemCount: results.length,
+                        itemBuilder: (context, index) {
+                          final o = results[index];
+                          return Padding(
+                            padding: const EdgeInsets.only(bottom: 20),
+                            child: PetCard(pet: o),
+                          );
+                        },
+                      ),
                       _buildFadeOverlay(top: true),
                       _buildFadeOverlay(top: false),
                     ],
@@ -111,6 +146,7 @@ class _AdoptablesPageState extends State<AdoptablesPage> {
           ),
           Expanded(
             child: TextField(
+              controller: controllerNome,
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.symmetric(horizontal: 0.0),
                 border: InputBorder.none,
@@ -128,8 +164,7 @@ class _AdoptablesPageState extends State<AdoptablesPage> {
     );
   }
 
-  Widget _buildFilterButton(BuildContext context) {
-    // BOTAO DO FILTRO
+  Widget _buildFilter(BuildContext context) {
     return Container(
       width: 40,
       height: 40,
@@ -152,18 +187,12 @@ class _AdoptablesPageState extends State<AdoptablesPage> {
     );
   }
 
-  Widget _buildPetList() {
-    return ListView.builder(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-      itemCount: 6,
-      itemBuilder: (context, index) {
-        final o = results[index];
-        return Padding(
-          padding: const EdgeInsets.only(bottom: 20),
-          child: PetCard(pet: o),
-        );
-      },
-    );
+  void resetarAll() {
+    controllerNome.text = "";
+    controllerCidade.text = "";
+    controllerEspecie = "";
+    controllerPorte = "";
+    controllerGenero = "";
   }
 
   void _showFilterModal(BuildContext context) {
@@ -189,15 +218,20 @@ class _AdoptablesPageState extends State<AdoptablesPage> {
               children: [
                 _buildModalHeader(),
                 SizedBox(height: 16),
+                _buildTitle("Buscar por nome"),
                 _buildFilterSection('Buscar pet por nome', Icons.search),
                 SizedBox(height: 16),
-                _buildFilterSection('Cidades do Goiás', null, showButton: true),
+                _buildTitle("Cidade"),
+                _buildFilterSection('Buscar cidade', Icons.search),
                 SizedBox(height: 16),
-                _buildFilterOptions('Espécie', ['Cão', 'Gato']),
+                _buildTitle("Espécies"),
+                EspecieOptions(),
                 SizedBox(height: 16),
-                _buildFilterOptions('Sexo', ['Macho', 'Fêmea']),
+                _buildTitle("Gênero"),
+                GeneroOptions(),
                 SizedBox(height: 16),
-                _buildFilterOptions('Porte', ['Pequeno', 'Médio', 'Grande']),
+                _buildTitle("Porte"),
+                CidadeOptions(),
                 SizedBox(height: 40),
                 _buildShowResultsButton(),
               ],
@@ -205,6 +239,17 @@ class _AdoptablesPageState extends State<AdoptablesPage> {
           ),
         );
       },
+    );
+  }
+
+  Widget _buildTitle(String title) {
+    return Text(
+      title,
+      style: TextStyle(
+        fontSize: 15,
+        fontWeight: FontWeight.bold,
+        color: Colors.grey[800],
+      ),
     );
   }
 
@@ -225,15 +270,19 @@ class _AdoptablesPageState extends State<AdoptablesPage> {
         Row(
           // RESETAR
           children: [
-            Text(
-              'Resetar',
-              style: TextStyle(
-                fontFamily: 'Poppins',
-                fontWeight: FontWeight.normal,
-                fontSize: 12,
-                color: Color(0xff7e8a8c),
-              ),
-            ),
+            TextButton(
+                onPressed: () {
+                  resetarAll();
+                },
+                child: Text(
+                  'Resetar',
+                  style: TextStyle(
+                    fontFamily: 'Poppins',
+                    fontWeight: FontWeight.normal,
+                    fontSize: 12,
+                    color: Color(0xff7e8a8c),
+                  ),
+                )),
             SizedBox(width: 15),
             Icon(Icons.arrow_back_ios_rounded, color: Color(0xffFF623E)),
             SizedBox(width: 15),
@@ -244,10 +293,11 @@ class _AdoptablesPageState extends State<AdoptablesPage> {
   }
 
   Widget _buildShowResultsButton() {
-    // BOTÃO MOSTRAR RESULTADOS
     return Center(
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: () {
+          buildSearch();
+        },
         style: ElevatedButton.styleFrom(
           backgroundColor: Color(0xffFF623E),
           shape: RoundedRectangleBorder(
@@ -273,15 +323,6 @@ class _AdoptablesPageState extends State<AdoptablesPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          title,
-          style: TextStyle(
-            fontFamily: 'Poppins',
-            fontWeight: FontWeight.bold,
-            fontSize: 13,
-            color: Color(0xff193238),
-          ),
-        ),
         SizedBox(height: 8),
         Container(
           padding: EdgeInsets.symmetric(horizontal: 8),
@@ -296,6 +337,9 @@ class _AdoptablesPageState extends State<AdoptablesPage> {
               SizedBox(width: 8),
               Expanded(
                 child: TextField(
+                  controller: title == 'Buscar pet por nome'
+                      ? controllerNome
+                      : controllerCidade,
                   decoration: InputDecoration(
                     border: InputBorder.none,
                     hintText: title == 'Buscar pet por nome'
@@ -304,7 +348,7 @@ class _AdoptablesPageState extends State<AdoptablesPage> {
                     hintStyle: TextStyle(
                       fontFamily: 'Poppins',
                       fontSize: 16,
-                      color: title == 'Cidades do Goiás'
+                      color: title == 'Digite a cidade de Goiás'
                           ? Color(0xFFFF623E)
                           : Color(
                               0xff8d8d8d), // Update color for 'Todas as cidades'
@@ -312,58 +356,8 @@ class _AdoptablesPageState extends State<AdoptablesPage> {
                   ),
                 ),
               ),
-              if (showButton)
-                TextButton(
-                  onPressed: () {},
-                  child: Text(
-                    'GO',
-                    style: TextStyle(color: Color(0xffFF623E)),
-                  ),
-                ),
             ],
           ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildFilterOptions(String title, List<String> options) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          title,
-          style: TextStyle(
-            fontFamily: 'Poppins',
-            fontWeight: FontWeight.bold,
-            fontSize: 13,
-            color: Color(0xff193238),
-          ),
-        ),
-        SizedBox(height: 8),
-        Row(
-          children: options.map((option) {
-            return Padding(
-              padding: const EdgeInsets.only(right: 8.0),
-              child: ChoiceChip(
-                // É OS BOTÃO
-                side: BorderSide(
-                    color: Color.fromARGB(221, 221, 221, 221), width: 1.5),
-                label: Text(
-                  option,
-                  style: TextStyle(
-                    fontFamily: 'Poppins',
-                    fontSize: 16,
-                    color: Color(0xff7e8a8c),
-                  ),
-                ),
-                selected: false,
-                onSelected: (selected) {},
-                backgroundColor: Colors.white,
-                selectedColor: Color(0xffFF623E),
-              ),
-            );
-          }).toList(),
         ),
       ],
     );
@@ -389,6 +383,155 @@ class _AdoptablesPageState extends State<AdoptablesPage> {
               ],
             ),
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class CidadeOptions extends StatefulWidget {
+  @override
+  _CidadeOptionsState createState() => _CidadeOptionsState();
+}
+
+class _CidadeOptionsState extends State<CidadeOptions> {
+  String _selectedCidade = '';
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: <Widget>[
+        _buildCidadeButton('Pequeno'),
+        SizedBox(width: 10),
+        _buildCidadeButton('Médio'),
+        SizedBox(width: 10),
+        _buildCidadeButton('Grande'),
+      ],
+    );
+  }
+
+  Widget _buildCidadeButton(String cidades) {
+    return ElevatedButton(
+      onPressed: () {
+        setState(() {
+          _selectedCidade == cidades
+              ? _selectedCidade = ""
+              : _selectedCidade = cidades;
+        });
+      },
+      style: ElevatedButton.styleFrom(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+          side: _selectedCidade != cidades
+              ? BorderSide(width: 1, color: Color.fromRGBO(0, 0, 0, 0.2))
+              : BorderSide(width: 1, color: Color.fromRGBO(0, 0, 0, 0)),
+        ),
+        backgroundColor:
+            _selectedCidade == cidades ? Color(0xFFFF623E) : Colors.white,
+        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+      ),
+      child: Text(
+        cidades,
+        style: TextStyle(
+          color: _selectedCidade == cidades ? Colors.white : Colors.black,
+        ),
+      ),
+    );
+  }
+}
+
+class GeneroOptions extends StatefulWidget {
+  @override
+  _GeneroOptionsState createState() => _GeneroOptionsState();
+}
+
+class _GeneroOptionsState extends State<GeneroOptions> {
+  String _selectedGenero = '';
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: <Widget>[
+        _buildGeneroButton('Macho'),
+        SizedBox(width: 10),
+        _buildGeneroButton('Fêmea'),
+      ],
+    );
+  }
+
+  Widget _buildGeneroButton(String generos) {
+    return ElevatedButton(
+      onPressed: () {
+        setState(() {
+          _selectedGenero == generos
+              ? _selectedGenero = ""
+              : _selectedGenero = generos;
+        });
+      },
+      style: ElevatedButton.styleFrom(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+          side: _selectedGenero != generos
+              ? BorderSide(width: 1, color: Color.fromRGBO(0, 0, 0, 0.2))
+              : BorderSide(width: 1, color: Color.fromRGBO(0, 0, 0, 0)),
+        ),
+        backgroundColor:
+            _selectedGenero == generos ? Color(0xFFFF623E) : Colors.white,
+        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+      ),
+      child: Text(
+        generos,
+        style: TextStyle(
+          color: _selectedGenero == generos ? Colors.white : Colors.black,
+        ),
+      ),
+    );
+  }
+}
+
+class EspecieOptions extends StatefulWidget {
+  @override
+  _EspecieOptionsState createState() => _EspecieOptionsState();
+}
+
+class _EspecieOptionsState extends State<EspecieOptions> {
+  String _selectedEspecie = '';
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: <Widget>[
+        _buildSpeciesButton('Cão'),
+        SizedBox(width: 10),
+        _buildSpeciesButton('Gato'),
+      ],
+    );
+  }
+
+  Widget _buildSpeciesButton(String especies) {
+    return ElevatedButton(
+      onPressed: () {
+        setState(() {
+          _selectedEspecie == especies
+              ? _selectedEspecie = ""
+              : _selectedEspecie = especies;
+        });
+      },
+      style: ElevatedButton.styleFrom(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+          side: _selectedEspecie != especies
+              ? BorderSide(width: 1, color: Color.fromRGBO(0, 0, 0, 0.2))
+              : BorderSide(width: 1, color: Color.fromRGBO(0, 0, 0, 0)),
+        ),
+        backgroundColor:
+            _selectedEspecie == especies ? Color(0xFFFF623E) : Colors.white,
+        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+      ),
+      child: Text(
+        especies,
+        style: TextStyle(
+          color: _selectedEspecie == especies ? Colors.white : Colors.black,
         ),
       ),
     );

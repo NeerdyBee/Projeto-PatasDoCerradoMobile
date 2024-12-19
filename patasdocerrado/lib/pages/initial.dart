@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:patasdocerrado/components/my_petsupercard.dart';
-import 'dart:ui';
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 
 class InitialPage extends StatefulWidget {
@@ -13,20 +12,13 @@ class _InitialPageState extends State<InitialPage> {
   List<ParseObject> results = <ParseObject>[];
 
   void doQueryMatches() async {
-    // Create inner Book query
     final QueryBuilder<ParseObject> statusQuery =
         QueryBuilder<ParseObject>(ParseObject('StatusAdocao'))
-          ..whereEqualTo('nome', 'Para adoção');
-
-    final ParseResponse statusResponse = await statusQuery.query();
-    if (!statusResponse.success) {
-      return;
-    }
-    final status = statusResponse.results?.first as ParseObject;
-
+          ..whereEqualTo("nome", "Para adoção");
     final QueryBuilder<ParseObject> petQuery =
         QueryBuilder<ParseObject>(ParseObject('Animal'))
-          ..orderByDescending('createdAt');
+          ..orderByDescending('createdAt')
+          ..whereMatchesQuery("animal_statusAdocao", statusQuery);
     final ParseResponse queryResponse = await petQuery.query();
     if (!queryResponse.success) {
       setState(() {
@@ -40,8 +32,13 @@ class _InitialPageState extends State<InitialPage> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    super.initState();
     doQueryMatches();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Stack(
@@ -147,107 +144,6 @@ class _InitialPageState extends State<InitialPage> {
           ),
         ),
       ),
-    );
-  }
-}
-
-class CardDetails extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 322,
-      height: 96,
-      decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.75),
-        borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(20),
-          bottomRight: Radius.circular(20),
-        ),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Bartho',
-                  style: TextStyle(
-                    fontFamily: 'Poppins',
-                    fontWeight: FontWeight.w700,
-                    fontSize: 14,
-                    color: Color(0xFFFF623E),
-                  ),
-                ),
-                ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFFFF623E),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                  child: Text(
-                    'Me adote!',
-                    style: TextStyle(
-                      fontFamily: 'Poppins',
-                      fontWeight: FontWeight.w500,
-                      fontSize: 11,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            Text(
-              'Rialma, Goiás',
-              style: TextStyle(
-                fontFamily: 'Poppins',
-                fontWeight: FontWeight.w500,
-                fontSize: 11,
-                color: Color(0xFF8d8d8d),
-              ),
-            ),
-            SizedBox(height: 8),
-            Row(
-              children: [
-                InfoRow(icon: Icons.male, label: 'Macho'),
-                SizedBox(width: 16),
-                InfoRow(icon: Icons.access_time, label: '2 Anos'),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class InfoRow extends StatelessWidget {
-  final IconData icon;
-  final String label;
-
-  const InfoRow({required this.icon, required this.label});
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Icon(icon, size: 11, color: Color(0xFF8d8d8d)),
-        SizedBox(width: 4),
-        Text(
-          label,
-          style: TextStyle(
-            fontFamily: 'Poppins',
-            fontWeight: FontWeight.w500,
-            fontSize: 11,
-            color: Color(0xFF8d8d8d),
-          ),
-        ),
-      ],
     );
   }
 }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:patasdocerrado/components/my_navbar.dart';
 import 'package:patasdocerrado/pages/initial.dart';
 import 'package:patasdocerrado/pages/adoptables.dart';
-import 'package:patasdocerrado/pages/userprofile.dart';
+import 'package:patasdocerrado/pages/userProfile.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
