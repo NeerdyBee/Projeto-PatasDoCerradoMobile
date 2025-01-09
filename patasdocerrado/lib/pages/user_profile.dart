@@ -10,89 +10,103 @@ class UserProfilePage extends StatefulWidget {
 
 class _UserProfilePageState extends State<UserProfilePage> {
   ParseUser? currentUser;
-  Future<ParseUser?> getUser() async {
+  String nome = "";
+  String foto = "";
+  Future<void> getUser() async {
     currentUser = await ParseUser.currentUser() as ParseUser?;
-    return currentUser;
+    getDono();
+  }
+
+  Future<void> getDono() async {
+    QueryBuilder<ParseObject> donoQuery =
+        QueryBuilder<ParseObject>(ParseObject('Dono'))
+          ..whereEqualTo('dono_usuario', currentUser);
+    ParseResponse response = await donoQuery.query();
+    final String n = response.results?.first.get('nome');
+    final String f = response.results?.first.get('foto').get('url');
+    setState(() => nome = n);
+    setState(() => foto = f);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getUser();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.white,
-        body: FutureBuilder<ParseUser?>(
-            future: getUser(),
-            builder: (context, snapshot) {
-              switch (snapshot.connectionState) {
-                case ConnectionState.none:
-                case ConnectionState.waiting:
-                  return Center(
-                    child: Container(
-                        width: 100,
-                        height: 100,
-                        child: CircularProgressIndicator()),
-                  );
-                default:
-                  return SafeArea(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 70.0),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: <Widget>[
-                          CircleAvatar(
-                            radius: 48,
-                            backgroundColor: Colors.grey.shade300,
-                          ),
-                          SizedBox(height: 18),
-                          Text(
-                            ('${snapshot.data!.username}'),
-                            style: TextStyle(
-                              fontFamily: 'Poppins',
-                              fontWeight: FontWeight.w500,
-                              fontSize: 16,
-                              color: Color(0xFFFF623E),
-                            ),
-                          ),
-                          SizedBox(height: 20),
-                          Center(
-                            child: Column(
-                              children: [
-                                buildMenuButton(context, Icons.manage_accounts,
-                                    'Configuração de perfil', '/editprofile'),
-                                buildMenuButton(context, Icons.pets_outlined,
-                                    'Adotaveis', "/my_adoptables",
-                                    outline: true),
-                                buildMenuButton(context, Icons.favorite,
-                                    'Meus favoritos', "/my_favorites"),
-                                buildMenuButton(context, Icons.lock,
-                                    'Alterar senha', "/recoverpswdpage",
-                                    outline: true),
-                              ],
-                            ),
-                          ),
-                          SizedBox(height: 40),
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Color(0xFFFF623E),
-                              minimumSize: Size(123, 36),
-                            ),
-                            onPressed: () => doUserLogout(),
-                            child: Text(
-                              'Sair da conta',
-                              style: TextStyle(
-                                fontFamily: 'Poppins',
-                                fontWeight: FontWeight.w500,
-                                fontSize: 14,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ],
+        body: foto != ""
+            ? SafeArea(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 70.0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      CircleAvatar(
+                        radius: 48,
+                        backgroundColor: Colors.grey.shade300,
+                        backgroundImage: foto != "" ? NetworkImage(foto) : null,
                       ),
-                    ),
-                  );
-              }
-            }));
+                      SizedBox(height: 18),
+                      Text(
+                        (nome),
+                        style: TextStyle(
+                          fontFamily: 'Poppins',
+                          fontWeight: FontWeight.w500,
+                          fontSize: 16,
+                          color: Color(0xFFFF623E),
+                        ),
+                      ),
+                      SizedBox(height: 20),
+                      Center(
+                        child: Column(
+                          children: [
+                            buildMenuButton(context, Icons.manage_accounts,
+                                'Configuração de perfil', '/edit_profile'),
+                            buildMenuButton(context, Icons.pets_outlined,
+                                'Adotaveis', "/my_adoptables",
+                                outline: true),
+                            buildMenuButton(context, Icons.favorite,
+                                'Meus favoritos', "/my_favorites"),
+                            buildMenuButton(context, Icons.lock,
+                                'Alterar senha', "/edit_pswd",
+                                outline: true),
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: 40),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Color(0xFFFF623E),
+                          minimumSize: Size(123, 36),
+                        ),
+                        onPressed: () => doUserLogout(),
+                        child: Text(
+                          'Sair da conta',
+                          style: TextStyle(
+                            fontFamily: 'Poppins',
+                            fontWeight: FontWeight.w500,
+                            fontSize: 14,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              )
+            : Center(
+                child: SizedBox(
+                    width: 100,
+                    height: 100,
+                    child: CircularProgressIndicator(
+                      color: Color(0xFFFF623E),
+                    )),
+              ));
   }
 
   Widget buildMenuButton(
