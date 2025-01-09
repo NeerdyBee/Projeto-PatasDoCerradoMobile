@@ -30,7 +30,7 @@ class _InitialPageState extends State<InitialPage> {
       setState(() {
         results.clear();
       });
-    } else if (mounted) {
+    } else if (queryResponse.results != null && mounted) {
       setState(() {
         results = queryResponse.results as List<ParseObject>;
       });
@@ -62,57 +62,57 @@ class _InitialPageState extends State<InitialPage> {
                         )),
                   );
                 default:
-                  return results.isNotEmpty
-                      ? Stack(children: [
-                          SafeArea(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                  return Stack(children: [
+                    SafeArea(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Row(
                               children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(16.0),
-                                  child: Row(
-                                    children: [
-                                      Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: Image.asset(
-                                          'assets/logo.png',
-                                          width: 93,
-                                          height: 54,
-                                        ),
-                                      ),
-                                    ],
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Image.asset(
+                                    'assets/logo.png',
+                                    width: 93,
+                                    height: 54,
                                   ),
                                 ),
-                                Center(
-                                  child: Column(
-                                    children: [
-                                      Text(
-                                        'Bem vindo!',
-                                        style: TextStyle(
-                                          fontFamily: 'Poppins',
-                                          fontWeight: FontWeight.w800,
-                                          fontSize: 16,
-                                          color: Colors.black.withOpacity(0.5),
-                                        ),
-                                        textAlign: TextAlign.center,
-                                      ),
-                                      SizedBox(height: 6),
-                                      Text(
-                                        'Conheça seu novo melhor amigo!',
-                                        style: TextStyle(
-                                          fontFamily: 'Poppins',
-                                          fontWeight: FontWeight.w900,
-                                          fontSize: 16,
-                                          color: Colors.black,
-                                        ),
-                                        textAlign: TextAlign.center,
-                                      ),
-                                    ],
+                              ],
+                            ),
+                          ),
+                          Center(
+                            child: Column(
+                              children: [
+                                Text(
+                                  'Bem vindo!',
+                                  style: TextStyle(
+                                    fontFamily: 'Poppins',
+                                    fontWeight: FontWeight.w800,
+                                    fontSize: 16,
+                                    color: Colors.black.withOpacity(0.5),
                                   ),
+                                  textAlign: TextAlign.center,
                                 ),
-                                SizedBox(height: 16),
-                                Expanded(
-                                  child: Stack(
+                                SizedBox(height: 6),
+                                Text(
+                                  'Conheça seu novo melhor amigo!',
+                                  style: TextStyle(
+                                    fontFamily: 'Poppins',
+                                    fontWeight: FontWeight.w900,
+                                    fontSize: 16,
+                                    color: Colors.black,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(height: 16),
+                          Expanded(
+                            child: results.isNotEmpty
+                                ? Stack(
                                     children: [
                                       ListView.builder(
                                         padding: const EdgeInsets.symmetric(
@@ -130,20 +130,33 @@ class _InitialPageState extends State<InitialPage> {
                                       _buildFadeOverlay(top: true),
                                       _buildFadeOverlay(top: false),
                                     ],
+                                  )
+                                : RichText(
+                                    textAlign: TextAlign.center,
+                                    text: TextSpan(
+                                      children: <TextSpan>[
+                                        TextSpan(
+                                            text: '\n\n\n',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 18,
+                                                height: 4)),
+                                        TextSpan(
+                                            text:
+                                                'Não há animais cadastrados no momento.',
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w900,
+                                                color: Colors.black
+                                                    .withOpacity(0.5))),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                              ],
-                            ),
                           ),
-                        ])
-                      : Center(
-                          child: SizedBox(
-                              width: 100,
-                              height: 100,
-                              child: CircularProgressIndicator(
-                                color: Color(0xFFFF623E),
-                              )),
-                        );
+                        ],
+                      ),
+                    ),
+                  ]);
               }
             }));
   }

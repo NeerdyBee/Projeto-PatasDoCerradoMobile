@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
-import 'package:patasdocerrado/pages/adoptables.dart';
-import 'package:patasdocerrado/pages/my_adoptables.dart';
 import 'package:patasdocerrado/pages/pet_profile.dart';
 
 class PetCard extends StatefulWidget {
@@ -27,7 +25,7 @@ class _PetCardState extends State<PetCard> {
           ..whereEqualTo('objectId', p?.get('animal_cidade').get('objectId'));
     ParseResponse response = await cidadeQuery.query();
     final String c = response.results?.first.get('nome');
-    setState(() => _cidade = c);
+    if (response.results != null && mounted) setState(() => _cidade = c);
   }
 
   Future<void> getGenero(ParseObject? p) async {
@@ -36,7 +34,7 @@ class _PetCardState extends State<PetCard> {
           ..whereEqualTo('objectId', p?.get('animal_genero').get('objectId'));
     ParseResponse response = await generoQuery.query();
     final String g = response.results?.first.get('nome');
-    setState(() => _genero = g);
+    if (response.results != null && mounted) setState(() => _genero = g);
   }
 
   Future<void> getTipoIdade(ParseObject? p) async {
@@ -45,7 +43,7 @@ class _PetCardState extends State<PetCard> {
       ..whereEqualTo('objectId', p?.get('animal_tipoIdade').get('objectId'));
     ParseResponse response = await tipoIdadeQuery.query();
     final String t = response.results?.first.get('nome');
-    setState(() => _tipoIdade = t);
+    if (response.results != null && mounted) setState(() => _tipoIdade = t);
   }
 
   Future<void> getFavorito(ParseObject? p) async {
@@ -60,10 +58,10 @@ class _PetCardState extends State<PetCard> {
           ..whereEqualTo('favorito_animal', p)
           ..whereEqualTo('favorito_dono', d);
     ParseResponse favoritoResponse = await favoritoQuery.query();
-    if (favoritoResponse.results == null) {
+    if (favoritoResponse.results == null && mounted) {
       setState(() => isFavorite = false);
       return;
-    } else {
+    } else if (mounted) {
       final dynamic f = favoritoResponse.results?.first;
       setState(() => isFavorite = true);
       setState(() => favorito = f);
@@ -182,7 +180,11 @@ class _PetCardState extends State<PetCard> {
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
-                                      InfoRow(icon: Icons.male, label: _genero),
+                                      InfoRow(
+                                          icon: _genero == "Macho"
+                                              ? Icons.male
+                                              : Icons.female,
+                                          label: _genero),
                                       SizedBox(width: 16),
                                       InfoRow(
                                           icon: Icons.access_time,
@@ -231,7 +233,7 @@ class _PetCardState extends State<PetCard> {
                 ),
                 Positioned(
                   top: 4,
-                  right: 32,
+                  right: 10,
                   child: IconButton(
                     icon: Icon(
                       isFavorite ? Icons.favorite : Icons.favorite_border,
@@ -330,7 +332,10 @@ class _PetCardState extends State<PetCard> {
                                             MainAxisAlignment.start,
                                         children: [
                                           InfoRow(
-                                              icon: Icons.male, label: _genero),
+                                              icon: _genero == "Macho"
+                                                  ? Icons.male
+                                                  : Icons.female,
+                                              label: _genero),
                                           SizedBox(width: 16),
                                           InfoRow(
                                               icon: Icons.access_time,
@@ -380,7 +385,7 @@ class _PetCardState extends State<PetCard> {
                     ),
                     Positioned(
                       top: 4,
-                      right: 32,
+                      right: 10,
                       child: IconButton(
                         icon: Icon(
                           isFavorite ? Icons.favorite : Icons.favorite_border,

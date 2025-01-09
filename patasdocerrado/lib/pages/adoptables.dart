@@ -29,7 +29,7 @@ class _AdoptablesPageState extends State<AdoptablesPage> {
       setState(() {
         results.clear();
       });
-    } else if (mounted) {
+    } else if (queryResponse.results != null && mounted) {
       setState(() {
         results = queryResponse.results as List<ParseObject>;
       });
@@ -125,7 +125,7 @@ class _AdoptablesPageState extends State<AdoptablesPage> {
                                       height: 4)),
                               TextSpan(
                                   text:
-                                      'Você ainda não tem nenhum pet para adoção.\n\nCaso deseje cadastrar um novo pet use o botão abaixo!',
+                                      'Não foram encontrados animais para busca.',
                                   style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w900,

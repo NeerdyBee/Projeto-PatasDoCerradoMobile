@@ -129,7 +129,7 @@ class _MyAdoptablesPageState extends State<MyAdoptablesPage> {
                                                   height: 4)),
                                           TextSpan(
                                               text:
-                                                  'Não há animais cadastrados no momento.',
+                                                  'Você ainda não tem nenhum pet para adoção.\n\nCaso deseje cadastrar um novo pet use o botão abaixo!',
                                               style: TextStyle(
                                                   fontSize: 16,
                                                   fontWeight: FontWeight.w900,

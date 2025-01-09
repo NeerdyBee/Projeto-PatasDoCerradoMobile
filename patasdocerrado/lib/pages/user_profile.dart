@@ -14,7 +14,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
   String foto = "";
   Future<void> getUser() async {
     currentUser = await ParseUser.currentUser() as ParseUser?;
-    getDono();
+    await getDono();
   }
 
   Future<void> getDono() async {

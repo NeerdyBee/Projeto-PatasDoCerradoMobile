@@ -130,11 +130,20 @@ class _MyFavoritesPageState extends State<MyFavoritesPage> {
                 ),
                 SizedBox(height: 16),
                 Expanded(
-                  child: Stack(children: [
-                    _buildPetList(),
-                    // Fade overlays
-                    _buildFadeOverlay(top: true),
-                  ]),
+                  child: results.isNotEmpty
+                      ? Stack(children: [
+                          _buildPetList(),
+                          // Fade overlays
+                          _buildFadeOverlay(top: true),
+                        ])
+                      : Center(
+                          child: SizedBox(
+                              width: 200,
+                              height: 200,
+                              child: CircularProgressIndicator(
+                                color: Color(0xFFFF623E),
+                              )),
+                        ),
                 ),
               ],
             ),

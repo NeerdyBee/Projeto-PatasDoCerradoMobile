@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
+import 'package:patasdocerrado/pages/edit_pet.dart';
 
 class MyAdoptablesCard extends StatefulWidget {
   ParseObject? pet;
@@ -149,7 +150,11 @@ class _MyAdoptablesCardState extends State<MyAdoptablesCard> {
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
-                                      InfoRow(icon: Icons.male, label: _genero),
+                                      InfoRow(
+                                          icon: _genero == "Macho"
+                                              ? Icons.male
+                                              : Icons.female,
+                                          label: _genero),
                                       SizedBox(width: 16),
                                       InfoRow(
                                           icon: Icons.access_time,
@@ -192,9 +197,10 @@ class _MyAdoptablesCardState extends State<MyAdoptablesCard> {
                                   SizedBox(width: 6), // Espaço entre os botões
                                   // Botão pequeno à direita do "Status de adoção"
                                   InkWell(
-                                    onTap: () {
-                                      print("Botão da engrenagem pressionado");
-                                    },
+                                    onTap: () => Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                EditPetPage(widget.pet))),
                                     splashColor: Colors.white
                                         .withOpacity(0.5), // Efeito de splash
                                     borderRadius: BorderRadius.circular(10),
@@ -226,7 +232,7 @@ class _MyAdoptablesCardState extends State<MyAdoptablesCard> {
                 // Ícone de lixeira no canto superior direito
                 Positioned(
                   top: 5,
-                  right: 35,
+                  right: 10,
                   child: IconButton(
                     icon: Icon(
                       Icons.delete_outline, // Ícone de lixeira (não preenchido)
