@@ -149,7 +149,7 @@ class CardDetails extends StatelessWidget {
                   style: TextStyle(
                     fontFamily: 'Poppins',
                     fontWeight: FontWeight.w700,
-                    fontSize: 14,
+                    fontSize: 18,
                     color: Color(0xFFFF623E),
                   ),
                 ),
@@ -195,10 +195,10 @@ class CardDetails extends StatelessWidget {
                     label: tipoIdade == "Anos"
                         ? idade != 1
                             ? "$idade $tipoIdade"
-                            : "$idade Mês"
+                            : "$idade Ano"
                         : idade != 1
                             ? "$idade $tipoIdade"
-                            : "$idade Ano"),
+                            : "$idade Mês"),
               ],
             ),
           ],

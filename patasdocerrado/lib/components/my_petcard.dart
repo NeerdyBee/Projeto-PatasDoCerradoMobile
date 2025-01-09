@@ -191,10 +191,10 @@ class _PetCardState extends State<PetCard> {
                                           label: _tipoIdade == "Anos"
                                               ? _idade != 1
                                                   ? "$_idade $_tipoIdade"
-                                                  : "$_idade Mês"
+                                                  : "$_idade Ano"
                                               : _idade != 1
                                                   ? "$_idade $_tipoIdade"
-                                                  : "$_idade Ano"),
+                                                  : "$_idade Mês"),
                                     ],
                                   ),
                                 ],

@@ -14,7 +14,7 @@ class _MyFavoritesPageState extends State<MyFavoritesPage> {
   ParseObject? currentDono;
   Future<void> getUser() async {
     currentUser = await ParseUser.currentUser() as ParseUser?;
-    getDono();
+    await getDono();
   }
 
   Future<void> getDono() async {
@@ -136,13 +136,24 @@ class _MyFavoritesPageState extends State<MyFavoritesPage> {
                           // Fade overlays
                           _buildFadeOverlay(top: true),
                         ])
-                      : Center(
-                          child: SizedBox(
-                              width: 200,
-                              height: 200,
-                              child: CircularProgressIndicator(
-                                color: Color(0xFFFF623E),
-                              )),
+                      : RichText(
+                          textAlign: TextAlign.center,
+                          text: TextSpan(
+                            children: <TextSpan>[
+                              TextSpan(
+                                  text: '\n\n\n',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18,
+                                      height: 4)),
+                              TextSpan(
+                                  text: 'Nenhum animal favoritado.',
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w900,
+                                      color: Colors.black.withOpacity(0.5))),
+                            ],
+                          ),
                         ),
                 ),
               ],
