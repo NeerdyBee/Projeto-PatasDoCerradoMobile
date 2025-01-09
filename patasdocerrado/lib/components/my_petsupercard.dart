@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 import 'dart:ui';
 
+import 'package:patasdocerrado/pages/pet_profile.dart';
+
 class PetSuperCard extends StatefulWidget {
   final ParseObject? pet;
 
@@ -18,73 +20,81 @@ class _PetSuperCardState extends State<PetSuperCard> {
   String _imgURL = "";
   int _idade = 0;
   String _tipoIdade = "";
-  Future<void> getCidade(ParseObject? p) async {
-    QueryBuilder<ParseObject> cidadeQuery =
-        QueryBuilder<ParseObject>(ParseObject('Cidade'))
-          ..whereEqualTo('objectId', p?.get('animal_cidade').get('objectId'));
-    ParseResponse response = await cidadeQuery.query();
-    final String c = response.results?.first.get('nome');
-    setState(() => _cidade = c);
-  }
 
-  Future<void> getGenero(ParseObject? p) async {
-    QueryBuilder<ParseObject> generoQuery =
-        QueryBuilder<ParseObject>(ParseObject('Genero'))
-          ..whereEqualTo('objectId', p?.get('animal_genero').get('objectId'));
-    ParseResponse response = await generoQuery.query();
-    final String g = response.results?.first.get('nome');
-    setState(() => _genero = g);
-  }
-
-  Future<void> getTipoIdade(ParseObject? p) async {
+  Future<void> getPetInfo(ParseObject? p) async {
     QueryBuilder<ParseObject> tipoIdadeQuery = QueryBuilder<ParseObject>(
         ParseObject('TipoIdade'))
       ..whereEqualTo('objectId', p?.get('animal_tipoIdade').get('objectId'));
-    ParseResponse response = await tipoIdadeQuery.query();
-    final String t = response.results?.first.get('nome');
-    setState(() => _tipoIdade = t);
+    ParseResponse responseTipoIdade = await tipoIdadeQuery.query();
+    final String t = responseTipoIdade.results?.first.get('nome') is String
+        ? responseTipoIdade.results?.first.get('nome')
+        : "{undefined}";
+
+    QueryBuilder<ParseObject> generoQuery =
+        QueryBuilder<ParseObject>(ParseObject('Genero'))
+          ..whereEqualTo('objectId', p?.get('animal_genero').get('objectId'));
+    ParseResponse responseGenero = await generoQuery.query();
+    final String g = responseGenero.results?.first.get('nome')!;
+
+    QueryBuilder<ParseObject> cidadeQuery =
+        QueryBuilder<ParseObject>(ParseObject('Cidade'))
+          ..whereEqualTo('objectId', p?.get('animal_cidade').get('objectId'));
+    ParseResponse responseCidade = await cidadeQuery.query();
+    final String c = responseCidade.results?.first.get('nome')!;
+    if (this.mounted) {
+      setState(() => _cidade = c);
+      setState(() => _genero = g);
+      setState(() => _tipoIdade = t);
+    }
   }
 
   @override
   void initState() {
     super.initState();
-    getGenero(widget.pet);
-    getCidade(widget.pet);
+    getPetInfo(widget.pet);
     _imgURL = widget.pet?.get("foto").get("url");
     _idade = widget.pet?.get("idade");
-    getTipoIdade(widget.pet);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      alignment: Alignment.bottomCenter,
-      children: [
-        Container(
-          width: 322,
-          height: 368,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            image: DecorationImage(
-              image: NetworkImage(_imgURL),
-              fit: BoxFit.cover,
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.1),
-                blurRadius: 5,
-                spreadRadius: 2,
-                offset: Offset(0, 5),
+    return _cidade != "" && _tipoIdade != "" && _genero != ""
+        ? Stack(
+            alignment: Alignment.bottomCenter,
+            children: [
+              Container(
+                width: 322,
+                height: 368,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  image: DecorationImage(
+                    image: NetworkImage(_imgURL),
+                    fit: BoxFit.cover,
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.1),
+                      blurRadius: 5,
+                      spreadRadius: 2,
+                      offset: Offset(0, 5),
+                    ),
+                  ],
+                ),
+              ),
+              Positioned(
+                bottom: 0,
+                child: _buildBlurEffect(widget),
               ),
             ],
-          ),
-        ),
-        Positioned(
-          bottom: 0,
-          child: _buildBlurEffect(widget),
-        ),
-      ],
-    );
+          )
+        : Center(
+            child: SizedBox(
+                width: 200,
+                height: 200,
+                child: CircularProgressIndicator(
+                  color: Color(0xFFFF623E),
+                )),
+          );
   }
 
   Widget _buildBlurEffect(PetSuperCard pet) {
@@ -144,7 +154,8 @@ class CardDetails extends StatelessWidget {
                   ),
                 ),
                 ElevatedButton(
-                  onPressed: () => Navigator.pushNamed(context, '/petprofile'),
+                  onPressed: () => Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => PetProfilePage(pet.pet))),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Color(0xFFFF623E),
                     shape: RoundedRectangleBorder(

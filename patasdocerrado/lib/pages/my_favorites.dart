@@ -10,21 +10,54 @@ class MyFavoritesPage extends StatefulWidget {
 
 class _MyFavoritesPageState extends State<MyFavoritesPage> {
   List<ParseObject> results = <ParseObject>[];
+  ParseUser? currentUser;
+  ParseObject? currentDono;
+  Future<void> getUser() async {
+    currentUser = await ParseUser.currentUser() as ParseUser?;
+    getDono();
+  }
+
+  Future<void> getDono() async {
+    QueryBuilder<ParseObject> donoQuery =
+        QueryBuilder<ParseObject>(ParseObject('Dono'))
+          ..whereEqualTo('dono_usuario', currentUser);
+    ParseResponse response = await donoQuery.query();
+    setState(() => currentDono = response.results?.first);
+    doQueryMatches();
+  }
 
   void doQueryMatches() async {
-    // Create inner Book query
+    final QueryBuilder<ParseObject> favoritoQuery =
+        QueryBuilder<ParseObject>(ParseObject('Favorito'))
+          ..whereEqualTo('favorito_dono', currentDono);
     final QueryBuilder<ParseObject> petQuery =
         QueryBuilder<ParseObject>(ParseObject('Animal'))
           ..orderByDescending('createdAt');
-
+    final ParseResponse favoritosResponse = await favoritoQuery.query();
     final ParseResponse petResponse = await petQuery.query();
-    if (!petResponse.success) {
+    print(currentDono);
+    print(currentUser);
+    print(favoritosResponse.results);
+    if ((!petResponse.success ||
+            petResponse.results == null ||
+            favoritosResponse.results == null) &&
+        mounted) {
       setState(() {
         results.clear();
       });
     } else if (mounted) {
+      List<ParseObject> r = <ParseObject>[];
+      for (var obj in favoritosResponse.results!) {
+        print(obj);
+        for (var p in petResponse.results!) {
+          if (obj.get('favorito_animal').get('objectId') == p.get('objectId')) {
+            print("Pet add: $p");
+            r.add(p);
+          }
+        }
+      }
       setState(() {
-        results = petResponse.results as List<ParseObject>;
+        results = r;
       });
     }
   }
@@ -32,7 +65,7 @@ class _MyFavoritesPageState extends State<MyFavoritesPage> {
   @override
   void initState() {
     super.initState();
-    doQueryMatches();
+    getUser();
   }
 
   @override
@@ -119,7 +152,7 @@ class _MyFavoritesPageState extends State<MyFavoritesPage> {
         final o = results[index];
         return Padding(
           padding: const EdgeInsets.only(bottom: 20),
-          child: PetCard(pet: o),
+          child: PetCard(pet: o, isFavoritos: true),
         );
       },
     );

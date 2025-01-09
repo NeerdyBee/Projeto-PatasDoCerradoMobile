@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:patasdocerrado/pages/edit_pswd.dart';
 import 'package:patasdocerrado/pages/home.dart';
 import 'package:patasdocerrado/pages/my_adoptables.dart';
 import 'package:patasdocerrado/pages/intro.dart';
 import 'package:patasdocerrado/pages/login.dart';
-import 'package:patasdocerrado/pages/petprofile.dart';
-import 'package:patasdocerrado/pages/registerPet.dart';
-import 'package:patasdocerrado/pages/registerPet2.dart';
-import 'package:patasdocerrado/pages/registerUser.dart';
-import 'package:patasdocerrado/pages/recoverPswd.dart';
-import 'package:patasdocerrado/pages/editprofile.dart';
+import 'package:patasdocerrado/pages/register_pet.dart';
+import 'package:patasdocerrado/pages/register_user.dart';
+import 'package:patasdocerrado/pages/recover_pswd.dart';
+import 'package:patasdocerrado/pages/edit_profile.dart';
 import 'package:patasdocerrado/pages/my_favorites.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 import 'package:flutter/services.dart';
@@ -41,12 +40,11 @@ class MainApp extends StatelessWidget {
         '/registerpage': (context) => const RegisterUserPage(),
         '/homepage': (context) => const HomePage(),
         '/recoverpswdpage': (context) => const RecoverPswdPage(),
-        '/editprofile': (context) => const EditProfilePage(),
+        '/edit_profile': (context) => const EditProfilePage(),
+        '/edit_pswd': (context) => const EditPswdPage(),
         '/my_favorites': (context) => const MyFavoritesPage(),
         '/my_adoptables': (context) => const MyAdoptablesPage(),
-        '/registerpet01': (context) => const RegisterPetPage(),
-        '/registerpet02': (context) => const RegisterPetPage2(),
-        '/petprofile': (context) => const PetProfilePage()
+        '/registerpet': (context) => const RegisterPetPage()
       },
     );
   }

@@ -12,7 +12,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   bool _passwordVisible = false;
-  final controllerUsername = TextEditingController();
+  final controllerEmail = TextEditingController();
   final controllerPassword = TextEditingController();
   bool isLoggedIn = false;
 
@@ -65,10 +65,10 @@ class _LoginPageState extends State<LoginPage> {
                     child: Expanded(
                       child: TextField(
                         enabled: !isLoggedIn,
-                        controller: controllerUsername,
+                        controller: controllerEmail,
                         decoration: InputDecoration(
                             border: InputBorder.none,
-                            hintText: 'Usuário',
+                            hintText: 'Email',
                             hintStyle: TextStyle(
                                 fontFamily: 'Poppins',
                                 fontSize: 16,
@@ -147,30 +147,34 @@ class _LoginPageState extends State<LoginPage> {
                       'Entrar',
                       style: TextStyle(fontSize: 16),
                     )),
-                SizedBox(height: 30),
+                SizedBox(height: 10),
                 GestureDetector(
                     onTap: () => Navigator.pushNamed(context, '/registerpage'),
-                    child: Align(
-                        alignment: Alignment.center,
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 10),
-                          child: RichText(
-                            text: TextSpan(
-                              children: <TextSpan>[
-                                TextSpan(
-                                    text: "Ainda não possui uma conta? ",
-                                    style: TextStyle(
-                                        color: Colors.black.withOpacity(0.5),
-                                        fontSize: 16)),
-                                TextSpan(
-                                    text: "Crie agora!",
-                                    style: TextStyle(
-                                        color: Color.fromRGBO(255, 97, 62, 1),
-                                        fontSize: 16))
-                              ],
+                    child: Container(
+                      height: 50,
+                      width: 350,
+                      child: Align(
+                          alignment: Alignment.center,
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 10),
+                            child: RichText(
+                              text: TextSpan(
+                                children: <TextSpan>[
+                                  TextSpan(
+                                      text: "Ainda não possui uma conta? ",
+                                      style: TextStyle(
+                                          color: Colors.black.withOpacity(0.5),
+                                          fontSize: 16)),
+                                  TextSpan(
+                                      text: "Crie agora!",
+                                      style: TextStyle(
+                                          color: Color.fromRGBO(255, 97, 62, 1),
+                                          fontSize: 16))
+                                ],
+                              ),
                             ),
-                          ),
-                        ))),
+                          )),
+                    )),
               ],
             ),
           ),
@@ -198,14 +202,14 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void doUserLogin() async {
-    final username = controllerUsername.text.trim();
+    final email = controllerEmail.text.trim();
     final password = controllerPassword.text.trim();
 
-    if (username.isEmpty || password.isEmpty) {
+    if (email.isEmpty || password.isEmpty) {
       showError("Tenha certeza de preencher todos os campos!");
       return;
     }
-    final user = ParseUser(username, password, null);
+    final user = ParseUser(email, password, null);
     var response = await user.login();
     if (response.success) {
       isLoggedIn = true;

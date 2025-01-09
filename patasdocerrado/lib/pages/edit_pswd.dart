@@ -1,15 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 
-class RecoverPswdPage extends StatefulWidget {
-  const RecoverPswdPage({super.key});
+class EditPswdPage extends StatefulWidget {
+  const EditPswdPage({super.key});
 
   @override
-  _RecoverPswdState createState() => _RecoverPswdState();
+  _EditPswdState createState() => _EditPswdState();
 }
 
-class _RecoverPswdState extends State<RecoverPswdPage> {
-  final controllerEmail = TextEditingController();
+class _EditPswdState extends State<EditPswdPage> {
+  ParseUser? currentUser;
+  Future<void> getUser() async {
+    currentUser = await ParseUser.currentUser() as ParseUser?;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getUser();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +41,7 @@ class _RecoverPswdState extends State<RecoverPswdPage> {
                     children: <Widget>[
                       Image.asset('assets/logo.png', height: 130)
                     ]),
-                SizedBox(height: 40),
+                SizedBox(height: 60),
                 RichText(
                   textAlign: TextAlign.center,
                   text: TextSpan(
@@ -45,36 +54,12 @@ class _RecoverPswdState extends State<RecoverPswdPage> {
                               height: 4)),
                       TextSpan(
                           text:
-                              'Vamos ajuda-lo nisso! Digite o e-mail de\nsua conta para enviarmos as instruções.',
+                              'Caso deseje alterar sua senha,\npressione o botão abaixo para receber\ninstruções em seu email.',
                           style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w900,
                               color: Colors.black.withOpacity(0.5))),
                     ],
-                  ),
-                ),
-                SizedBox(height: 40),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 67),
-                  child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 8),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      border:
-                          Border.all(color: Colors.grey.shade300, width: 2.0),
-                    ),
-                    child: Expanded(
-                      child: TextField(
-                        controller: controllerEmail,
-                        decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: 'E-mail',
-                            hintStyle: TextStyle(
-                                fontFamily: 'Poppins',
-                                fontSize: 16,
-                                color: Color(0xff8d8d8d))),
-                      ),
-                    ),
                   ),
                 ),
                 SizedBox(height: 40),
@@ -88,7 +73,7 @@ class _RecoverPswdState extends State<RecoverPswdPage> {
                           borderRadius: BorderRadius.circular(10),
                         )),
                     child: Text(
-                      'Confirmar',
+                      'Enviar instruções',
                       style: TextStyle(fontSize: 16),
                     )),
               ],
@@ -108,7 +93,7 @@ class _RecoverPswdState extends State<RecoverPswdPage> {
             ElevatedButton(
               child: const Text("OK"),
               onPressed: () {
-                Navigator.pushNamed(context, '/login');
+                Navigator.pop(context);
               },
             ),
           ],
@@ -137,16 +122,11 @@ class _RecoverPswdState extends State<RecoverPswdPage> {
   }
 
   void doUserResetPassword() async {
-    final email = controllerEmail.text.trim();
-    if (email.isEmpty) {
-      showError("É necessário inserir um e-mail!");
-      return;
-    }
-    final ParseUser user = ParseUser(null, null, email);
-    final ParseResponse parseResponse = await user.requestPasswordReset();
+    final ParseResponse parseResponse =
+        await currentUser!.requestPasswordReset();
     if (parseResponse.success) {
       showSuccess(
-          "As intruções para resetar sua senha foram enviadas em seu e-mail!");
+          "As intruções para alterar sua senha foram enviadas em seu e-mail!");
     } else {
       showError(parseResponse.error!.message);
     }

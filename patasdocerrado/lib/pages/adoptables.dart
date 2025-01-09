@@ -94,24 +94,45 @@ class _AdoptablesPageState extends State<AdoptablesPage> {
                 ),
                 SizedBox(height: 16), // FADE DA PARTE DE CIMA
                 Expanded(
-                  child: Stack(
-                    children: [
-                      ListView.builder(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 16.0, vertical: 8.0),
-                        itemCount: results.length,
-                        itemBuilder: (context, index) {
-                          final o = results[index];
-                          return Padding(
-                            padding: const EdgeInsets.only(bottom: 20),
-                            child: PetCard(pet: o),
-                          );
-                        },
-                      ),
-                      _buildFadeOverlay(top: true),
-                      _buildFadeOverlay(top: false),
-                    ],
-                  ),
+                  child: results.isNotEmpty
+                      ? Stack(
+                          children: [
+                            ListView.builder(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 16.0, vertical: 8.0),
+                              itemCount: results.length,
+                              itemBuilder: (context, index) {
+                                final o = results[index];
+                                return Padding(
+                                  padding: const EdgeInsets.only(bottom: 20),
+                                  child: PetCard(pet: o, isFavoritos: false),
+                                );
+                              },
+                            ),
+                            _buildFadeOverlay(top: true),
+                            _buildFadeOverlay(top: false),
+                          ],
+                        )
+                      : RichText(
+                          textAlign: TextAlign.center,
+                          text: TextSpan(
+                            children: <TextSpan>[
+                              TextSpan(
+                                  text: '\n\n\n',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18,
+                                      height: 4)),
+                              TextSpan(
+                                  text:
+                                      'Você ainda não tem nenhum pet para adoção.\n\nCaso deseje cadastrar um novo pet use o botão abaixo!',
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w900,
+                                      color: Colors.black.withOpacity(0.5))),
+                            ],
+                          ),
+                        ),
                 ),
               ],
             ),

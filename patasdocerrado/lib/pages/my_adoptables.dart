@@ -10,18 +10,25 @@ class MyAdoptablesPage extends StatefulWidget {
 
 class _MyAdoptablesPageState extends State<MyAdoptablesPage> {
   List<ParseObject> results = <ParseObject>[];
+  ParseUser? currentUser;
 
-  void doQueryMatches() async {
-    ParseUser? currentUser = await ParseUser.currentUser() as ParseUser?;
-    final QueryBuilder<ParseObject> userQuery =
-        QueryBuilder<ParseObject>(ParseObject('_User'))
-          ..whereEqualTo("objectId", currentUser?.objectId);
-    final QueryBuilder<ParseObject> petQuery =
+  Future<ParseUser?> getUser() async {
+    currentUser = await ParseUser.currentUser() as ParseUser?;
+    getAdoptables();
+    return currentUser;
+  }
+
+  void getAdoptables() async {
+    final QueryBuilder<ParseObject> donoQuery =
+        QueryBuilder<ParseObject>(ParseObject('Dono'))
+          ..whereEqualTo('dono_usuario', currentUser);
+    ParseResponse response = await donoQuery.query();
+    final QueryBuilder<ParseObject> adoptablesQuery =
         QueryBuilder<ParseObject>(ParseObject('Animal'))
           ..orderByDescending('createdAt')
-          ..whereMatchesQuery("animal_usuario", userQuery);
-    final ParseResponse queryResponse = await petQuery.query();
-    if (!queryResponse.success) {
+          ..whereEqualTo("animal_dono", response.results!.first as ParseObject);
+    final ParseResponse queryResponse = await adoptablesQuery.query();
+    if (!queryResponse.success || queryResponse.results == null) {
       setState(() {
         results.clear();
       });
@@ -35,7 +42,7 @@ class _MyAdoptablesPageState extends State<MyAdoptablesPage> {
   @override
   void initState() {
     super.initState();
-    doQueryMatches();
+    getUser();
   }
 
   @override
@@ -44,82 +51,114 @@ class _MyAdoptablesPageState extends State<MyAdoptablesPage> {
         debugShowCheckedModeBanner: false, // Desativa o debug banner
         home: Scaffold(
           backgroundColor: Colors.white,
-          body: Stack(
-            children: [
-              SafeArea(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
+          body: currentUser != null
+              ? Stack(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Row(
-                        children: [
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: Image.asset(
-                              'assets/logo.png',
-                              width: 93,
-                              height: 54,
-                            ),
-                          ),
-                          Spacer(),
-                          IconButton(
-                              icon: Icon(
-                                Icons.arrow_back_ios,
-                                color: Color(0xFFFF623E),
-                              ),
-                              onPressed: () => Navigator.of(context).pop()),
-                        ],
-                      ),
-                    ),
-                    Center(
+                    SafeArea(
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          Text(
-                            'Adotáveis!',
-                            style: TextStyle(
-                              fontFamily: 'Poppins',
-                              fontWeight: FontWeight.w800,
-                              fontSize: 16,
-                              color: Color(0xFFFF623E),
+                          Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Row(
+                              children: [
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Image.asset(
+                                    'assets/logo.png',
+                                    width: 93,
+                                    height: 54,
+                                  ),
+                                ),
+                                Spacer(),
+                                IconButton(
+                                    icon: Icon(
+                                      Icons.arrow_back_ios,
+                                      color: Color(0xFFFF623E),
+                                    ),
+                                    onPressed: () =>
+                                        Navigator.of(context).pop()),
+                              ],
                             ),
-                            textAlign: TextAlign.center,
                           ),
-                          SizedBox(height: 6),
-                          Text(
-                            'Veja seus pets para adoção',
-                            style: TextStyle(
-                              fontFamily: 'Poppins',
-                              fontWeight: FontWeight.w900,
-                              fontSize: 16,
-                              color: Colors.black.withOpacity(0.5),
+                          Center(
+                            child: Column(
+                              children: [
+                                Text(
+                                  'Adotáveis!',
+                                  style: TextStyle(
+                                    fontFamily: 'Poppins',
+                                    fontWeight: FontWeight.w800,
+                                    fontSize: 16,
+                                    color: Color(0xFFFF623E),
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                                SizedBox(height: 6),
+                                Text(
+                                  'Veja seus pets para adoção',
+                                  style: TextStyle(
+                                    fontFamily: 'Poppins',
+                                    fontWeight: FontWeight.w900,
+                                    fontSize: 16,
+                                    color: Colors.black.withOpacity(0.5),
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ],
                             ),
-                            textAlign: TextAlign.center,
                           ),
+                          SizedBox(height: 16),
+                          Expanded(
+                              child: results.isNotEmpty
+                                  ? Stack(children: [
+                                      _buildPetList(),
+                                      // Fade overlays
+                                      _buildFadeOverlay(top: true),
+                                      _buildFadeOverlay(top: false),
+                                    ])
+                                  : RichText(
+                                      textAlign: TextAlign.center,
+                                      text: TextSpan(
+                                        children: <TextSpan>[
+                                          TextSpan(
+                                              text: '\n\n\n',
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 18,
+                                                  height: 4)),
+                                          TextSpan(
+                                              text:
+                                                  'Não há animais cadastrados no momento.',
+                                              style: TextStyle(
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.w900,
+                                                  color: Colors.black
+                                                      .withOpacity(0.5))),
+                                        ],
+                                      ),
+                                    )),
+                          SizedBox(
+                            height: 80,
+                          )
                         ],
                       ),
                     ),
-                    SizedBox(height: 16),
-                    Expanded(
-                        child: Stack(children: [
-                      _buildPetList(),
-                      // Fade overlays
-                      _buildFadeOverlay(top: true),
-                      _buildFadeOverlay(top: false),
-                    ])),
-                    SizedBox(
-                      height: 80,
-                    )
+                    Positioned(
+                      bottom: 30,
+                      right: 20,
+                      child: cadastrarPet(),
+                    ),
                   ],
+                )
+              : Center(
+                  child: SizedBox(
+                      width: 100,
+                      height: 100,
+                      child: CircularProgressIndicator(
+                        color: Color(0xFFFF623E),
+                      )),
                 ),
-              ),
-              Positioned(
-                bottom: 30,
-                right: 20,
-                child: FloatingButtonWithText(),
-              ),
-            ],
-          ),
         ));
   }
 
@@ -137,56 +176,10 @@ class _MyAdoptablesPageState extends State<MyAdoptablesPage> {
     );
   }
 
-  Widget _buildFadeOverlay({required bool top}) {
-    return Positioned(
-      top: top ? 0 : null,
-      bottom: top ? null : 0,
-      left: 0,
-      right: 0,
-      child: IgnorePointer(
-        child: Container(
-          height: 15.0,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: top ? Alignment.topCenter : Alignment.bottomCenter,
-              end: top ? Alignment.bottomCenter : Alignment.topCenter,
-              colors: [
-                Colors.white,
-                Colors.white.withOpacity(0.0),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class FloatingButtonWithText extends StatefulWidget {
-  @override
-  _FloatingButtonWithTextState createState() => _FloatingButtonWithTextState();
-}
-
-class _FloatingButtonWithTextState extends State<FloatingButtonWithText> {
-  bool _isPressed = false;
-
-  @override
-  Widget build(BuildContext context) {
+  Widget cadastrarPet() {
     return GestureDetector(
-      onTapDown: (_) {
-        setState(() {
-          _isPressed = true; // Pressionado
-        });
-      },
-      onTapUp: (_) {
-        setState(() {
-          _isPressed = false; // Soltou o toque
-        });
-      },
-      onTapCancel: () {
-        setState(() {
-          _isPressed = false; // Caso o toque seja cancelado
-        });
+      onTap: () {
+        Navigator.of(context).pushNamed("/registerpet");
       },
       child: Container(
         decoration: BoxDecoration(
@@ -217,8 +210,7 @@ class _FloatingButtonWithTextState extends State<FloatingButtonWithText> {
             SizedBox(width: 10),
             // Efeito de toque no botão
             AnimatedScale(
-              scale:
-                  _isPressed ? 0.9 : 1.0, // Reduz o tamanho quando pressionado
+              scale: 1.0, // Reduz o tamanho quando pressionado
               duration: Duration(milliseconds: 100), // Duração do efeito
               child: Container(
                 width: 50,
@@ -232,6 +224,30 @@ class _FloatingButtonWithTextState extends State<FloatingButtonWithText> {
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildFadeOverlay({required bool top}) {
+    return Positioned(
+      top: top ? 0 : null,
+      bottom: top ? null : 0,
+      left: 0,
+      right: 0,
+      child: IgnorePointer(
+        child: Container(
+          height: 15.0,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: top ? Alignment.topCenter : Alignment.bottomCenter,
+              end: top ? Alignment.bottomCenter : Alignment.topCenter,
+              colors: [
+                Colors.white,
+                Colors.white.withOpacity(0.0),
+              ],
+            ),
+          ),
         ),
       ),
     );

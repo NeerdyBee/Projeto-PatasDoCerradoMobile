@@ -11,12 +11,20 @@ class IntroPage extends StatelessWidget {
     print(response.results?.first.get('foto').get("url"));
   }
 
+  void getUsers() async {
+    QueryBuilder<ParseObject> donoQuery =
+        QueryBuilder<ParseObject>(ParseObject('_User'));
+    final ParseResponse response = await donoQuery.query();
+    print("Usuarios: ${response.results}");
+  }
+
   void initState() {}
 
 //INICIALIZAÇÃO
   @override
   Widget build(BuildContext context) {
     getAnimal();
+    getUsers();
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         home: Scaffold(
